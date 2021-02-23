@@ -20,14 +20,11 @@
 
       <form>
         <p>{{nhan.khuVuc.chonKhuVuc.mieuTa}}</p>
-        <input class="form__input-text" type="text" v-on:input="timKhuVuc"/>
+        <input class="form__input-text" type="text" v-on:input="timKhuVuc" />
       </form>
 
-      <div v-for="(khuVuc, index) in danhSachKhuVuc"
-        v-bind:key="index"
-        v-bind:tabindex="index"
-        v-on:click="chonKhuVuc(khuVuc)"
-        >
+      <div v-for="(khuVuc, index) in danhSachKhuVuc" v-bind:key="index" v-bind:tabindex="index"
+        v-on:click="chonKhuVuc(khuVuc)">
         {{khuVuc.ten}}
       </div>
     </div>
@@ -54,12 +51,111 @@
     </div>
 
     <!-- PIN -->
+    <div class="pin">
+      <h1>{{nhan.pin.tieuDe}}</h1>
+
+      <h2>{{nhan.pin.dauVao.tieuDe}}</h2>
+      <p>{{nhan.pin.dauVao.congSuat}}</p>
+      <input type="number" value="1000" v-model="congSuatLapDat" />
+
+      <p>{{nhan.pin.dauVao.loaiPin}}</p>
+      <select v-model="maPinDuocChon">
+        <option v-for="(pin,index) in danhSachPin" v-bind:key="index" v-bind:value="pin.maSanPham">{{pin.maSanPham}}
+        </option>
+      </select>
+
+      <p>{{nhan.pin.dauVao.heSoTonThat}}</p>
+      <input type="number" min="0.5" max="0.9" step="0.05" v-model="heSoTonThat" />
+
+      <h2>{{nhan.pin.thongTin.tieuDe}}</h2>
+
+      <span v-if="!pinDuocChon">{{nhan.pin.thongTin.mieuTa}}</span>
+      <table id="pin-detail" v-else>
+        <tr>
+          <td>
+            {{nhan.pin.thongTin.bang.maSanPham}}
+          </td>
+          <td>{{pinDuocChon.maSanPham}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.pmax}}</td>
+          <td>{{pinDuocChon.pmax}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.vmp}}</td>
+          <td>{{pinDuocChon.vmp}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.imp}}</td>
+          <td>{{pinDuocChon.imp}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.voc}}</td>
+          <td>{{pinDuocChon.voc}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.isc}}</td>
+          <td>{{pinDuocChon.isc}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.hieuSuat}}</td>
+          <td>{{pinDuocChon.hieuSuat}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.nhietDoHoatDong}}</td>
+          <td>{{thongTinChung.nhietDoHoatDong}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.dienApToiDa}}</td>
+          <td>{{thongTinChung.dienApToiDa}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.loaiVatLieu}}</td>
+          <td>{{thongTinChung.loaiVatLieu}}</td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.kichThuoc}}</td>
+          <td>
+            {{thongTinChung.kichThuoc.dai}}x
+            {{thongTinChung.kichThuoc.rong}}x
+            {{thongTinChung.kichThuoc.cao}} (mm)
+          </td>
+        </tr>
+        <tr>
+          <td>{{nhan.pin.thongTin.bang.trongLuong}}</td>
+          <td>{{thongTinChung.trongLuong}}</td>
+        </tr>
+      </table>
+
+      <span v-if="!pinDuocChon"></span>
+      <div v-else>
+        <h2>{{nhan.pin.ketQua.tieuDe}}</h2>
+        <table>
+          <tr>
+            <td>{{nhan.pin.ketQua.soLuong}}</td>
+            <td>{{soLuongPin}}</td>
+          </tr>
+          <tr>
+            <td>{{nhan.pin.ketQua.tongDienTich}}</td>
+            <td>{{tongDienTichPin}} (m2)</td>
+          </tr>
+          <tr>
+            <td>{{nhan.pin.ketQua.tongSanLuong}}</td>
+            <td>{{tongSanLuongTieuThu}} (kWh/an)</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
     <!-- RESULT -->
+    <h1>{{nhan.sanLuong.tieuDe}}</h1>
+    <div>
+      <canvas id="chart-energy"></canvas>
+    </div>
   </div>
 
   <script src="./js/data.js"></script>
   <script src="./vendor/chart/chart.min.js"></script>
-  <script src="./js/chart.js"></script>
   <script src="./vendor/lodash/lodash.js"></script>
   <script src="./vendor/vue/vue.js"></script>
   <script src="./js/app.js"></script>
