@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
   <meta charset="UTF-8">
@@ -13,6 +13,8 @@
   <div id="app">
     <h1>{{nhan.khuVuc.tieuDe}}</h1>
     <p>{{nhan.khuVuc.mieuTa}}</p>
+    
+    <button v-on:click="doiNgonNgu">{{(ngonNgu === "vi" ? "English" : "Tiếng Việt")}}</button>
 
     <!-- AREA -->
     <div class="area">

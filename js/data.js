@@ -135,8 +135,8 @@ const data = {
             "datasets": [
               {
                 "label": "Solar radiation level",
-                "backgroundColor": "# ff9f43",
-                "borderColor": "# ff9f43",
+                "backgroundColor": "#ff9f43",
+                "borderColor": "#ff9f43",
                 "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
               }
             ]
@@ -196,8 +196,8 @@ const data = {
           "datasets": [
             {
               "label": "Consumption volume",
-              "backgroundColor": "# 1e90ff",
-              "borderColor": "# 1e90ff",
+              "backgroundColor": "#1e90ff",
+              "borderColor": "#1e90ff",
               "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             }
           ]

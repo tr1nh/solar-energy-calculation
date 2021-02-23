@@ -13,7 +13,8 @@ var app = new Vue({
       thongTinChung: data.values.pin.thongTinChung,
       pinAmount: 0,
       maPinDuocChon: '',
-      heSoTonThat: 0.75
+      heSoTonThat: 0.75,
+      ngonNgu: 'vi'
     }
   },
   mounted: function () {
@@ -26,7 +27,16 @@ var app = new Vue({
     }, 250),
     chonKhuVuc: function (khuVuc) {
       this.khuVucDuocChon = khuVuc
-      updateChart(chartArea, khuVuc.bucXa)
+      updateChartColumn(chartArea, khuVuc.bucXa)
+    },
+    doiNgonNgu: function () {
+      this.ngonNgu = (this.ngonNgu === 'en') ? 'vi' : 'en'
+      updateObject(this.nhan, data.labels[this.ngonNgu])
+
+      updateChartLabel(chartArea, data.labels[this.ngonNgu].khuVuc.bucXaTheoThang.chartjs)
+      updateChartLabel(chartEnergy, data.labels[this.ngonNgu].sanLuong.chartjs)
+
+      document.documentElement.setAttribute('lang', this.ngonNgu)
     }
   },
   computed: {
@@ -48,7 +58,7 @@ var app = new Vue({
     },
     sanLuongTieuThu: function () {
       const ketQua = tinhSanLuongTieuThu(this.khuVucDuocChon.bucXa, this.tongDienTichPin, this.pinDuocChon.hieuSuat, this.heSoTonThat)
-      updateChart(chartEnergy, ketQua)
+      updateChartColumn(chartEnergy, ketQua)
       return ketQua
     },
     tongSanLuongTieuThu: function () {
@@ -83,8 +93,25 @@ function timKhuVuc(tatCaKhuVuc, chuoiTimKiem) {
   })
 }
 
-function updateChart(instance, data) {
+function updateChartColumn(instance, data) {
   instance.data.datasets[0].data = data
+  instance.update()
+}
+
+function updateObject(obj1, obj2) {
+  for (var k in obj1) {
+    if (!obj1.hasOwnProperty(k)) continue
+
+    if (typeof obj1[k] == 'object') updateObject(obj1[k], obj2[k])
+    else obj1[k] = obj2[k]
+  }
+}
+
+function updateChartLabel(instance, data) {
+  let temporaryData = Object.assign({}, data)
+  temporaryData.datasets[0].data = instance.data.datasets[0].data
+
+  instance.data = temporaryData
   instance.update()
 }
 
