@@ -37,6 +37,47 @@ var app = new Vue({
       updateChartLabel(chartEnergy, data.labels[this.ngonNgu].sanLuong.chartjs)
 
       document.documentElement.setAttribute('lang', this.ngonNgu)
+    },
+    xuatPDF: async function () {
+      const page = new window.jspdf.jsPDF()
+      const width = 210
+      const margin = 10
+      let currentLine = 10
+
+      await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
+      await addTextCenterPDF(page, this.nhan.pdf.tieuDe.toUpperCase(), 20, (width / 2), currentLine, (width - (margin * 5)))
+
+      addTextPDF(page, `${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, 10, margin, currentLine += 20)
+      addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, 10, margin, currentLine += 5)
+      addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.pinAmount}`, 10, margin, currentLine += 5)
+      addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, 10, margin, currentLine += 5)
+      addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, 10, margin, currentLine += 5)
+      addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, 10, margin, currentLine += 5)
+      addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.tongSanLuongTieuThu} (kWh/an)`, 10, margin, currentLine += 5)
+
+      addChartJSPDF(page, chartArea, document.getElementById('chart-area'), margin, currentLine += 20, (width / 2 - margin - (margin / 2)), 50)
+      addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)
+
+      await addTextCenterPDF(page, this.nhan.pdf.hinh1, 10, (width / 4), currentLine += 55, (width / 2))
+      await addTextCenterPDF(page, this.nhan.pdf.hinh2, 10, ((width * (3 / 4)) - (margin / 2)), currentLine, (width / 2))
+
+      await addTextCenterPDF(page, this.nhan.pdf.bang1.tieuDe, 10, (width / 2), currentLine += 20, width)
+
+      let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.sanLuongTieuThu, this.tongBucXa, this.tongSanLuongTieuThu)
+
+      page.autoTable({
+        head: this.nhan.pdf.bang1.head,
+        body: data,
+        startY: currentLine += 5,
+        styles: {
+          font: 'Roboto-Regular',
+          lineWidth: 0.25,
+          lineColor: 0
+        },
+        theme: 'plain'
+      })
+
+      page.save(this.nhan.pdf.tenTep)
     }
   },
   computed: {
@@ -139,4 +180,92 @@ function tinhSanLuongTieuThu(bucXaTungThang, tongDienTich, hieuSuat, heSoTonThat
 
 function tinhTongSanLuongTieuThu(sanLuongTungThang) {
   return sanLuongTungThang.reduce((acc, v) => acc += v)
+}
+
+async function loadFontPDF(instance, fontURL) {
+  const fontFile = await fileToBase64(fontURL)
+
+  instance.addFileToVFS('Roboto-Regular-normal.ttf', fontFile.split(',')[1])
+  instance.addFont('Roboto-Regular-normal.ttf', 'Roboto-Regular', 'normal')
+  instance.setFont('Roboto-Regular')
+}
+
+function fileToBase64(url) {
+  return new Promise((resolve, reject) => {
+    let xhr = new XMLHttpRequest()
+    xhr.onload = () => {
+      let reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.readAsDataURL(xhr.response)
+    }
+    xhr.open("GET", url)
+    xhr.responseType = "blob"
+    xhr.send()
+  })
+}
+
+async function addTextCenterPDF(instance, text, fontSize, x, y, maxWidth) {
+  const tieuDe = instance.splitTextToSize(text, maxWidth)
+  instance.setFontSize(fontSize)
+  instance.text(tieuDe, x, y, { align: 'center' })
+}
+
+async function addTextPDF(instance, text, fontSize, x, y) {
+  instance.setFontSize(fontSize)
+  instance.text(text, x, y)
+}
+
+async function addChartJSPDF(pageInstance, chartInstance, element, x, y, width, height) {
+  drawValueOnBar(chartInstance)
+  pageInstance.addImage(element, 'PNG', x, y, width, height)
+  chartInstance.update()
+}
+
+async function layDuLieuBangBucXaHangThang(thang, bucXa, sanLuong, tongBucXa, tongSanLuong) {
+  let data = []
+
+  thang.forEach((v, i) => {
+    let row = {}
+
+    if (i < 12) {
+      row = [
+        v,
+        bucXa[i].toString(),
+        sanLuong[i].toString(),
+      ]
+    } else {
+      row = [
+        v,
+        tongBucXa.toString(),
+        tongSanLuong.toString(),
+      ]
+    }
+
+    data.push(row)
+  })
+
+  return data
+}
+
+function drawValueOnBar(instance) {
+  let ctx = instance.ctx
+
+  ctx.font = Chart.helpers.fontString(
+    Chart.defaults.global.defaultFontSize,
+    Chart.defaults.global.defaultFontStyle,
+    Chart.defaults.global.defaultFontFamily
+  )
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'bottom'
+
+  instance.data.datasets.forEach(function (dataset, i) {
+    let meta = instance.controller.getDatasetMeta(i)
+
+    meta.data.forEach(function (bar, index) {
+      if (dataset.data[index] > 0) {
+        let data = dataset.data[index]
+        ctx.fillText(data, bar._model.x, bar._model.y)
+      }
+    })
+  })
 }

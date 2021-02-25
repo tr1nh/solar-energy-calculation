@@ -100,6 +100,24 @@ const data = {
             }
           ]
         }
+      },
+      "pdf": {
+        "tenTep": "ket-qua.pdf",
+        "tieuDe": "Kết quả tính toán các thông số chính của hệ thống điện mặt trời nối lưới",
+        "diaChi": "Địa chỉ",
+        "congSuatLapDat": "Công suất lắp đặt",
+        "soLuongPin": "Số lượng pin",
+        "loaiPin": "Loại pin",
+        "congSuatPin": "Công suất 1 tấm pin",
+        "dienTich": "Diện tích lắp đặt",
+        "sanLuongDuKien": "Sản lượng dự kiến",
+        "hinh1": "Hình 1. Bức xạ mặt trời.",
+        "hinh2": "Hình 2. Sản lượng điện hàng tháng.",
+        "bang1": {
+          "tieuDe": "Bảng 1. Kết quả tính toán sản lượng điện mặt trời.",
+          "head": [["Tháng", "Bức xạ mặt trời", "Sản lượng"]],
+          "column1": ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12", "Cả năm"]
+        }
       }
     },
     "en": {
@@ -201,6 +219,24 @@ const data = {
               "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             }
           ]
+        }
+      },
+      "pdf": {
+        "tenTep": "result.pdf",
+        "tieuDe": "Calculation results of main parameters of grid-connected solar power system",
+        "diaChi": "Address",
+        "congSuatLapDat": "Installed capacity",
+        "soLuongPin": "Number of batteries",
+        "loaiPin": "Type of battery",
+        "congSuatPin": "Capacity 1 panel",
+        "dienTich": "Installation area",
+        "sanLuongDuKien": "Expected output",
+        "hinh1": "Figure 1. Solar radiation.",
+        "hinh2": "Figure 2. Monthly electricity output.",
+        "bang1": {
+          "tieuDe": "Table 1. Calculation results of solar power output.",
+          "head": [["Month", "Solar radiation", "Output"]],
+          "column1": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "Year"]
         }
       }
     }
