@@ -37,47 +37,52 @@ var app = new Vue({
       updateChartLabel(chartEnergy, data.labels[this.ngonNgu].sanLuong.chartjs)
 
       document.documentElement.setAttribute('lang', this.ngonNgu)
+      document.title = this.nhan.tieuDe
     },
     xuatPDF: async function () {
-      const page = new window.jspdf.jsPDF()
-      const width = 210
-      const margin = 10
-      let currentLine = 10
+      try {
+        const page = new window.jspdf.jsPDF()
+        const width = 210
+        const margin = 10
+        let currentLine = 10
 
-      await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
-      await addTextCenterPDF(page, this.nhan.pdf.tieuDe.toUpperCase(), 20, (width / 2), currentLine, (width - (margin * 5)))
+        await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
+        await addTextCenterPDF(page, this.nhan.pdf.tieuDe.toUpperCase(), 20, (width / 2), currentLine, (width - (margin * 5)))
 
-      addTextPDF(page, `${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, 10, margin, currentLine += 20)
-      addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, 10, margin, currentLine += 5)
-      addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.pinAmount}`, 10, margin, currentLine += 5)
-      addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, 10, margin, currentLine += 5)
-      addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, 10, margin, currentLine += 5)
-      addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, 10, margin, currentLine += 5)
-      addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.tongSanLuongTieuThu} (kWh/an)`, 10, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, 10, margin, currentLine += 20)
+        addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, 10, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.pinAmount}`, 10, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, 10, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, 10, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, 10, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.tongSanLuongTieuThu} (kWh/an)`, 10, margin, currentLine += 5)
 
-      addChartJSPDF(page, chartArea, document.getElementById('chart-area'), margin, currentLine += 20, (width / 2 - margin - (margin / 2)), 50)
-      addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)
+        addChartJSPDF(page, chartArea, document.getElementById('chart-area'), margin, currentLine += 20, (width / 2 - margin - (margin / 2)), 50)
+        addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)
 
-      await addTextCenterPDF(page, this.nhan.pdf.hinh1, 10, (width / 4), currentLine += 55, (width / 2))
-      await addTextCenterPDF(page, this.nhan.pdf.hinh2, 10, ((width * (3 / 4)) - (margin / 2)), currentLine, (width / 2))
+        await addTextCenterPDF(page, this.nhan.pdf.hinh1, 10, (width / 4), currentLine += 55, (width / 2))
+        await addTextCenterPDF(page, this.nhan.pdf.hinh2, 10, ((width * (3 / 4)) - (margin / 2)), currentLine, (width / 2))
 
-      await addTextCenterPDF(page, this.nhan.pdf.bang1.tieuDe, 10, (width / 2), currentLine += 20, width)
+        await addTextCenterPDF(page, this.nhan.pdf.bang1.tieuDe, 10, (width / 2), currentLine += 20, width)
 
-      let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.sanLuongTieuThu, this.tongBucXa, this.tongSanLuongTieuThu)
+        let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.sanLuongTieuThu, this.tongBucXa, this.tongSanLuongTieuThu)
 
-      page.autoTable({
-        head: this.nhan.pdf.bang1.head,
-        body: data,
-        startY: currentLine += 5,
-        styles: {
-          font: 'Roboto-Regular',
-          lineWidth: 0.25,
-          lineColor: 0
-        },
-        theme: 'plain'
-      })
+        page.autoTable({
+          head: this.nhan.pdf.bang1.head,
+          body: data,
+          startY: currentLine += 5,
+          styles: {
+            font: 'Roboto-Regular',
+            lineWidth: 0.25,
+            lineColor: 0
+          },
+          theme: 'plain'
+        })
 
-      page.save(this.nhan.pdf.tenTep)
+        page.save(this.nhan.pdf.tenTep)
+      } catch (error) {
+        alert(this.nhan.pdf.canhBao)
+      }
     }
   },
   computed: {
@@ -216,8 +221,16 @@ async function addTextPDF(instance, text, fontSize, x, y) {
 }
 
 async function addChartJSPDF(pageInstance, chartInstance, element, x, y, width, height) {
+  let oldSize = chartInstance.canvas.parentElement.style.width
+  chartInstance.canvas.parentElement.style.width = "700px"
+  chartInstance.resize()
+  
   drawValueOnBar(chartInstance)
   pageInstance.addImage(element, 'PNG', x, y, width, height)
+
+  chartInstance.canvas.parentElement.style.width = oldSize
+  chartInstance.resize()
+  
   chartInstance.update()
 }
 

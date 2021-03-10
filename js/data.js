@@ -1,6 +1,7 @@
 const data = {
   "labels": {
     "vi": {
+      "tieuDe": "Tính sản lượng năng lượng mặt trời",
       "khuVuc": {
         "tieuDe": "Tính sản lượng năng lượng mặt trời",
         "mieuTa": "Tính toán và thống kê sản lượng năng lượng mặt trời theo tháng của từng khu vực trên Việt Nam.",
@@ -117,10 +118,12 @@ const data = {
           "tieuDe": "Bảng 1. Kết quả tính toán sản lượng điện mặt trời.",
           "head": [["Tháng", "Bức xạ mặt trời", "Sản lượng"]],
           "column1": ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12", "Cả năm"]
-        }
+        },
+        "canhBao": "Bạn phải điền đủ thông tin"
       }
     },
     "en": {
+      "tieuDe": "Solar energy calculation",
       "khuVuc": {
         "tieuDe": "Calculate solar energy",
         "mieuTa": "Calculate and statistic the monthly solar energy output of each region in Vietnam.",
@@ -237,7 +240,8 @@ const data = {
           "tieuDe": "Table 1. Calculation results of solar power output.",
           "head": [["Month", "Solar radiation", "Output"]],
           "column1": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "Year"]
-        }
+        },
+        "canhBao": "You must fill all information"
       }
     }
   },

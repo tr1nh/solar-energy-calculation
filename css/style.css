@@ -1,12 +1,200 @@
 * {
+  box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-table {
-  border-collapse: collapse;
+body {
+  margin: 0;
+  background-color: #fafafa;
 }
 
-table, tr, td {
+/* reuse */
+.clear-fix::after {
+  display: block;
+  content: "";
+  clear: both;
+}
+.card {
+  height: 100%;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition-duration: 0.25s;
+}
+.card:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+.card__media {
+  width: 100%;
+  height: 200px;
+  border-radius: 4px 4px 0 0;
+}
+.card__title {
+  padding: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.card__body {
+  padding: 0 1.5em 1.5em 1.5em;
+}
+
+.form__label {
+  display: block;
+  padding: 1em 0;
+}
+.form__input-text {
+  display: block;
+  width: 100%;
   padding: 0.5em;
-  border: 1px solid black;
+  font-size: 1em;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.form__input-text:focus,
+.form__input-select:focus {
+  border-color: #66afe9;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(102, 175, 233, 0.6);
+}
+.form__input-select {
+  display: block;
+  width: 100%;
+  padding: 0.5em;
+  font-size: 1em;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table tr td {
+  border: 1px solid #ccc;
+}
+table td {
+  padding: 0.5em;
+}
+
+/* layout 2 page */
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.row__title {
+  width: 100%;
+  padding: 2em 2em 0 2em;
+}
+.column {
+  width: 50%;
+  padding: 2em;
+}
+.column--right {
+  padding-left: 0;
+}
+.column--100 {
+  width: 100%;
+}
+
+#button-pdf {
+  margin: 1em 0.5em;
+}
+
+#button-lang {
+  margin: 1em 2em 0.5em 0.5em;
+}
+
+#button-pdf:hover, #button-lang:hover {
+  cursor: pointer;
+}
+
+/* title section */
+#section-title {
+  text-align: center;
+  background-color: #1e90ff;
+}
+
+/* area section */
+#section-area {
+  background-color: #48dbfb;
+}
+#card__media--area {
+  background: #ccc
+    url("https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80")
+    no-repeat center;
+  background-size: cover;
+}
+.list-area {
+  /* max-height: 35vh; */
+  /* height: calc(100% - 2em - 1em - 1em - 1em); */
+  /* height: 35vh; */
+  overflow-y: scroll;
+  margin-top: 1em;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  scrollbar-width: none;
+}
+.list-area::-webkit-scrollbar {
+  display: none;
+}
+.list-area__item {
+  display: block;
+  padding: 0.5em 1em;
+}
+.list-area__item:hover {
+  cursor: pointer;
+  background-color: #dfe4ea;
+}
+#area-detail td {
+  text-align: center;
+}
+
+/* section of energy calculationg */
+#section-energy {
+  background-color: #0abde3;
+}
+#card__media--pin {
+  height: 300px;
+  background: #ccc
+    url("https://images.unsplash.com/photo-1547321627-2479fe834b1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80")
+    no-repeat center;
+  background-size: cover;
+}
+
+/* section of chart */
+#section-result {
+  background-color: #2e86de;
+}
+
+/* responsive */
+@media only screen and (max-width: 750px) {
+  .row {
+    height: auto;
+  }
+  .column {
+    width: 100%;
+    padding: 1em;
+  }
+  .column--right {
+    padding: 1em;
+  }
+  .card__media {
+    height: 150px;
+  }
+  .card__title {
+    padding: 0.5em;
+  }
+  .card__body {
+    /* height: calc(100% - 2em - 1.5em - 100px); */
+    padding: 0 1em 1em 1em;
+  }
+  #chart__container--result {
+    width: 100%;
+  }
+}
+
+[v-cloak] {
+  display: none;
 }

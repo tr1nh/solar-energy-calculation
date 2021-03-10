@@ -5,155 +5,216 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solar Energy Calculation</title>
+  <title>Tính sản lượng năng lượng mặt trời</title>
   <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-  <div id="app">
-    <h1>{{nhan.khuVuc.tieuDe}}</h1>
-    <p>{{nhan.khuVuc.mieuTa}}</p>
+  <div id="app" v-cloak>
+    <div class="row clear-fix" style="position: absolute; width: 100%; justify-content: flex-end;">
+      <a id="button-pdf" v-on:click="xuatPDF">PDF</a>
+      <a id="button-lang" v-on:click="doiNgonNgu">{{(ngonNgu === "vi" ? "English" : "Tiếng Việt")}}</a>
+    </div>
+
+    <div class="row clear-fix" id="row--area">
+      
+      <div class="row__title">
+        <h1>{{nhan.khuVuc.tieuDe}}</h1>
+        <p>{{nhan.khuVuc.mieuTa}}</p>
+      </div>
+      
+      <div class="column">
+        <div class="card">
+          <div class="card__media" id="card__media--area"></div>
+          <div class="card__title">{{nhan.khuVuc.chonKhuVuc.tieuDe}}</div>
+
+          <div class="card__body">
+            <form>
+              <div class="form__input-group">
+                <label class="form__label" for="area-name">
+                  {{nhan.khuVuc.chonKhuVuc.mieuTa}}
+                </label>
+                <input class="form__input-text" type="text" v-on:input="timKhuVuc" />
+              </div>
+            </form>
+            
+            <div class="list-area" tabindex="-1">
+              <div class="list-area__item" v-for="(khuVuc, index) in danhSachKhuVuc" v-bind:key="index"
+                v-bind:tabindex="index" v-on:click="chonKhuVuc(khuVuc)">
+                {{khuVuc.ten}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+      <div class="column column--right">
+        <div class="card" id="card--result-area">
+          <div class="card__title">{{nhan.khuVuc.bucXaTheoNam.tieuDe}}</div>
+          <div class="card__body">
+            <table id="area-detail">
+              <thead>
+                <tr>
+                  <td>{{nhan.khuVuc.bucXaTheoNam.viTri}}</td>
+                  <td>{{nhan.khuVuc.bucXaTheoNam.bucXa}}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{khuVucDuocChon.ten}}</td>
+                  <td>{{tongBucXa}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <h2>{{nhan.khuVuc.bucXaTheoThang.tieuDe}}</h2>
+            <div style="width:100%;">
+              <canvas id="chart-area"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     
-    <button v-on:click="doiNgonNgu">{{(ngonNgu === "vi" ? "English" : "Tiếng Việt")}}</button>
-    <button v-on:click="xuatPDF">PDF</button>
+    <div class="row clear-fix" id="row--energy">
+      <div class="row__title">
+        <h1>{{nhan.pin.tieuDe}}</h1>
+      </div>
+      
+      <div class="column">
+        <div class="card">
+          <div class="card__media" id="card__media--pin"></div>
+          
+          <div class="card__title">{{nhan.pin.dauVao.tieuDe}}</div>
+          <div class="card__body">
+            <form>
+              <div class="form__input-group">
+                <label class="form__label" for="power-plan">
+                  {{nhan.pin.dauVao.congSuat}}
+                </label>
+                <input class="form__input-text" type="number" name="power-plan" id="power-plan" value="1000"
+                  v-model="congSuatLapDat" />
+              </div>
+              <div class="form__input-group">
+                <label class="form__label" for="pin-type">
+                  {{nhan.pin.dauVao.loaiPin}}
+                </label>
+                <select class="form__input-select" name="pin-type" id="pin-type" v-model="maPinDuocChon">
+                  <option v-for="(pin,index) in danhSachPin" v-bind:key="index" v-bind:value="pin.maSanPham">
+                    {{pin.maSanPham}}</option>
+                </select>
+              </div>
+              <div class="form__input-group">
+                <label class="form__label">
+                  {{nhan.pin.dauVao.heSoTonThat}}
+                </label>
+                <input class="form__input-text" type="number" min="0.5" max="0.9" step="0.05" v-model="heSoTonThat" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="column column--right">
+        <div class="card">
+          <div class="card__title">{{nhan.pin.thongTin.tieuDe}}</div>
+          <div class="card__body">
+            <span v-if="!pinDuocChon">{{nhan.pin.thongTin.mieuTa}}</span>
+            <table id="pin-detail" v-else>
+              <tr>
+                <td>
+                  {{nhan.pin.thongTin.bang.maSanPham}}
+                </td>
+                <td>{{pinDuocChon.maSanPham}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.pmax}}</td>
+                <td>{{pinDuocChon.pmax}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.vmp}}</td>
+                <td>{{pinDuocChon.vmp}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.imp}}</td>
+                <td>{{pinDuocChon.imp}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.voc}}</td>
+                <td>{{pinDuocChon.voc}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.isc}}</td>
+                <td>{{pinDuocChon.isc}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.hieuSuat}}</td>
+                <td>{{pinDuocChon.hieuSuat}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.nhietDoHoatDong}}</td>
+                <td>{{thongTinChung.nhietDoHoatDong}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.dienApToiDa}}</td>
+                <td>{{thongTinChung.dienApToiDa}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.loaiVatLieu}}</td>
+                <td>{{thongTinChung.loaiVatLieu}}</td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.kichThuoc}}</td>
+                <td>
+                  {{thongTinChung.kichThuoc.dai}}x
+                  {{thongTinChung.kichThuoc.rong}}x
+                  {{thongTinChung.kichThuoc.cao}} (mm)
+                </td>
+              </tr>
+              <tr>
+                <td>{{nhan.pin.thongTin.bang.trongLuong}}</td>
+                <td>{{thongTinChung.trongLuong}}</td>
+              </tr>
+            </table>
 
-    <!-- AREA -->
-    <div class="area">
-      <h2>{{nhan.khuVuc.chonKhuVuc.tieuDe}}</h2>
-
-      <form>
-        <p>{{nhan.khuVuc.chonKhuVuc.mieuTa}}</p>
-        <input class="form__input-text" type="text" v-on:input="timKhuVuc" />
-      </form>
-
-      <div v-for="(khuVuc, index) in danhSachKhuVuc" v-bind:key="index" v-bind:tabindex="index"
-        v-on:click="chonKhuVuc(khuVuc)">
-        {{khuVuc.ten}}
+            <span v-if="!pinDuocChon"></span>
+            <div v-else>
+              <h2>{{nhan.pin.ketQua.tieuDe}}</h2>
+              <table>
+                <tr>
+                  <td>{{nhan.pin.ketQua.soLuong}}</td>
+                  <td>{{soLuongPin}}</td>
+                </tr>
+                <tr>
+                  <td>{{nhan.pin.ketQua.tongDienTich}}</td>
+                  <td>{{tongDienTichPin}} (m2)</td>
+                </tr>
+                <tr>
+                  <td>{{nhan.pin.ketQua.tongSanLuong}}</td>
+                  <td>{{tongSanLuongTieuThu}} (kWh/an)</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <h2>{{nhan.khuVuc.bucXaTheoNam.tieuDe}}</h2>
-    <table>
-      <thead>
-        <tr>
-          <td>{{nhan.khuVuc.bucXaTheoNam.viTri}}</td>
-          <td>{{nhan.khuVuc.bucXaTheoNam.bucXa}}</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{khuVucDuocChon.ten}}</td>
-          <td>{{tongBucXa}}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>{{nhan.khuVuc.bucXaTheoThang.tieuDe}}</h2>
-    <div>
-      <canvas id="chart-area"></canvas>
-    </div>
-
-    <!-- PIN -->
-    <div class="pin">
-      <h1>{{nhan.pin.tieuDe}}</h1>
-
-      <h2>{{nhan.pin.dauVao.tieuDe}}</h2>
-      <p>{{nhan.pin.dauVao.congSuat}}</p>
-      <input type="number" value="1000" v-model="congSuatLapDat" />
-
-      <p>{{nhan.pin.dauVao.loaiPin}}</p>
-      <select v-model="maPinDuocChon">
-        <option v-for="(pin,index) in danhSachPin" v-bind:key="index" v-bind:value="pin.maSanPham">{{pin.maSanPham}}
-        </option>
-      </select>
-
-      <p>{{nhan.pin.dauVao.heSoTonThat}}</p>
-      <input type="number" min="0.5" max="0.9" step="0.05" v-model="heSoTonThat" />
-
-      <h2>{{nhan.pin.thongTin.tieuDe}}</h2>
-
-      <span v-if="!pinDuocChon">{{nhan.pin.thongTin.mieuTa}}</span>
-      <table id="pin-detail" v-else>
-        <tr>
-          <td>
-            {{nhan.pin.thongTin.bang.maSanPham}}
-          </td>
-          <td>{{pinDuocChon.maSanPham}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.pmax}}</td>
-          <td>{{pinDuocChon.pmax}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.vmp}}</td>
-          <td>{{pinDuocChon.vmp}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.imp}}</td>
-          <td>{{pinDuocChon.imp}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.voc}}</td>
-          <td>{{pinDuocChon.voc}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.isc}}</td>
-          <td>{{pinDuocChon.isc}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.hieuSuat}}</td>
-          <td>{{pinDuocChon.hieuSuat}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.nhietDoHoatDong}}</td>
-          <td>{{thongTinChung.nhietDoHoatDong}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.dienApToiDa}}</td>
-          <td>{{thongTinChung.dienApToiDa}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.loaiVatLieu}}</td>
-          <td>{{thongTinChung.loaiVatLieu}}</td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.kichThuoc}}</td>
-          <td>
-            {{thongTinChung.kichThuoc.dai}}x
-            {{thongTinChung.kichThuoc.rong}}x
-            {{thongTinChung.kichThuoc.cao}} (mm)
-          </td>
-        </tr>
-        <tr>
-          <td>{{nhan.pin.thongTin.bang.trongLuong}}</td>
-          <td>{{thongTinChung.trongLuong}}</td>
-        </tr>
-      </table>
-
-      <span v-if="!pinDuocChon"></span>
-      <div v-else>
-        <h2>{{nhan.pin.ketQua.tieuDe}}</h2>
-        <table>
-          <tr>
-            <td>{{nhan.pin.ketQua.soLuong}}</td>
-            <td>{{soLuongPin}}</td>
-          </tr>
-          <tr>
-            <td>{{nhan.pin.ketQua.tongDienTich}}</td>
-            <td>{{tongDienTichPin}} (m2)</td>
-          </tr>
-          <tr>
-            <td>{{nhan.pin.ketQua.tongSanLuong}}</td>
-            <td>{{tongSanLuongTieuThu}} (kWh/an)</td>
-          </tr>
-        </table>
+    
+    <div class="row" id="row--result" v-show="pinDuocChon">
+      <div class="row__title">
+        <h1>{{nhan.sanLuong.tieuDe}}</h1>
       </div>
-    </div>
-
-    <!-- RESULT -->
-    <h1>{{nhan.sanLuong.tieuDe}}</h1>
-    <div>
-      <canvas id="chart-energy"></canvas>
+      <div class="column column--100">
+        <div class="card">
+          <div class="card__title"></div>
+          <div class="card__body">
+            <div id="chart__container--result" style="position: relative; width:70vw; margin: 0 auto;">
+              <canvas id="chart-energy"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
