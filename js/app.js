@@ -18,6 +18,8 @@ var app = new Vue({
     }
   },
   mounted: function () {
+    Chart.defaults.global.legend.display = false;
+ 
     chartArea = initChart(document.getElementById('chart-area'), data.labels.vi.khuVuc.bucXaTheoThang.chartjs)
     chartEnergy = initChart(document.getElementById('chart-energy'), data.labels.vi.sanLuong.chartjs)
   },
@@ -49,13 +51,13 @@ var app = new Vue({
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
         await addTextCenterPDF(page, this.nhan.pdf.tieuDe.toUpperCase(), 20, (width / 2), currentLine, (width - (margin * 5)))
 
-        addTextPDF(page, `${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, 10, margin, currentLine += 20)
-        addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, 10, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.pinAmount}`, 10, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, 10, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, 10, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, 10, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.tongSanLuongTieuThu} (kWh/an)`, 10, margin, currentLine += 5)
+        addTextPDF(page, `1. ${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, 10, margin, currentLine += 20)
+        addTextPDF(page, `5. ${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, 10, (width / 2), currentLine)
+        addTextPDF(page, `2. ${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, 10, margin, currentLine += 5)
+        addTextPDF(page, `6. ${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, 10, (width / 2), currentLine)
+        addTextPDF(page, `3. ${this.nhan.pdf.soLuongPin}: ${this.pinAmount}`, 10, margin, currentLine += 5)
+        addTextPDF(page, `7. ${this.nhan.pdf.sanLuongDuKien}: ${this.tongSanLuongTieuThu} (kWh/an)`, 10, (width / 2), currentLine)
+        addTextPDF(page, `4. ${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, 10, margin, currentLine += 5)
 
         addChartJSPDF(page, chartArea, document.getElementById('chart-area'), margin, currentLine += 20, (width / 2 - margin - (margin / 2)), 50)
         addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)

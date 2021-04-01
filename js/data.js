@@ -15,7 +15,7 @@ const data = {
           "bucXa": "Mức bức xạ của cả năm (kWh/an)"
         },
         "bucXaTheoThang": {
-          "tieuDe": "Mức bức xạ mặt trời theo từng tháng",
+          "tieuDe": "Mức bức xạ mặt trời trung bình theo tháng",
           "chartjs": {
             "labels": [
               "Tháng 1",
@@ -116,7 +116,7 @@ const data = {
         "hinh2": "Hình 2. Sản lượng điện hàng tháng.",
         "bang1": {
           "tieuDe": "Bảng 1. Kết quả tính toán sản lượng điện mặt trời.",
-          "head": [["Tháng", "Bức xạ mặt trời", "Sản lượng"]],
+          "head": [["Tháng", "Bức xạ mặt trời (KWh/m²)", "Sản lượng (KWh)"]],
           "column1": ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12", "Cả năm"]
         },
         "canhBao": "Bạn phải điền đủ thông tin"
@@ -137,7 +137,7 @@ const data = {
           "bucXa": "Radiation level of the whole year (kWh / an)"
         },
         "bucXaTheoThang": {
-          "tieuDe": "Monthly solar radiation level",
+          "tieuDe": "Average solar radiation by month",
           "chartjs": {
             "labels": [
               "January",
@@ -238,7 +238,7 @@ const data = {
         "hinh2": "Figure 2. Monthly electricity output.",
         "bang1": {
           "tieuDe": "Table 1. Calculation results of solar power output.",
-          "head": [["Month", "Solar radiation", "Output"]],
+          "head": [["Month", "Solar radiation (KWh/m²)", "Output (KWh)"]],
           "column1": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "Year"]
         },
         "canhBao": "You must fill all information"
