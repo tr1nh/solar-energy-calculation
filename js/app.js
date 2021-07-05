@@ -164,7 +164,7 @@ function updateChartLabel(instance, data) {
 }
 
 function tinhTong(mang) {
-  return mang.reduce((acc, i) => acc += i)
+  return Math.round((mang.reduce((acc, i) => acc += i) + Number.EPSILON) * 100) / 100
 }
 
 function chonPin(mang, ma) {

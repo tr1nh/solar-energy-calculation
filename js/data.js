@@ -1,10 +1,10 @@
 const data = {
   "labels": {
     "vi": {
-      "tieuDe": "Tính sản lượng năng lượng mặt trời",
+      "tieuDe": "Tính toán sản lượng năng lượng mặt trời tại Tỉnh Đồng Nai",
       "khuVuc": {
-        "tieuDe": "Tính sản lượng năng lượng mặt trời",
-        "mieuTa": "Tính toán và thống kê sản lượng năng lượng mặt trời theo tháng của từng khu vực trên Việt Nam.",
+        "tieuDe": "Tính toán sản lượng năng lượng mặt trời tại Tỉnh Đồng Nai",
+        "mieuTa": "Đây là công cụ sử dụng để ước lượng sản lượng điện mặt trời. Để tính toán sản lượng điện các bạn làm theo các bước sau: (1) Chọn địa điểm lắp đặt;(2) Chọn công suất lắp đặt ( Đối với hộ gia đình mỗi tháng sử dụng từ 300 kWh đến 400kWh thì công suất lắp đặt nên chọn từ 3000 Wp đến 5000 Wp), (3) Chọn loại Pin năng lượng mặt trời.Kết quả sẽ là sản lượng điện và tổng diện tích lắp đặt.",
         "chonKhuVuc": {
           "tieuDe": "Chọn khu vực",
           "mieuTa": "Lọc huyện hoặc thành phố theo tên"
@@ -12,10 +12,10 @@ const data = {
         "bucXaTheoNam": {
           "tieuDe": "Thông tin của huyện / thành phố",
           "viTri": "Tên huyện / thành phố",
-          "bucXa": "Mức bức xạ của cả năm (kWh/an)"
+          "bucXa": "Bức xạ của cả năm (kWh/m²/năm)"
         },
         "bucXaTheoThang": {
-          "tieuDe": "Mức bức xạ mặt trời trung bình theo tháng",
+          "tieuDe": "Bức xạ mặt trời trung bình (kWh/m²/tháng)",
           "chartjs": {
             "labels": [
               "Tháng 1",
@@ -33,7 +33,7 @@ const data = {
             ],
             "datasets": [
               {
-                "label": "Mức bức xạ mặt trời",
+                "label": "Bức xạ mặt trời",
                 "backgroundColor": "#ff9f43",
                 "borderColor": "#ff9f43",
                 "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -43,7 +43,7 @@ const data = {
         }
       },
       "pin": {
-        "tieuDe": "Tính toán năng luợng tiêu thụ",
+        "tieuDe": "Tính Toán sản lượng điện",
         "dauVao": {
           "tieuDe": "Thông số đầu vào",
           "congSuat": "Công suất lắp đặt (W)",
@@ -70,7 +70,7 @@ const data = {
         },
         "ketQua": {
           "tieuDe": "Kết quả",
-          "soLuong": "Số lượng pin",
+          "soLuong": "Số lượng pin quang dien",
           "tongDienTich": "Tổng diện tích lắp đặt",
           "tongSanLuong": "Tổng sản lượng cả năm"
         }
@@ -94,7 +94,7 @@ const data = {
           ],
           "datasets": [
             {
-              "label": "Sản lượng tiêu thụ",
+              "label": "Sản lượng",
               "backgroundColor": "#1e90ff",
               "borderColor": "#1e90ff",
               "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -125,8 +125,8 @@ const data = {
     "en": {
       "tieuDe": "Solar energy calculation",
       "khuVuc": {
-        "tieuDe": "Calculate solar energy",
-        "mieuTa": "Calculate and statistic the monthly solar energy output of each region in Vietnam.",
+        "tieuDe": "Calculating solar energy production in Dong Nai Province ",
+        "mieuTa": "This is a tool used to estimate solar power output. To calculate the power output, you follow these steps: (1) Choose the installation location; (2) Choose the installed capacity (For households that use between 300 kWh and 400kWh per month, the installed capacity is should choose from 3000 Wp to 5000 Wp), (3) Choose the type of solar battery. The result will be the power output and total installation area.",
         "chonKhuVuc": {
           "tieuDe": "Select region",
           "mieuTa": "Filter district or city by name"
@@ -134,10 +134,10 @@ const data = {
         "bucXaTheoNam": {
           "tieuDe": "Information of the district / city",
           "viTri": "Name of district / city",
-          "bucXa": "Radiation level of the whole year (kWh / an)"
+          "bucXa": "Radiation level of the whole year (kWh/m²/year)"
         },
         "bucXaTheoThang": {
-          "tieuDe": "Average solar radiation by month",
+          "tieuDe": "Average solar radiation (kWh/m²/month)",
           "chartjs": {
             "labels": [
               "January",
@@ -165,7 +165,7 @@ const data = {
         }
       },
       "pin": {
-        "tieuDe": "Calculate energy consumption",
+        "tieuDe": "Calculate power output",
         "dauVao": {
           "tieuDe": "Input parameters",
           "congSuat": "Installed power (W)",
@@ -262,6 +262,62 @@ const data = {
       {
         "ten": "Đồng Nai, Nhơn Trạch",
         "bucXa": [160, 168, 197, 190, 163, 150, 159, 156, 145, 148, 143, 146]
+      },
+      {
+        "ten": "Biên Hòa, Trảng Dài",
+        "bucXa": [156.7, 152.9, 170.6, 154.8, 166.5, 161.4, 163.0, 161.7, 137.0, 148.1, 140.5, 138.]
+      },
+      {
+        "ten": "Biên Hòa, Tân Biên",
+        "bucXa": [156.4, 153.1, 169.9, 154.4, 165.5, 160.9, 163.0, 161.7, 137.5, 148.3, 140.6, 138.]
+      },
+      {
+        "ten": "Biên Hòa, Hố Nai",
+        "bucXa": [154.5, 152.1, 168.0, 153.0, 163.7, 160.7, 162.9, 161.8, 138.0, 148.1, 140.5, 137.]
+      },
+      {
+        "ten": "Biên Hòa, Tân Hòa",
+        "bucXa": [155.6, 152.6, 168.9, 153.8, 164.5, 160.7, 162.9, 161.7, 137.6, 148.1, 140.4, 137.7,]
+      },
+      {
+        "ten": "Biên Hòa, Tân Tiến",
+        "bucXa": [154.3, 151.5, 168.3, 153.5, 164.7, 160.9, 162.4, 162.4, 137.8, 147.6, 139.6, 138.]
+      },
+      {
+        "ten": "Biên Hòa, Tam Hiệp",
+        "bucXa": [154.2, 151.6, 168.2, 153.5, 164.5, 160.9, 162.6, 162.1, 137.7, 147.7, 139.7, 138.]
+      },
+      {
+        "ten": "Biên Hòa, Long Bình",
+        "bucXa": [154.9, 152.0, 168.6, 153.6, 164.5, 160.9, 162.8, 162.0, 137.6, 147.9, 140.0, 138.]
+      },
+      {
+        "ten": "Biên Hòa, Quang Vinh",
+        "bucXa": [152.6, 150.4, 166.7, 152.7, 163.7, 160.5, 162.2, 162.8, 138.0, 147.2, 139.0, 138.]
+      },
+      {
+        "ten": "Biên Hòa, Bửu Long",
+        "bucXa": [153.1, 150.6, 167.2, 152.9, 164.2, 160.7, 162.4, 162.7, 137.8, 147.1, 139.1, 138.]
+      },
+      {
+        "ten": "Biên Hòa, Tân Mai",
+        "bucXa": [154.1, 151.4, 168.2, 153.5, 164.7, 160.8, 162.5, 162.1, 137.8, 147.6, 139.6, 138.]
+      },
+      {
+        "ten": "Biên Hòa, Thống Nhất",
+        "bucXa": [153.1, 150.8, 167.2, 152.9, 164.1, 160.6, 162.1, 162.7, 138.1, 147.4, 139.2, 138.4]
+      },
+      {
+        "ten": "Biên Hòa, Trung Dũng",
+        "bucXa": [152.8, 150.6, 166.9, 152.8, 163.9, 160.5, 162.0, 162.6, 138.0, 147.3, 139.1, 138.4]
+      },
+      {
+        "ten": "Biên Hòa, Tam Hòa",
+        "bucXa": [154.7, 151.8, 168.5, 153.4, 164.6, 160.9, 162.7, 162.2, 137.8, 147.8, 139.9, 138.3]
+      },
+      {
+        "ten": "Biên Hòa, Hòa Bình",
+        "bucXa": [152.5, 150.4, 166.7, 152.5, 163.6, 160.6, 162.2, 162.8, 138.2, 147.2, 138.9, 138.2]
       }
     ],
     "pin": {
