@@ -19,7 +19,7 @@ var app = new Vue({
   },
   mounted: function () {
     Chart.defaults.global.legend.display = false;
- 
+
     chartArea = initChart(document.getElementById('chart-area'), data.labels.vi.khuVuc.bucXaTheoThang.chartjs)
     chartEnergy = initChart(document.getElementById('chart-energy'), data.labels.vi.sanLuong.chartjs)
   },
@@ -47,32 +47,59 @@ var app = new Vue({
         const width = 210
         const margin = 10
         let currentLine = 10
+        const fontSizeNormal = 10
+        const fontSizeTitle = 15
+        const fontSizeHeading = 14
+
+        function printDate() {
+          let now = new Date()
+          let year = now.getFullYear()
+          let month = now.getMonth() + 1 > 9 ? now.getMonth() + 1 : `0${now.getMonth() + 1}`
+          let date = now.getDate() + 1 > 9 ? now.getDate() + 1 : `0${now.getDate() + 1}`
+          return `${year}/${month}/${date}`
+        }
+
+        // timestamp and Header
+        await loadFontPDF(page, './fonts/Roboto-Italic.ttf')
+        addTextPDF(page, printDate(), fontSizeNormal, margin, currentLine)
+        addTextPDF(page, `${this.nhan.pdf.pdfHeader}`, fontSizeNormal, (width / 2) + 40, currentLine)
+
+        // title
+        await loadFontPDF(page, './fonts/Roboto-Bold.ttf')
+        await addTextCenterPDF(page, this.nhan.pdf.tieuDe.toUpperCase(), fontSizeTitle, (width / 2), currentLine += 20, 100)
+
+        // project information
+        await loadFontPDF(page, './fonts/Roboto-Bold.ttf')
+        addTextPDF(page, `${this.nhan.pdf.tieuDeThongTin}`, fontSizeHeading, margin, currentLine += 20)
 
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
-        await addTextCenterPDF(page, this.nhan.pdf.tieuDe.toUpperCase(), 20, (width / 2), currentLine, (width - (margin * 5)))
+        addTextPDF(page, `${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, fontSizeNormal, margin, currentLine += 7)
+        addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.pinAmount}`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.tongSanLuongTieuThu} (kWh/năm)`, fontSizeNormal, margin, currentLine += 5)
 
-        addTextPDF(page, `1. ${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, 10, margin, currentLine += 20)
-        addTextPDF(page, `5. ${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, 10, (width / 2), currentLine)
-        addTextPDF(page, `2. ${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, 10, margin, currentLine += 5)
-        addTextPDF(page, `6. ${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, 10, (width / 2), currentLine)
-        addTextPDF(page, `3. ${this.nhan.pdf.soLuongPin}: ${this.pinAmount}`, 10, margin, currentLine += 5)
-        addTextPDF(page, `7. ${this.nhan.pdf.sanLuongDuKien}: ${this.tongSanLuongTieuThu} (kWh/an)`, 10, (width / 2), currentLine)
-        addTextPDF(page, `4. ${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, 10, margin, currentLine += 5)
+        // calculation result
+        await loadFontPDF(page, './fonts/Roboto-Bold.ttf')
+        addTextPDF(page, `${this.nhan.pdf.tieuDeKetQua}`, fontSizeHeading, margin, currentLine += 12)
 
-        addChartJSPDF(page, chartArea, document.getElementById('chart-area'), margin, currentLine += 20, (width / 2 - margin - (margin / 2)), 50)
+        // charts
+        addChartJSPDF(page, chartArea, document.getElementById('chart-area'), margin, currentLine += 7, (width / 2 - margin - (margin / 2)), 50)
         addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)
+        await loadFontPDF(page, './fonts/Roboto-Italic.ttf')
+        await addTextCenterPDF(page, this.nhan.pdf.hinh1, fontSizeNormal, (width / 4), currentLine += 55, (width / 2))
+        await addTextCenterPDF(page, this.nhan.pdf.hinh2, fontSizeNormal, ((width * (3 / 4)) - (margin / 2)), currentLine, (width / 2))
 
-        await addTextCenterPDF(page, this.nhan.pdf.hinh1, 10, (width / 4), currentLine += 55, (width / 2))
-        await addTextCenterPDF(page, this.nhan.pdf.hinh2, 10, ((width * (3 / 4)) - (margin / 2)), currentLine, (width / 2))
-
-        await addTextCenterPDF(page, this.nhan.pdf.bang1.tieuDe, 10, (width / 2), currentLine += 20, width)
-
+        // table
+        await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
         let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.sanLuongTieuThu, this.tongBucXa, this.tongSanLuongTieuThu)
-
         page.autoTable({
           head: this.nhan.pdf.bang1.head,
           body: data,
-          startY: currentLine += 5,
+          startY: currentLine += 12,
+          margin: {horizontal: (width * 0.25)},
           styles: {
             font: 'Roboto-Regular',
             lineWidth: 0.25,
@@ -226,13 +253,13 @@ async function addChartJSPDF(pageInstance, chartInstance, element, x, y, width, 
   let oldSize = chartInstance.canvas.parentElement.style.width
   chartInstance.canvas.parentElement.style.width = "700px"
   chartInstance.resize()
-  
+
   drawValueOnBar(chartInstance)
   pageInstance.addImage(element, 'PNG', x, y, width, height)
 
   chartInstance.canvas.parentElement.style.width = oldSize
   chartInstance.resize()
-  
+
   chartInstance.update()
 }
 

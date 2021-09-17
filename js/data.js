@@ -104,7 +104,9 @@ const data = {
       },
       "pdf": {
         "tenTep": "ket-qua.pdf",
+        "pdfHeader": "Phần mềm tính toán sản lượng điện",
         "tieuDe": "Kết quả tính toán các thông số chính của hệ thống điện mặt trời nối lưới",
+        "tieuDeThongTin": "Thông tin về dự án",
         "diaChi": "Địa chỉ",
         "congSuatLapDat": "Công suất lắp đặt",
         "soLuongPin": "Số lượng pin",
@@ -112,6 +114,7 @@ const data = {
         "congSuatPin": "Công suất 1 tấm pin",
         "dienTich": "Diện tích lắp đặt",
         "sanLuongDuKien": "Sản lượng dự kiến",
+        "tieuDeKetQua": "Kết quả tính toán",
         "hinh1": "Hình 1. Bức xạ mặt trời.",
         "hinh2": "Hình 2. Sản lượng điện hàng tháng.",
         "bang1": {
@@ -226,7 +229,9 @@ const data = {
       },
       "pdf": {
         "tenTep": "result.pdf",
+        "pdfHeader": "Software to calculate electricity output",
         "tieuDe": "Calculation results of main parameters of grid-connected solar power system",
+        "tieuDeThongTin": "Project Information",
         "diaChi": "Address",
         "congSuatLapDat": "Installed capacity",
         "soLuongPin": "Number of batteries",
@@ -234,6 +239,7 @@ const data = {
         "congSuatPin": "Capacity 1 panel",
         "dienTich": "Installation area",
         "sanLuongDuKien": "Expected output",
+        "tieuDeKetQua":  "Calculation results",
         "hinh1": "Figure 1. Solar radiation.",
         "hinh2": "Figure 2. Monthly electricity output.",
         "bang1": {
