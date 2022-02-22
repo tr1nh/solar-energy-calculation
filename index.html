@@ -19,7 +19,11 @@
     <div class="row clear-fix" id="row--area">
 
       <div class="row__title">
-        <h1 style="text-transform: uppercase;">{{nhan.khuVuc.tieuDe}}</h1>
+        <div class="web-title">
+          <img style="max-width: 5em; max-height: 5em; margin-right: 0.5em;" src="./images/logo-so-khoa-hoc-cong-nghe-tinh-dong-nai.png" alt="logo-so-khoa-hoc-cong-nghe-tinh-dong-nai">
+          <img style="max-width: 5em; max-height: 5em; margin-right: 1em;" src="./images/logo-so-cong-thuong-tinh-dong-nai.png" alt="logo-so-cong-thuong-tinh-dong-nai">
+          <h1 style="text-transform: uppercase;">{{nhan.khuVuc.tieuDe}}</h1>
+        </div>
         <p>{{nhan.khuVuc.mieuTa}}</p>
       </div>
 
@@ -34,18 +38,13 @@
                 <label class="form__label" for="area-name">
                   {{nhan.khuVuc.chonKhuVuc.mieuTa}}
                 </label>
-                <input class="form__input-text" type="text" v-on:input="timKhuVuc" />
+                <input class="form__input-text" type="text" v-on:input="timKhuVuc" list="datalist-area"/>
+                <datalist id="datalist-area">
+                <option v-for="(khuVuc, index) in danhSachKhuVuc" v-bind:key="index"
+                  v-bind:tabindex="index" v-bind:value="khuVuc.ten">
+                </datalist>
               </div>
             </form>
-
-            <div class="list-area" tabindex="-1">
-              <div class="list-area__scroll">
-                <div class="list-area__item" v-for="(khuVuc, index) in danhSachKhuVuc" v-bind:key="index"
-                  v-bind:tabindex="index" v-on:click="chonKhuVuc(khuVuc)">
-                  {{khuVuc.ten}}
-                </div>
-              </div>
-            </div>
           </div>
 
         </div>

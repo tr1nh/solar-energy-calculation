@@ -1,9 +1,9 @@
 const data = {
   "labels": {
     "vi": {
-      "tieuDe": "Tính toán sản lượng năng lượng mặt trời tại Tỉnh Đồng Nai",
+      "tieuDe": "Solar data Đồng Nai",
       "khuVuc": {
-        "tieuDe": "Tính toán sản lượng năng lượng mặt trời tại Tỉnh Đồng Nai",
+        "tieuDe": "Solar data Đồng Nai",
         "mieuTa": "Đây là công cụ sử dụng để ước lượng sản lượng điện mặt trời. Để tính toán sản lượng điện các bạn làm theo các bước sau: (1) Chọn địa điểm lắp đặt;(2) Chọn công suất lắp đặt ( Đối với hộ gia đình mỗi tháng sử dụng từ 300 kWh đến 400kWh thì công suất lắp đặt nên chọn từ 3000 Wp đến 5000 Wp), (3) Chọn loại Pin năng lượng mặt trời.Kết quả sẽ là sản lượng điện và tổng diện tích lắp đặt.",
         "chonKhuVuc": {
           "tieuDe": "Chọn khu vực",
@@ -126,9 +126,9 @@ const data = {
       }
     },
     "en": {
-      "tieuDe": "Solar energy calculation",
+      "tieuDe": "Solar data Dong Nai",
       "khuVuc": {
-        "tieuDe": "Calculating solar energy production in Dong Nai Province ",
+        "tieuDe": "Solar data Dong Nai",
         "mieuTa": "This is a tool used to estimate solar power output. To calculate the power output, you follow these steps: (1) Choose the installation location; (2) Choose the installed capacity (For households that use between 300 kWh and 400kWh per month, the installed capacity is should choose from 3000 Wp to 5000 Wp), (3) Choose the type of solar battery. The result will be the power output and total installation area.",
         "chonKhuVuc": {
           "tieuDe": "Select region",
@@ -406,51 +406,51 @@ const data = {
         "bucXa": [154.7, 154.1, 170.5, 152.7, 161.3, 160.4, 164.6, 160.5, 136.6, 145.8, 143.3, 134.4]
       },
       {
-        "ten": "Long Thành, Hiệp Phước",
+        "ten": "Nhà Bè, Hiệp Phước",
         "bucXa": [139.7, 141.1, 168.1, 179.9, 166.6, 154.7, 156.1, 152.5, 134.6, 165.2, 115.9, 120.3]
       },
       {
-        "ten": "Long Thành, Phú Hội",
+        "ten": "Nhơn Trạch, Phú Hội",
         "bucXa": [139.3, 140.2, 167.2, 178.9, 166.0, 154.8, 156.2, 152.4, 134.6, 164.8, 115.6, 119.7]
       },
       {
-        "ten": "Long Thành, Long Thọ",
+        "ten": "Nhơn Trạch, Long Thọ",
         "bucXa": [140.7, 141.2, 168.6, 181.1, 166.4, 154.0, 156.2, 152.4, 134.7, 165.5, 115.1, 119.7]
       },
       {
-        "ten": "Long Thành, Phú Hữu",
+        "ten": "Nhơn Trạch, Phú Hữu",
         "bucXa": [138.4, 139.6, 165.9, 177.3, 165.9, 154.9, 156.1, 153.2, 134.6, 163.8, 114.8, 118.6]
       },
       {
-        "ten": "Long Thành, Đại Phước",
+        "ten": "Nhơn Trạch, Đại Phước",
         "bucXa": [138.5, 139.8, 166.1, 177.6, 165.9, 154.7, 156.2, 153.1, 134.6, 163.9, 114.8, 114.8]
       },
       {
-        "ten": "Long Thành, Vĩnh Thanh",
+        "ten": "Nhơn Trạch, Vĩnh Thanh",
         "bucXa": [139.0, 139.9, 167.3, 179.3, 165.9, 154.0, 156.2, 153.2, 134.2, 164.4, 114.5, 118.3]
       },
       {
-        "ten": "Long Thành, Phú Thạnh",
+        "ten": "Nhơn Trạch, Phú Thạnh",
         "bucXa": [138.9, 140.0, 167.4, 178.9, 165.4, 153.7, 156.0, 153.2, 134.9, 163.7, 113.9, 117.6]
       },
       {
-        "ten": "Long Thành, Phước Thiền",
+        "ten": "Nhơn Trạch, Phước Thiền",
         "bucXa": [139.6, 140.9, 167.8, 179.9, 166.6, 154.7, 156.2, 152.4, 134.5, 165.1, 115.7, 120.3]
       },
       {
-        "ten": "Long Thành, Phước Khánh",
+        "ten": "Nhơn Trạch, Phước Khánh",
         "bucXa": [138.5, 139.8, 166.8, 178.2, 165.3, 154.1, 156.0, 153.2, 134.5, 163.4, 114.0, 117.6]
       },
       {
-        "ten": "Long Thành, Phước An",
+        "ten": "Nhơn Trạch, Phước An",
         "bucXa": [140.9, 141.4, 168.7, 181.2, 166.6, 154.0, 156.2, 152.4, 134.5, 165.9, 115.3, 120.2]
       },
       {
-        "ten": "Long Thành, Phú Đông",
+        "ten": "Nhơn Trạch, Phú Đông",
         "bucXa": [138.5, 139.7, 167.1, 178.4, 165.2, 153.7, 156.2, 153.2, 135.0, 163.2, 113.2, 117.3]
       },
       {
-        "ten": "Long Thành, Long Tân",
+        "ten": "Nhơn Trạch, Long Tân",
         "bucXa": [139.0, 139.9, 166.6, 178.3, 165.7, 154.8, 156.2, 152.4, 134.6, 164.4, 115.2, 118.9]
       },
       {
@@ -478,7 +478,7 @@ const data = {
         "bucXa": [138.9, 139.7, 165.9, 177.7, 166.6, 154.7, 156.2, 152.4, 133.7, 164.5, 115.9, 120.2]
       },
       {
-        "ten": "Long Thành,Phước Thái",
+        "ten": "Long Thành, Phước Thái",
         "bucXa": [141.5, 141.9, 169.8, 182.7, 166.8, 154.1, 156.1, 152.3, 134.0, 166.9, 115.6, 121.2]
       },
       {

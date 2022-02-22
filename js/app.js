@@ -25,12 +25,15 @@ var app = new Vue({
   },
   methods: {
     timKhuVuc: _.debounce(function (e) {
-      this.danhSachKhuVuc = timKhuVuc(data.values.khuVuc, e.target.value.toLowerCase())
+      this.khuVucDuocChon = data.values.khuVuc.filter(khuVuc => {
+        return khuVuc.ten.indexOf(e.target.value) > -1
+      })[0]
+      updateChartColumn(chartArea, this.khuVucDuocChon.bucXa)
     }, 250),
-    chonKhuVuc: function (khuVuc) {
+    /* chonKhuVuc: function (khuVuc) {
       this.khuVucDuocChon = khuVuc
       updateChartColumn(chartArea, khuVuc.bucXa)
-    },
+    }, */
     doiNgonNgu: function () {
       this.ngonNgu = (this.ngonNgu === 'en') ? 'vi' : 'en'
       updateObject(this.nhan, data.labels[this.ngonNgu])
