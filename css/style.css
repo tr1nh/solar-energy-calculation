@@ -171,9 +171,9 @@ table td {
 #card__media--pin {
   height: 300px;
   background-color: #f2f2f2;
-  background-image: url("../images/solar-panel.png");
+  background-image: url("../images/solar-panel-3.png");
   background-position: center;
-  background-size: 25%;
+  background-size: 95%;
   background-repeat: no-repeat;
 }
 

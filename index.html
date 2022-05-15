@@ -24,7 +24,7 @@
           <img style="max-width: 5em; max-height: 5em; margin-right: 1em;" src="./images/logo-so-cong-thuong-tinh-dong-nai.png" alt="logo-so-cong-thuong-tinh-dong-nai">
           <h1 style="text-transform: uppercase;">{{nhan.khuVuc.tieuDe}}</h1>
         </div>
-        <p>{{nhan.khuVuc.mieuTa}}</p>
+        <p style="white-space: pre-line;">{{nhan.khuVuc.mieuTa}}</p>
       </div>
 
       <div class="column">
@@ -168,14 +168,14 @@
               <tr>
                 <td>{{nhan.pin.thongTin.bang.kichThuoc}}</td>
                 <td>
-                  {{thongTinChung.kichThuoc.dai}}x
-                  {{thongTinChung.kichThuoc.rong}}x
-                  {{thongTinChung.kichThuoc.cao}} (mm)
+                  {{pinDuocChon.kichThuoc.dai}} x
+                  {{pinDuocChon.kichThuoc.rong}} x
+                  {{pinDuocChon.kichThuoc.cao}} (mm)
                 </td>
               </tr>
               <tr>
                 <td>{{nhan.pin.thongTin.bang.trongLuong}}</td>
-                <td>{{thongTinChung.trongLuong}}</td>
+                <td>{{pinDuocChon.trongLuong}}</td>
               </tr>
             </table>
 

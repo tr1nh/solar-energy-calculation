@@ -4,7 +4,7 @@ const data = {
       "tieuDe": "Solar data Đồng Nai",
       "khuVuc": {
         "tieuDe": "Solar data Đồng Nai",
-        "mieuTa": "Đây là công cụ sử dụng để ước lượng sản lượng điện mặt trời. Để tính toán sản lượng điện các bạn làm theo các bước sau: (1) Chọn địa điểm lắp đặt;(2) Chọn công suất lắp đặt ( Đối với hộ gia đình mỗi tháng sử dụng từ 300 kWh đến 400kWh thì công suất lắp đặt nên chọn từ 3000 Wp đến 5000 Wp), (3) Chọn loại Pin năng lượng mặt trời.Kết quả sẽ là sản lượng điện và tổng diện tích lắp đặt.",
+        "mieuTa": "Chào mừng các bạn truy cập vào trang dữ liệu năng lượng mặt trời của tỉnh Đồng Nai.\n\nTrang này cho phép các bạn truy cập dữ liệu bức xạ của Tỉnh Đồng Nai, ước lượng sản lượng điện mặt trời và diện tích trên mái.  Để tính toán sản lượng điện các bạn làm tho các bước sau đây: (1) Chọn địa điểm lắp đặt;(2) Chọn công suất lắp đặt (Đối với hộ gia đình mỗi tháng sử dụng từ 300 kWh đến 400kWh thì công suất lắp đặt nên chọn từ 3000 Wp đến 5000 Wp), (3) Chọn loại Pin năng lượng mặt trời. Phần mềm sẽ cung cấp kết quả là sản lượng điện hàng năm, số lượng pin quang điện và diện tích trên mái.",
         "chonKhuVuc": {
           "tieuDe": "Chọn khu vực",
           "mieuTa": "Lọc huyện hoặc thành phố theo tên"
@@ -70,7 +70,7 @@ const data = {
         },
         "ketQua": {
           "tieuDe": "Kết quả",
-          "soLuong": "Số lượng pin quang dien",
+          "soLuong": "Số lượng pin quang điện",
           "tongDienTich": "Tổng diện tích lắp đặt",
           "tongSanLuong": "Tổng sản lượng cả năm"
         }
@@ -129,7 +129,7 @@ const data = {
       "tieuDe": "Solar data Dong Nai",
       "khuVuc": {
         "tieuDe": "Solar data Dong Nai",
-        "mieuTa": "This is a tool used to estimate solar power output. To calculate the power output, you follow these steps: (1) Choose the installation location; (2) Choose the installed capacity (For households that use between 300 kWh and 400kWh per month, the installed capacity is should choose from 3000 Wp to 5000 Wp), (3) Choose the type of solar battery. The result will be the power output and total installation area.",
+        "mieuTa": "Welcome to the solar data page of Dong Nai province.\n\nThis page allows you to access radiation data for Dong Nai Province, solar power generation estimates and roof area. To calculate the power output, you do the following steps: (1) Choose the installation location; (2) Choose the installed capacity (For households using between 300 kWh and 400kWh per month, the capacity installation should choose from 3000 Wp to 5000 Wp), (3) Choose the type of solar battery. The software will provide the results of the annual power output, the number of photovoltaic cells and the area on the roof.",
         "chonKhuVuc": {
           "tieuDe": "Select region",
           "mieuTa": "Filter district or city by name"
@@ -762,13 +762,7 @@ const data = {
       "thongTinChung": {
         "nhietDoHoatDong": "-40°C ➝ 85°C",
         "dienApToiDa": 1000,
-        "loaiVatLieu": "Poly-Si",
-        "kichThuoc": {
-          "dai": 1956,
-          "rong": 992,
-          "cao": 40
-        },
-        "trongLuong": 26.5
+        "loaiVatLieu": "Poly-Si"
       },
       "thongTinRieng": [
         {
@@ -778,7 +772,13 @@ const data = {
           "imp": 8.84,
           "voc": 45.3,
           "isc": 8.84,
-          "hieuSuat": 15.46
+          "kichThuoc": {
+            "dai": 1956,
+            "rong": 992,
+            "cao": 40
+          },
+          "hieuSuat": 15.46,
+          "trongLuong": 26.5
         },
         {
           "maSanPham": "JKM305P",
@@ -787,7 +787,13 @@ const data = {
           "imp": 8.91,
           "voc": 45.6,
           "isc": 8.91,
-          "hieuSuat": 15.72
+          "kichThuoc": {
+            "dai": 1956,
+            "rong": 992,
+            "cao": 40
+          },
+          "hieuSuat": 15.72,
+          "trongLuong": 26.5
         },
         {
           "maSanPham": "JKM310P",
@@ -796,7 +802,13 @@ const data = {
           "imp": 8.96,
           "voc": 45.9,
           "isc": 8.96,
-          "hieuSuat": 15.98
+          "kichThuoc": {
+            "dai": 1956,
+            "rong": 992,
+            "cao": 40
+          },
+          "hieuSuat": 15.98,
+          "trongLuong": 26.5
         },
         {
           "maSanPham": "JKM315P",
@@ -805,7 +817,73 @@ const data = {
           "imp": 9.01,
           "voc": 46.2,
           "isc": 9.01,
-          "hieuSuat": 16.23
+          "kichThuoc": {
+            "dai": 1956,
+            "rong": 992,
+            "cao": 40
+          },
+          "hieuSuat": 16.23,
+          "trongLuong": 26.5
+        },
+        {
+          "maSanPham": "CS3W-430MS",
+          "pmax": 430,
+          "vmp": 39.7,
+          "imp": 10.84,
+          "voc": 47.9,
+          "isc": 11.42,
+          "kichThuoc": {
+            "dai": 2108,
+            "rong": 1038,
+            "cao": 40
+          },
+          "hieuSuat": 19.46,
+          "trongLuong": 24.9
+        },
+        {
+          "maSanPham": "CS3W-435MS",
+          "pmax": 435,
+          "vmp": 39.9,
+          "imp": 10.91,
+          "voc": 48.1,
+          "isc": 11.47,
+          "kichThuoc": {
+            "dai": 2108,
+            "rong": 1038,
+            "cao": 40
+          },
+          "hieuSuat": 19.69,
+          "trongLuong": 24.9
+        },
+        {
+          "maSanPham": "CS3W-440MS",
+          "pmax": 440,
+          "vmp": 40.1,
+          "imp": 10.98,
+          "voc": 48.3,
+          "isc": 11.53,
+          "kichThuoc": {
+            "dai": 2108,
+            "rong": 1038,
+            "cao": 40
+          },
+          "hieuSuat": 19.92,
+          "trongLuong": 24.9
+        },
+        {
+          "maSanPham": "CS3W-445MS",
+          "pmax": 445,
+          "vmp": 40.3,
+          "imp": 11.05,
+          "voc": 48.5,
+          "isc": 11.59,
+          "kichThuoc": {
+            "dai": 2108,
+            "rong": 1038,
+            "cao": 40
+          },
+          "hieuSuat": 20.14,
+          "trongLuong": 24.9
         }
       ]
     }

@@ -78,7 +78,7 @@ var app = new Vue({
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
         addTextPDF(page, `${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, fontSizeNormal, margin, currentLine += 7)
         addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.pinAmount}`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.soLuongPin}`, fontSizeNormal, margin, currentLine += 5)
         addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, fontSizeNormal, margin, currentLine += 5)
         addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, fontSizeNormal, margin, currentLine += 5)
         addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, fontSizeNormal, margin, currentLine += 5)
@@ -129,8 +129,8 @@ var app = new Vue({
       return tinhSoLuongPin(this.congSuatLapDat, this.pinDuocChon.pmax)
     },
     tongDienTichPin: function () {
-      return tinhTongDienTich(this.thongTinChung.kichThuoc.dai,
-        this.thongTinChung.kichThuoc.rong,
+      return tinhTongDienTich(this.pinDuocChon.kichThuoc.dai,
+        this.pinDuocChon.kichThuoc.rong,
         this.soLuongPin
       )
     },
