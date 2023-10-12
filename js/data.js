@@ -48,7 +48,10 @@ const data = {
           "tieuDe": "Thông số đầu vào",
           "congSuat": "Công suất lắp đặt (W)",
           "loaiPin": "Chọn loại pin",
-          "heSoTonThat": "Hệ số tổn thất"
+          "heSoTonThat": "Hệ số tổn thất",
+          "congSuatTieuThu": "Công suất tiêu thụ hàng tháng (kWh)",
+          "giaPin": "Giá 1 tấm pin",
+          "thang": "Chọn bức xạ và nhiệt độ theo tháng",
         },
         "thongTin": {
           "tieuDe": "Thông tin pin",
@@ -65,14 +68,16 @@ const data = {
             "dienApToiDa": "Điện áp tối đa của hệ thống",
             "loaiVatLieu": "Loại vật liệu",
             "kichThuoc": "Kích thước",
-            "trongLuong": "Trọng lượng"
+            "trongLuong": "Trọng lượng",
           }
         },
         "ketQua": {
           "tieuDe": "Kết quả",
           "soLuong": "Số lượng pin quang điện",
           "tongDienTich": "Tổng diện tích lắp đặt",
-          "tongSanLuong": "Tổng sản lượng cả năm"
+          "tongSanLuong": "Tổng sản lượng cả năm",
+          "tongVon": "Tổng vốn đầu tư",
+          "soNamHoanVon": "Số năm hoàn vốn",
         }
       },
       "sanLuong": {
@@ -114,6 +119,8 @@ const data = {
         "congSuatPin": "Công suất 1 tấm pin",
         "dienTich": "Diện tích lắp đặt",
         "sanLuongDuKien": "Sản lượng dự kiến",
+        "tongVon": "Tổng vốn đầu tư",
+        "soNamHoanVon": "Số năm hoàn vốn",
         "tieuDeKetQua": "Kết quả tính toán",
         "hinh1": "Hình 1. Bức xạ mặt trời.",
         "hinh2": "Hình 2. Sản lượng điện hàng tháng.",
@@ -173,7 +180,10 @@ const data = {
           "tieuDe": "Input parameters",
           "congSuat": "Installed power (W)",
           "loaiPin": "Select battery type",
-          "heSoTonThat": "Loss coefficient"
+          "heSoTonThat": "Loss coefficient",
+          "congSuatTieuThu": "Monthly power consumption (kWh)",
+          "giaPin": "Price is for 1 panel",
+          "thang": "Select radiation and temperature by month",
         },
         "thongTin": {
           "tieuDe": "Battery information",
@@ -197,7 +207,9 @@ const data = {
           "tieuDe": "Result",
           "soLuong": "Number of batteries",
           "tongDienTich": "Total installation area",
-          "tongSanLuong": "Total production of the year"
+          "tongSanLuong": "Total production of the year",
+          "tongVon": "Total investment",
+          "soNamHoanVon": "Number of years to pay back capital",
         }
       },
       "sanLuong": {
@@ -240,6 +252,8 @@ const data = {
         "dienTich": "Installation area",
         "sanLuongDuKien": "Expected output",
         "tieuDeKetQua":  "Calculation results",
+        "tongVon": "Total investment",
+        "soNamHoanVon": "Number of years to pay back capital",
         "hinh1": "Figure 1. Solar radiation.",
         "hinh2": "Figure 2. Monthly electricity output.",
         "bang1": {

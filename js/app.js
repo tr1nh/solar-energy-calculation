@@ -1,21 +1,52 @@
 var chartArea
 var chartEnergy
 
+const KHU_VUC_RONG = {
+  ten: "",
+  bucXa: [0,0,0,0,0,0,0,0,0,0,0,0],
+  nhietDo: [0,0,0,0,0,0,0,0,0,0,0,0]
+}
+
 var app = new Vue({
   el: '#app',
   data: function () {
     return {
       nhan: _.cloneDeep(data.labels.vi),
-      danhSachKhuVuc: data.values.khuVuc,
-      khuVucDuocChon: _.cloneDeep(data.values.khuVuc[0]),
-      congSuatLapDat: 0,
-      danhSachPin: data.values.pin.thongTinRieng,
-      thongTinChung: data.values.pin.thongTinChung,
+      danhSachKhuVuc: [],
+      khuVucDuocChon: KHU_VUC_RONG,
+      danhSachPin: [],
       pinAmount: 0,
       maPinDuocChon: '',
       heSoTonThat: 0.75,
-      ngonNgu: 'vi'
+      ngonNgu: 'vi',
+      congSuatTieuThuThang: 0,
+      giaPin: 0,
+      inverter: [],
+      inverterPhuHop: [],
+      giaInverter: 0,
+      thangDuocChon: 0,
     }
+  },
+  beforeMount: async function() {
+    let gSheetId = '1--DtK6k7YhokP4g0lfPL3CcRRJ9s4DSw5ZrwoX5vpkI';
+
+    fetchWSheet({ gSheetId, wSheetName: 'khuVuc' }).then(khuVuc => {;
+      khuVuc.forEach(item => {
+        item.bucXa = item.bucXa.split(',').map(Number);
+        item.nhietDo = item.nhietDo.split(',').map(Number);
+      });
+      Object.assign(this.danhSachKhuVuc, khuVuc);
+    });
+
+    fetchWSheet({ gSheetId, wSheetName: 'pin' }).then(data => {
+      this.danhSachPin = data
+      this.maPinDuocChon = this.danhSachPin[0].maSanPham;
+      this.layGiaPinMacDinh();
+    });
+
+    fetchWSheet({ gSheetId, wSheetName: 'inverter' }).then(data => {
+      this.inverter = data;
+    });
   },
   mounted: function () {
     Chart.defaults.global.legend.display = false;
@@ -24,16 +55,21 @@ var app = new Vue({
     chartEnergy = initChart(document.getElementById('chart-energy'), data.labels.vi.sanLuong.chartjs)
   },
   methods: {
+    chinhGiaPin: function(e) {
+      this.giaPin = e.target.value;
+    },
+    layGiaPinMacDinh: function() {
+      this.giaPin = this.pinDuocChon.giaTien;
+    },
     timKhuVuc: _.debounce(function (e) {
-      this.khuVucDuocChon = data.values.khuVuc.filter(khuVuc => {
+      if (e.target.value == "") return;
+      let temp = this.danhSachKhuVuc.find(khuVuc => {
         return khuVuc.ten.indexOf(e.target.value) > -1
-      })[0]
+      });
+      this.khuVucDuocChon = temp || KHU_VUC_RONG;
+      Object.assign(this.khuVucDuocChon, temp || KHU_VUC_RONG);
       updateChartColumn(chartArea, this.khuVucDuocChon.bucXa)
     }, 250),
-    /* chonKhuVuc: function (khuVuc) {
-      this.khuVucDuocChon = khuVuc
-      updateChartColumn(chartArea, khuVuc.bucXa)
-    }, */
     doiNgonNgu: function () {
       this.ngonNgu = (this.ngonNgu === 'en') ? 'vi' : 'en'
       updateObject(this.nhan, data.labels[this.ngonNgu])
@@ -77,12 +113,14 @@ var app = new Vue({
 
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
         addTextPDF(page, `${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, fontSizeNormal, margin, currentLine += 7)
-        addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.congSuatLapDat} (W)`, fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.soLuongPin}`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.tongVon}: ${Number(this.ketQua.tongVonDauTu).toLocaleString("us-US")} (VNĐ)`, fontSizeNormal, margin + 75, currentLine)
+        addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.ketQua.congSuatLapDat} (W)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.soNamHoanVon}: ${this.ketQua.soNamHoanVon}`, fontSizeNormal, margin + 75, currentLine)
+        addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.ketQua.soLuongPin}`, fontSizeNormal, margin, currentLine += 5)
         addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, fontSizeNormal, margin, currentLine += 5)
         addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.tongDienTichPin} (m²)`, fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.tongSanLuongTieuThu} (kWh/năm)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.ketQua.dienTichLapDat} (m²)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.ketQua.tongSanLuongTieuThu} (kWh/năm)`, fontSizeNormal, margin, currentLine += 5)
 
         // calculation result
         await loadFontPDF(page, './fonts/Roboto-Bold.ttf')
@@ -97,7 +135,7 @@ var app = new Vue({
 
         // table
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
-        let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.sanLuongTieuThu, this.tongBucXa, this.tongSanLuongTieuThu)
+        let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.ketQua.sanLuongTieuThu, this.tongBucXa, this.ketQua.tongSanLuongTieuThu)
         page.autoTable({
           head: this.nhan.pdf.bang1.head,
           body: data,
@@ -113,6 +151,7 @@ var app = new Vue({
 
         page.save(this.nhan.pdf.tenTep)
       } catch (error) {
+        console.log(error);
         alert(this.nhan.pdf.canhBao)
       }
     }
@@ -122,26 +161,44 @@ var app = new Vue({
       const tong = tinhTong(this.khuVucDuocChon.bucXa)
       return tong
     },
+    ketQua: function () {
+      if (!this.khuVucDuocChon || !this.pinDuocChon) return null;
+
+      let heSoSuyGiamNangSuat = 1 - 0.0045 * (this.khuVucDuocChon.nhietDo[this.thangDuocChon] - 25);
+      let dienTichPin = this.pinDuocChon.chieuDai * this.pinDuocChon.chieuRong / 1000000;
+      let sanLuong1TamPin = this.heSoTonThat * dienTichPin * this.khuVucDuocChon.bucXa[this.thangDuocChon] * heSoSuyGiamNangSuat * this.pinDuocChon.hieuSuat / 100;
+      let soLuongPin = Math.round(this.congSuatTieuThuThang / sanLuong1TamPin);
+      let tongDienTichPin = Math.round((this.pinDuocChon.chieuDai / 1000) * (this.pinDuocChon.chieuRong / 1000) * soLuongPin);
+      let dienTichLapDat = soLuongPin * tongDienTichPin;
+      let congSuatLapDat = soLuongPin * this.pinDuocChon.pmax / 1000;
+      let sanLuongTieuThu = this.khuVucDuocChon.bucXa.map(bucXa => Math.round((tongDienTichPin * (this.pinDuocChon.hieuSuat / 100) * bucXa * this.heSoTonThat)));
+      let tongSanLuongTieuThu = sanLuongTieuThu.reduce((acc, v) => acc += v);
+      let tongChiPhiPin = this.giaPin * soLuongPin;
+
+      if (congSuatLapDat) {
+        this.inverterPhuHop = this.inverter.filter(item => item.congSuat >= congSuatLapDat);
+        this.giaInverter = this.inverterPhuHop[0].gia;
+      }
+
+      let tongChiPinInverter = parseInt(this.giaInverter) + tongChiPhiPin;
+      let phiLapDat = 0.15 * tongChiPinInverter;
+      let phiDayCap = 0.2 * tongChiPinInverter;
+      let phiKhungGiaDo = 0.4 * tongChiPinInverter;
+
+      let tongVonDauTu = tongChiPinInverter + phiLapDat + phiDayCap + phiKhungGiaDo;
+      let giaDien = this.congSuatTieuThuThang > 401 ? 3015 : this.congSuatTieuThuThang >= 301 ? 2919 : this.congSuatTieuThuThang >= 201 ? 2612 : this.congSuatTieuThuThang >= 101 ? 2072 : this.congSuatTieuThuThang >= 51 ? 1786 : 1728;
+      let soNamHoanVon = Math.floor(tongVonDauTu / (sanLuong1TamPin * giaDien * 12 * soLuongPin));
+
+      updateChartColumn(chartEnergy, sanLuongTieuThu);
+
+      return { soLuongPin ,tongDienTichPin ,sanLuongTieuThu ,congSuatLapDat ,dienTichLapDat ,tongSanLuongTieuThu ,tongChiPhiPin, tongVonDauTu, soNamHoanVon };
+    },
     pinDuocChon: function () {
       return chonPin(this.danhSachPin, this.maPinDuocChon)
     },
-    soLuongPin: function () {
-      return tinhSoLuongPin(this.congSuatLapDat, this.pinDuocChon.pmax)
+    inverterDuocChon: function () {
+      return this.inverterPhuHop.find(item => item.gia == giaInverter);
     },
-    tongDienTichPin: function () {
-      return tinhTongDienTich(this.pinDuocChon.kichThuoc.dai,
-        this.pinDuocChon.kichThuoc.rong,
-        this.soLuongPin
-      )
-    },
-    sanLuongTieuThu: function () {
-      const ketQua = tinhSanLuongTieuThu(this.khuVucDuocChon.bucXa, this.tongDienTichPin, this.pinDuocChon.hieuSuat, this.heSoTonThat)
-      updateChartColumn(chartEnergy, ketQua)
-      return ketQua
-    },
-    tongSanLuongTieuThu: function () {
-      return tinhTongSanLuongTieuThu(this.sanLuongTieuThu)
-    }
   }
 })
 
@@ -269,6 +326,8 @@ async function addChartJSPDF(pageInstance, chartInstance, element, x, y, width, 
 async function layDuLieuBangBucXaHangThang(thang, bucXa, sanLuong, tongBucXa, tongSanLuong) {
   let data = []
 
+  console.log({thang, bucXa, sanLuong, tongBucXa, tongSanLuong});
+
   thang.forEach((v, i) => {
     let row = {}
 
@@ -313,4 +372,39 @@ function drawValueOnBar(instance) {
       }
     })
   })
+}
+
+async function fetchWSheet({ gSheetId, wSheetName, range, query }) {
+  let url, raw, response;
+
+  url = "https://docs.google.com/spreadsheets/d/";
+  url += `${gSheetId}/gviz/tq?tqx=out:csv`;
+
+  if (wSheetName) url += `&sheet=${wSheetName}`;
+  if (range) url += `&range=${range}`;
+  if (query) url += `&tq=${query}`;
+
+  response = await fetch(url);
+
+  if (response.status != 200) return [];
+
+  raw = await response.text();
+  raw = raw
+    .slice(1, raw.length - 1)
+    .split(/\"\n\"/)
+    .map((row) => row.split('","'));
+
+  let map = getRowMap(raw[0]);
+  raw.splice(0, 1); // remove header
+  return array2Json(raw, map);
+}
+
+function getRowMap(array) {
+  return array.reduce((a, c, i) => ({ ...a, [c]: i }), {});
+}
+
+function array2Json(data, map) {
+  return data.map((row) =>
+    row.reduce((a, c, i) => ({ ...a, [Object.keys(map)[i]]: row[i] }), {})
+  );
 }

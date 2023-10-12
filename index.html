@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tính sản lượng năng lượng mặt trời</title>
+  <title>Solar data Đồng Nai</title>
   <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -91,26 +91,42 @@
           <div class="card__body">
             <form>
               <div class="form__input-group">
-                <label class="form__label" for="power-plan">
-                  {{nhan.pin.dauVao.congSuat}}
-                </label>
-                <input class="form__input-text" type="number" name="power-plan" id="power-plan" value="1000"
-                  v-model="congSuatLapDat" />
+                <label class="form__label" for="power-plan">{{nhan.pin.dauVao.congSuatTieuThu}}</label>
+                <input class="form__input-text" type="number" name="power-plan" id="power-plan" value="1000" v-model="congSuatTieuThuThang" />
               </div>
               <div class="form__input-group">
-                <label class="form__label" for="pin-type">
-                  {{nhan.pin.dauVao.loaiPin}}
-                </label>
-                <select class="form__input-select" name="pin-type" id="pin-type" v-model="maPinDuocChon">
+                <label class="form__label" for="pin-type"> {{nhan.pin.dauVao.loaiPin}} </label>
+                <select class="form__input-select" name="pin-type" id="pin-type" v-model="maPinDuocChon" @change="layGiaPinMacDinh">
                   <option v-for="(pin,index) in danhSachPin" v-bind:key="index" v-bind:value="pin.maSanPham">
-                    {{pin.maSanPham}}</option>
+                    {{pin.maSanPham}}
+                  </option>
                 </select>
+              </div>
+              <div class="form__input-group">
+                <label class="form__label" for="power-plan">{{nhan.pin.dauVao.giaPin}}</label>
+                <input class="form__input-text" type="number" name="power-plan" id="power-plan" value="1000" @change="chinhGiaPin" v-model="giaPin" />
               </div>
               <div class="form__input-group">
                 <label class="form__label">
                   {{nhan.pin.dauVao.heSoTonThat}}
                 </label>
                 <input class="form__input-text" type="number" min="0.5" max="0.9" step="0.05" v-model="heSoTonThat" />
+              </div>
+              <div class="form__input-group">
+                <label class="form__label" for="pin-type"> {{nhan.pin.dauVao.thang}} </label>
+                <select class="form__input-select" name="pin-type" id="pin-type" v-model="thangDuocChon">
+                  <option v-for="(index) in [0,1,2,3,4,5,6,7,8,9,10,11]" v-bind:key="index" v-bind:value="index">
+                    {{index + 1}}
+                  </option>
+                </select>
+              </div>
+              <div class="form__input-group">
+                <label class="form__label" for="pin-type">Inverter</label>
+                <select class="form__input-select" name="pin-type" id="pin-type" v-model="giaInverter">
+                  <option v-for="(inverter,index) in inverterPhuHop" v-bind:key="index" v-bind:value="inverter.gia">
+                    {{inverter.congSuat}}
+                  </option>
+                </select>
               </div>
             </form>
           </div>
@@ -121,7 +137,7 @@
         <div class="card">
           <div class="card__title">{{nhan.pin.thongTin.tieuDe}}</div>
           <div class="card__body">
-            <span v-if="!pinDuocChon">{{nhan.pin.thongTin.mieuTa}}</span>
+            <span v-if="!ketQua">{{nhan.pin.thongTin.mieuTa}}</span>
             <table id="pin-detail" v-else>
               <tr>
                 <td>
@@ -155,22 +171,22 @@
               </tr>
               <tr>
                 <td>{{nhan.pin.thongTin.bang.nhietDoHoatDong}}</td>
-                <td>{{thongTinChung.nhietDoHoatDong}}</td>
+                <td>{{pinDuocChon.nhietDoHoatDong}}</td>
               </tr>
               <tr>
                 <td>{{nhan.pin.thongTin.bang.dienApToiDa}}</td>
-                <td>{{thongTinChung.dienApToiDa}}</td>
+                <td>{{pinDuocChon.dienApToiDa}}</td>
               </tr>
               <tr>
                 <td>{{nhan.pin.thongTin.bang.loaiVatLieu}}</td>
-                <td>{{thongTinChung.loaiVatLieu}}</td>
+                <td>{{pinDuocChon.loaiVatLieu}}</td>
               </tr>
               <tr>
                 <td>{{nhan.pin.thongTin.bang.kichThuoc}}</td>
                 <td>
-                  {{pinDuocChon.kichThuoc.dai}} x
-                  {{pinDuocChon.kichThuoc.rong}} x
-                  {{pinDuocChon.kichThuoc.cao}} (mm)
+                  {{pinDuocChon.chieuDai}} x
+                  {{pinDuocChon.chieuRong}} x
+                  {{pinDuocChon.chieuCao}} (mm)
                 </td>
               </tr>
               <tr>
@@ -179,21 +195,29 @@
               </tr>
             </table>
 
-            <span v-if="!pinDuocChon"></span>
+            <span v-if="!ketQua"></span>
             <div v-else>
               <h2>{{nhan.pin.ketQua.tieuDe}}</h2>
               <table>
                 <tr>
                   <td>{{nhan.pin.ketQua.soLuong}}</td>
-                  <td>{{soLuongPin}}</td>
+                  <td>{{ketQua.soLuongPin}}</td>
                 </tr>
                 <tr>
                   <td>{{nhan.pin.ketQua.tongDienTich}}</td>
-                  <td>{{tongDienTichPin}} (m<sup>2</sup>)</td>
+                  <td>{{ketQua.tongDienTichPin}} (m<sup>2</sup>)</td>
                 </tr>
                 <tr>
                   <td>{{nhan.pin.ketQua.tongSanLuong}}</td>
-                  <td>{{tongSanLuongTieuThu}} (kWh)</td>
+                  <td>{{ketQua.tongSanLuongTieuThu}} (kWh)</td>
+                </tr>
+                <tr>
+                  <td>{{nhan.pin.ketQua.tongVon}}</td>
+                  <td>{{Number(ketQua.tongVonDauTu).toLocaleString("us-US")}} (VNĐ)</td>
+                </tr>
+                <tr>
+                  <td>{{nhan.pin.ketQua.soNamHoanVon}}</td>
+                  <td>{{ketQua.soNamHoanVon}}</td>
                 </tr>
               </table>
             </div>
@@ -202,7 +226,7 @@
       </div>
     </div>
 
-    <div class="row" id="row--result" v-show="pinDuocChon">
+    <div class="row" id="row--result" v-show="ketQua">
       <div class="row__title">
         <h1>{{nhan.sanLuong.tieuDe}} (kWh)</h1>
       </div>
