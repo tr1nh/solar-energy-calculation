@@ -20,8 +20,6 @@
 
       <div class="row__title">
         <div class="web-title">
-          <img style="max-width: 5em; max-height: 5em; margin-right: 0.5em;" src="./images/logo-so-khoa-hoc-cong-nghe-tinh-dong-nai.png" alt="logo-so-khoa-hoc-cong-nghe-tinh-dong-nai">
-          <img style="max-width: 5em; max-height: 5em; margin-right: 1em;" src="./images/logo-so-cong-thuong-tinh-dong-nai.png" alt="logo-so-cong-thuong-tinh-dong-nai">
           <h1 style="text-transform: uppercase;">{{nhan.khuVuc.tieuDe}}</h1>
         </div>
         <p style="white-space: pre-line;">{{nhan.khuVuc.mieuTa}}</p>
@@ -113,18 +111,10 @@
                 <input class="form__input-text" type="number" min="0.5" max="0.9" step="0.05" v-model="heSoTonThat" />
               </div>
               <div class="form__input-group">
-                <label class="form__label" for="pin-type"> {{nhan.pin.dauVao.thang}} </label>
-                <select class="form__input-select" name="pin-type" id="pin-type" v-model="thangDuocChon">
-                  <option v-for="(index) in [0,1,2,3,4,5,6,7,8,9,10,11]" v-bind:key="index" v-bind:value="index">
-                    {{index + 1}}
-                  </option>
-                </select>
-              </div>
-              <div class="form__input-group">
                 <label class="form__label" for="pin-type">Inverter</label>
                 <select class="form__input-select" name="pin-type" id="pin-type" v-model="giaInverter">
                   <option v-for="(inverter,index) in inverterPhuHop" v-bind:key="index" v-bind:value="inverter.gia">
-                    {{inverter.congSuat}}
+                    {{inverter.congSuat}} (kW) - {{inverter.gia}} (VNĐ)
                   </option>
                 </select>
               </div>
@@ -201,7 +191,7 @@
               <table>
                 <tr>
                   <td>{{nhan.pin.ketQua.soLuong}}</td>
-                  <td>{{ketQua.soLuongPin}}</td>
+                  <td>{{ketQua.soLuongPin}} ({{ngonNgu === "vi" ? "tấm" : "plates"}})</td>
                 </tr>
                 <tr>
                   <td>{{nhan.pin.ketQua.tongDienTich}}</td>
@@ -217,7 +207,7 @@
                 </tr>
                 <tr>
                   <td>{{nhan.pin.ketQua.soNamHoanVon}}</td>
-                  <td>{{ketQua.soNamHoanVon}}</td>
+                  <td>{{ketQua.soNamHoanVon}} ({{ngonNgu === "vi" ? "năm" : "years"}})</td>
                 </tr>
               </table>
             </div>
