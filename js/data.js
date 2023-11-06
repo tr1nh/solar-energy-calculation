@@ -75,6 +75,7 @@ const data = {
           "tieuDe": "Kết quả",
           "soLuong": "Số lượng pin quang điện",
           "tongDienTich": "Tổng diện tích lắp đặt",
+          "congSuatLapDat": "Công suất lắp đặt",
           "tongSanLuong": "Tổng sản lượng cả năm",
           "tongVon": "Tổng vốn đầu tư",
           "soNamHoanVon": "Số năm hoàn vốn",
@@ -126,7 +127,7 @@ const data = {
         "hinh2": "Hình 2. Sản lượng điện hàng tháng.",
         "bang1": {
           "tieuDe": "Bảng 1. Kết quả tính toán sản lượng điện mặt trời.",
-          "head": [["Tháng", "Bức xạ mặt trời (KWh/m²)", "Sản lượng (KWh)"]],
+          "head": [["Tháng", "Bức xạ mặt trời (KWh/m²)", "Nhiệt độ (°C)", "Sản lượng (KWh)"]],
           "column1": ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12", "Cả năm"]
         },
         "canhBao": "Bạn phải điền đủ thông tin"
@@ -207,6 +208,7 @@ const data = {
           "tieuDe": "Result",
           "soLuong": "Number of batteries",
           "tongDienTich": "Total installation area",
+          "congSuatLapDat": "Installed capacity",
           "tongSanLuong": "Total production of the year",
           "tongVon": "Total investment",
           "soNamHoanVon": "Number of years to pay back capital",

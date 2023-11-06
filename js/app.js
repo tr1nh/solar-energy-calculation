@@ -159,11 +159,13 @@ var app = new Vue({
 
         // table
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
-        let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.ketQua.sanLuongTieuThu, this.tongBucXa, this.ketQua.tongSanLuongTieuThu)
+        let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.khuVucDuocChon.nhietDo, this.ketQua.sanLuongTieuThu, this.tongBucXa, this.khuVucDuocChon.nhietDo.reduce((a,c) => a+=c, 0), this.ketQua.tongSanLuongTieuThu)
+        page.addPage();
+
         page.autoTable({
           head: this.nhan.pdf.bang1.head,
           body: data,
-          startY: currentLine += 12,
+          startY: 25,
           margin: {horizontal: (width * 0.25)},
           styles: {
             font: 'Roboto-Regular',
@@ -172,6 +174,8 @@ var app = new Vue({
           },
           theme: 'plain'
         })
+
+        await addTextCenterPDF(page, 'Results of simulation', fontSizeNormal, (width / 2), 155, 100)
 
         page.save(this.nhan.pdf.tenTep)
       } catch (error) {
@@ -348,10 +352,8 @@ async function addChartJSPDF(pageInstance, chartInstance, element, x, y, width, 
   chartInstance.update()
 }
 
-async function layDuLieuBangBucXaHangThang(thang, bucXa, sanLuong, tongBucXa, tongSanLuong) {
+async function layDuLieuBangBucXaHangThang(thang, bucXa, nhietDo, sanLuong, tongBucXa, tongNhietDo, tongSanLuong) {
   let data = []
-
-  console.log({thang, bucXa, sanLuong, tongBucXa, tongSanLuong});
 
   thang.forEach((v, i) => {
     let row = {}
@@ -360,12 +362,14 @@ async function layDuLieuBangBucXaHangThang(thang, bucXa, sanLuong, tongBucXa, to
       row = [
         v,
         bucXa[i].toString(),
+        nhietDo[i].toString(),
         sanLuong[i].toString(),
       ]
     } else {
       row = [
         v,
         tongBucXa.toString(),
+        tongNhietDo.toString(),
         tongSanLuong.toString(),
       ]
     }
