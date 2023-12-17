@@ -40,6 +40,33 @@ const data = {
               }
             ]
           }
+        },
+        "nhietDoTheoThang": {
+          "tieuDe": "Nhiệt độ mặt trời trung bình (°C/tháng)",
+          "chartjs": {
+            "labels": [
+              "Tháng 1",
+              "Tháng 2",
+              "Tháng 3",
+              "Tháng 4",
+              "Tháng 5",
+              "Tháng 6",
+              "Tháng 7",
+              "Tháng 8",
+              "Tháng 9",
+              "Tháng 10",
+              "Tháng 11",
+              "Tháng 12"
+            ],
+            "datasets": [
+              {
+                "label": "Nhiệt độ mặt trời",
+                "backgroundColor": "#ef4444",
+                "borderColor": "#ef4444",
+                "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+              }
+            ]
+          }
         }
       },
       "pin": {
@@ -124,7 +151,8 @@ const data = {
         "soNamHoanVon": "Số năm hoàn vốn",
         "tieuDeKetQua": "Kết quả tính toán",
         "hinh1": "Hình 1. Bức xạ mặt trời.",
-        "hinh2": "Hình 2. Sản lượng điện hàng tháng.",
+        "hinh2": "Hình 2. Nhiệt độ mặt trời.",
+        "hinh3": "Hình 3. Sản lượng điện hàng tháng.",
         "bang1": {
           "tieuDe": "Bảng 1. Kết quả tính toán sản lượng điện mặt trời.",
           "head": [["Tháng", "Bức xạ mặt trời (KWh/m²)", "Nhiệt độ (°C)", "Sản lượng (KWh)"]],
@@ -169,6 +197,33 @@ const data = {
                 "label": "Solar radiation level",
                 "backgroundColor": "#ff9f43",
                 "borderColor": "#ff9f43",
+                "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+              }
+            ]
+          }
+        },
+        "nhietDoTheoThang": {
+          "tieuDe": "Average solar temperature (°C/month)",
+          "chartjs": {
+            "labels": [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December"
+            ],
+            "datasets": [
+              {
+                "label": "Solar temperature",
+                "backgroundColor": "#ef4444",
+                "borderColor": "#ef4444",
                 "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
               }
             ]
@@ -257,10 +312,11 @@ const data = {
         "tongVon": "Total investment",
         "soNamHoanVon": "Number of years to pay back capital",
         "hinh1": "Figure 1. Solar radiation.",
-        "hinh2": "Figure 2. Monthly electricity output.",
+        "hinh2": "Figure 2. Solar temperature.",
+        "hinh3": "Figure 3. Monthly electricity output.",
         "bang1": {
           "tieuDe": "Table 1. Calculation results of solar power output.",
-          "head": [["Month", "Solar radiation (KWh/m²)", "Output (KWh)"]],
+          "head": [["Month", "Solar radiation (KWh/m²)", "Temperature (°C)", "Output (KWh)"]],
           "column1": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "Year"]
         },
         "canhBao": "You must fill all information"

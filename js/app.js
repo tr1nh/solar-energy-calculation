@@ -1,4 +1,5 @@
 var chartArea
+var chartTemperature
 var chartEnergy
 
 const KHU_VUC_RONG = {
@@ -52,6 +53,7 @@ var app = new Vue({
     Chart.defaults.global.legend.display = false;
 
     chartArea = initChart(document.getElementById('chart-area'), data.labels.vi.khuVuc.bucXaTheoThang.chartjs)
+    chartTemperature = initChart(document.getElementById('chart-temperature'), data.labels.vi.khuVuc.nhietDoTheoThang.chartjs)
     chartEnergy = initChart(document.getElementById('chart-energy'), data.labels.vi.sanLuong.chartjs)
   },
   methods: {
@@ -69,12 +71,14 @@ var app = new Vue({
       this.khuVucDuocChon = temp || KHU_VUC_RONG;
       Object.assign(this.khuVucDuocChon, temp || KHU_VUC_RONG);
       updateChartColumn(chartArea, this.khuVucDuocChon.bucXa)
+      updateChartColumn(chartTemperature, this.khuVucDuocChon.nhietDo)
     }, 250),
     doiNgonNgu: function () {
       this.ngonNgu = (this.ngonNgu === 'en') ? 'vi' : 'en'
       updateObject(this.nhan, data.labels[this.ngonNgu])
 
       updateChartLabel(chartArea, data.labels[this.ngonNgu].khuVuc.bucXaTheoThang.chartjs)
+      updateChartLabel(chartTemperature, data.labels[this.ngonNgu].khuVuc.nhietDoTheoThang.chartjs)
       updateChartLabel(chartEnergy, data.labels[this.ngonNgu].sanLuong.chartjs)
 
       document.documentElement.setAttribute('lang', this.ngonNgu)
@@ -148,20 +152,23 @@ var app = new Vue({
 
         // calculation result
         await loadFontPDF(page, './fonts/Roboto-Bold.ttf')
-        addTextPDF(page, `${this.nhan.pdf.tieuDeKetQua}`, fontSizeHeading, margin, currentLine += 12)
+        addTextPDF(page, `${this.nhan.pdf.tieuDeKetQua}`, fontSizeHeading, margin, currentLine += 14)
 
         // charts
         addChartJSPDF(page, chartArea, document.getElementById('chart-area'), margin, currentLine += 7, (width / 2 - margin - (margin / 2)), 50)
-        addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)
+        addChartJSPDF(page, chartTemperature, document.getElementById('chart-temperature'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)
         await loadFontPDF(page, './fonts/Roboto-Italic.ttf')
         await addTextCenterPDF(page, this.nhan.pdf.hinh1, fontSizeNormal, (width / 4), currentLine += 55, (width / 2))
         await addTextCenterPDF(page, this.nhan.pdf.hinh2, fontSizeNormal, ((width * (3 / 4)) - (margin / 2)), currentLine, (width / 2))
+        addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 3.5), currentLine += 7, (width / 2 - margin - (margin / 2)), 50)
+        await addTextCenterPDF(page, this.nhan.pdf.hinh3, fontSizeNormal, ((width / 2)), currentLine += 55, (width / 2))
 
         // table
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
         let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.khuVucDuocChon.nhietDo, this.ketQua.sanLuongTieuThu, this.tongBucXa, this.khuVucDuocChon.nhietDo.reduce((a,c) => a+=c, 0), this.ketQua.tongSanLuongTieuThu)
         page.addPage();
 
+        await addTextCenterPDF(page, 'Results of simulation', fontSizeNormal, (width / 2), 20, 100)
         page.autoTable({
           head: this.nhan.pdf.bang1.head,
           body: data,
@@ -174,8 +181,6 @@ var app = new Vue({
           },
           theme: 'plain'
         })
-
-        await addTextCenterPDF(page, 'Results of simulation', fontSizeNormal, (width / 2), 155, 100)
 
         page.save(this.nhan.pdf.tenTep)
       } catch (error) {
