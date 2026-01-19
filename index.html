@@ -109,7 +109,7 @@
         <section class="container mx-auto px-4 md:px-6 py-6 md:py-8">
           
           <!-- Unified Responsive Tabs -->
-          <div class="flex justify-center mb-6 md:mb-8">
+          <div class="flex justify-center mx-auto mb-6 md:mb-8 max-w-2xl">
             <div class="w-full md:inline-flex bg-white rounded-lg shadow-sm border border-gray-200 p-1">
               <div class="grid grid-cols-3 gap-1 w-full">
                 
@@ -281,26 +281,34 @@
               </div>
               
               <!-- Next Step Button for Tab 1 -->
-              <div class="mt-8 flex items-center justify-between">
-                <div class="text-sm text-gray-500">
-                  <i class="fas fa-info-circle mr-2"></i>
-                  <span v-if="!isStep1Valid">{{ngonNgu === 'vi' ? 'Vui lòng chọn khu vực để tiếp tục' : 'Please select an area to continue'}}</span>
-                  <span v-else class="text-green-600 font-medium">
-                    <i class="fas fa-check-circle mr-2"></i>
-                    {{ngonNgu === 'vi' ? 'Đã chọn khu vực' : 'Area selected'}}
-                  </span>
+              <div class="mt-6 md:mt-8">
+                <!-- Status Message -->
+                <div class="mb-4 p-4 rounded-lg border" :class="isStep1Valid ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'">
+                  <div class="flex items-start space-x-3">
+                    <i :class="isStep1Valid ? 'fas fa-check-circle text-green-600' : 'fas fa-info-circle text-blue-600'" class="text-lg md:text-xl mt-0.5 flex-shrink-0"></i>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm md:text-base font-medium" :class="isStep1Valid ? 'text-green-800' : 'text-blue-800'">
+                        <span v-if="!isStep1Valid">{{ngonNgu === 'vi' ? 'Vui lòng chọn khu vực để tiếp tục' : 'Please select an area to continue'}}</span>
+                        <span v-else>{{ngonNgu === 'vi' ? 'Đã chọn khu vực' : 'Area selected'}}</span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <button
-                  @click="goToNextStep"
-                  :disabled="!isStep1Valid"
-                  :class="[
-                    'btn-professional',
-                    !isStep1Valid ? 'opacity-50 cursor-not-allowed' : ''
-                  ]"
-                >
-                  <span>{{ngonNgu === 'vi' ? 'Tiếp theo: Tính toán' : 'Next: Calculation'}}</span>
-                  <i class="fas fa-arrow-right ml-2"></i>
-                </button>
+                
+                <!-- Next Button -->
+                <div class="flex justify-end">
+                  <button
+                    @click="goToNextStep"
+                    :disabled="!isStep1Valid"
+                    :class="[
+                      'btn-professional w-full md:w-auto',
+                      !isStep1Valid ? 'opacity-50 cursor-not-allowed' : ''
+                    ]"
+                  >
+                    <span>{{ngonNgu === 'vi' ? 'Tiếp theo: Tính toán' : 'Next: Calculation'}}</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -561,34 +569,42 @@
               </div>
               
               <!-- Navigation Buttons for Tab 2 -->
-              <div class="mt-8 flex items-center justify-between">
-                <button
-                  @click="goToPreviousStep"
-                  class="flex items-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
-                >
-                  <i class="fas fa-arrow-left"></i>
-                  <span>{{ngonNgu === 'vi' ? 'Quay lại' : 'Back'}}</span>
-                </button>
-                
-                <div class="flex-1 mx-6">
-                  <div class="text-sm text-center" :class="isStep2Valid ? 'text-green-600 font-medium' : 'text-gray-500'">
-                    <i :class="isStep2Valid ? 'fas fa-check-circle' : 'fas fa-info-circle'" class="mr-2"></i>
-                    <span v-if="!isStep2Valid">{{ngonNgu === 'vi' ? 'Vui lòng nhập đầy đủ thông số để tiếp tục' : 'Please enter all parameters to continue'}}</span>
-                    <span v-else>{{ngonNgu === 'vi' ? 'Đã nhập đầy đủ thông số' : 'All parameters entered'}}</span>
+              <div class="mt-6 md:mt-8 space-y-4">
+                <!-- Status Message -->
+                <div class="p-4 rounded-lg border" :class="isStep2Valid ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'">
+                  <div class="flex items-start space-x-3">
+                    <i :class="isStep2Valid ? 'fas fa-check-circle text-green-600' : 'fas fa-info-circle text-blue-600'" class="text-lg md:text-xl mt-0.5 flex-shrink-0"></i>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm md:text-base font-medium" :class="isStep2Valid ? 'text-green-800' : 'text-blue-800'">
+                        <span v-if="!isStep2Valid">{{ngonNgu === 'vi' ? 'Vui lòng nhập đầy đủ thông số để tiếp tục' : 'Please enter all parameters to continue'}}</span>
+                        <span v-else>{{ngonNgu === 'vi' ? 'Đã nhập đầy đủ thông số' : 'All parameters entered'}}</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
                 
-                <button
-                  @click="goToNextStep"
-                  :disabled="!isStep2Valid"
-                  :class="[
-                    'btn-professional',
-                    !isStep2Valid ? 'opacity-50 cursor-not-allowed' : ''
-                  ]"
-                >
-                  <span>{{ngonNgu === 'vi' ? 'Xem kết quả' : 'View Results'}}</span>
-                  <i class="fas fa-arrow-right ml-2"></i>
-                </button>
+                <!-- Navigation Buttons -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                  <button
+                    @click="goToPreviousStep"
+                    class="flex items-center justify-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 border border-gray-300"
+                  >
+                    <i class="fas fa-arrow-left"></i>
+                    <span>{{ngonNgu === 'vi' ? 'Quay lại' : 'Back'}}</span>
+                  </button>
+                  
+                  <button
+                    @click="goToNextStep"
+                    :disabled="!isStep2Valid"
+                    :class="[
+                      'btn-professional',
+                      !isStep2Valid ? 'opacity-50 cursor-not-allowed' : ''
+                    ]"
+                  >
+                    <span>{{ngonNgu === 'vi' ? 'Xem kết quả' : 'View Results'}}</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -624,10 +640,10 @@
                 </div>
                 
                 <!-- Back Button for Tab 3 -->
-                <div class="flex justify-start">
+                <div class="flex justify-center sm:justify-start">
                   <button
                     @click="goToPreviousStep"
-                    class="flex items-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 border border-gray-300"
+                    class="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 border border-gray-300"
                   >
                     <i class="fas fa-arrow-left"></i>
                     <span>{{ngonNgu === 'vi' ? 'Quay lại tính toán' : 'Back to Calculation'}}</span>
