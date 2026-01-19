@@ -155,7 +155,7 @@ const data = {
     },
     en: {
       tieuDe:
-        "PERFORMANCE OF GRID-CONNECTED  ROOFTOP PHOTOVOLTAIC SYSTEM IN VIETNAM.Geographical Information",
+        "The Performance of Rooftop Photovoltaic Systems in Vietnam",
       tabs: {
         area: "Area",
         calculation: "Calculation",
@@ -163,19 +163,19 @@ const data = {
       },
       khuVuc: {
         tieuDe:
-          "PERFORMANCE OF GRID-CONNECTED  ROOFTOP PHOTOVOLTAIC SYSTEM IN VIETNAM",
-        mieuTa: "Welcome to PV_cal online tool. ",
+          "The Performance of Rooftop Photovoltaic Systems in Vietnam",
+        mieuTa: "Welcome to the Dong Nai Province solar energy data portal.\n\nThis portal provides access to solar radiation data for Dong Nai Province, and allows you to estimate solar electricity production and roof area requirements. To calculate electricity production, please follow these steps: (1) Select installation location; (2) Select installation capacity (For households using 300-400 kWh per month, the recommended installation capacity is 3000-5000 Wp); (3) Select solar panel type. The software will provide results including annual electricity production, number of photovoltaic panels, and required roof area.",
         chonKhuVuc: {
-          tieuDe: "Select region",
-          mieuTa: "Location"
+          tieuDe: "Select Area",
+          mieuTa: "Filter district or city by name"
         },
         bucXaTheoNam: {
-          tieuDe: "Weather data",
-          viTri: "Location",
-          bucXa: "Solar radiation (kWh/m²/year)"
+          tieuDe: "District / City Information",
+          viTri: "District / City Name",
+          bucXa: "Annual Solar Radiation (kWh/m²/year)"
         },
         bucXaTheoThang: {
-          tieuDe: "Solar radiation (kWh/m²/month)",
+          tieuDe: "Average Solar Radiation (kWh/m²/month)",
           chartjs: {
             labels: [
               "January",
@@ -203,46 +203,46 @@ const data = {
         }
       },
       pin: {
-        tieuDe: "Photovoltaic Performance ",
+        tieuDe: "Calculate Electricity Production",
         dauVao: {
-          tieuDe: "Input parameters",
-          congSuat: "Installed power (W)",
-          loaiPin: "Select PV Panel Type",
-          heSoTonThat: "PR",
-          congSuatTieuThu: "Monthly power consumption (kWh)",
-          giaPin: "The price of a solar panel [VND]",
-          thang: "Select radiation and temperature by month"
+          tieuDe: "Input Parameters",
+          congSuat: "Installation Capacity (W)",
+          loaiPin: "Select Panel Type",
+          heSoTonThat: "Loss Coefficient",
+          congSuatTieuThu: "Monthly Power Consumption (kWh)",
+          giaPin: "Price Per Panel",
+          thang: "Select Radiation and Temperature by Month"
         },
         thongTin: {
-          tieuDe: "PV specifications",
+          tieuDe: "Panel Information",
           mieuTa:
-            "You need to choose the type of battery to calculate the results",
+            "You need to select a panel type to calculate results",
           bang: {
-            maSanPham: "Product code",
+            maSanPham: "Product Code",
             pmax: "Pmax (W)",
             vmp: "Vmp (V)",
             imp: "Imp (A)",
             voc: "Voc (V)",
             isc: "Isc (A)",
-            hieuSuat: "Module efficiency (%)",
-            nhietDoHoatDong: "Operating temperature",
-            dienApToiDa: "Maximum system voltage",
-            loaiVatLieu: "Type of material",
-            kichThuoc: "Size",
+            hieuSuat: "Module Efficiency (%)",
+            nhietDoHoatDong: "Operating Temperature",
+            dienApToiDa: "Maximum System Voltage",
+            loaiVatLieu: "Material Type",
+            kichThuoc: "Dimensions",
             trongLuong: "Weight"
           }
         },
         ketQua: {
-          tieuDe: "Result",
-          soLuong: "Number of PV panel",
-          tongDienTich: "Total installation area",
-          tongSanLuong: "Final yield",
-          tongVon: "Total investment",
-          soNamHoanVon: "Payback Year"
+          tieuDe: "Results",
+          soLuong: "Number of Photovoltaic Panels",
+          tongDienTich: "Total Installation Area",
+          tongSanLuong: "Total Annual Production",
+          tongVon: "Total Investment",
+          soNamHoanVon: "Payback Period (Years)"
         }
       },
       sanLuong: {
-        tieuDe: "Final Yield [kWh/month]",
+        tieuDe: "Annual Solar Energy Production",
         chartjs: {
           labels: [
             "January",
@@ -260,7 +260,7 @@ const data = {
           ],
           datasets: [
             {
-              label: "Consumption volume",
+              label: "Production",
               backgroundColor: "rgba(37, 99, 235, 0.8)",
               borderColor: "rgb(37, 99, 235)",
               data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -270,25 +270,25 @@ const data = {
       },
       pdf: {
         tenTep: "result.pdf",
-        pdfHeader: " PV_Cal Version 2.0",
-        tieuDe: "Main parameters of grid-connected rooftop Photovoltaic system",
-        tieuDeThongTin: "Main system parameters",
-        diaChi: "Geographical site",
-        congSuatLapDat: "Installed capacity",
-        soLuongPin: "Number of PV",
-        loaiPin: "PV module",
-        congSuatPin: "Power of PV module",
-        dienTich: "Installation area",
-        sanLuongDuKien: "Final Yield",
-        tieuDeKetQua: "Main Estimation Results",
-        tongVon: "Total investment",
-        soNamHoanVon: "Payback Years",
-        hinh1: "Figure 1. Solar radiation.",
-        hinh2: "Figure 2. Monthly final yield.",
+        pdfHeader: "Electricity Production Calculation Software",
+        tieuDe: "Calculation Results of Main Parameters for Grid-Connected Solar Power System",
+        tieuDeThongTin: "Project Information",
+        diaChi: "Address",
+        congSuatLapDat: "Installation Capacity",
+        soLuongPin: "Number of Panels",
+        loaiPin: "Panel Type",
+        congSuatPin: "Power Per Panel",
+        dienTich: "Installation Area",
+        sanLuongDuKien: "Expected Production",
+        tieuDeKetQua: "Calculation Results",
+        tongVon: "Total Investment",
+        soNamHoanVon: "Payback Period (Years)",
+        hinh1: "Figure 1. Solar Radiation.",
+        hinh2: "Figure 2. Monthly Electricity Production.",
         bang1: {
           tieuDe:
-            "Table 1. Estimation results of grid-connected rooftop photovoltaic system.",
-          head: [["Month", "Solar radiation (KWh/m²)", "Final Yield (KWh)"]],
+            "Table 1. Solar Electricity Production Calculation Results.",
+          head: [["Month", "Solar Radiation (kWh/m²)", "Production (kWh)"]],
           column1: [
             "January",
             "February",
@@ -302,10 +302,10 @@ const data = {
             "October",
             "November",
             "December",
-            "Year"
+            "Annual Total"
           ]
         },
-        canhBao: "You must fill all information"
+        canhBao: "You must fill in all information"
       }
     }
   },
