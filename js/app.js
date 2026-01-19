@@ -129,13 +129,17 @@ var app = new Vue({
       document.title = this.nhan.tieuDe
     },
     xuatPDF: async function () {
+      // Save current active tab
+      const currentActiveTab = this.activeTab;
+      
+      // Temporarily show all tabs to ensure charts are rendered
+      const tabPanels = document.querySelectorAll('.tab-panel');
+      const originalDisplayValues = [];
+      
       try {
-        // Save current active tab
-        const currentActiveTab = this.activeTab;
-        
-        // Temporarily show all tabs to ensure charts are rendered
-        const tabPanels = document.querySelectorAll('.tab-panel');
-        tabPanels.forEach(panel => {
+        // Save original display values and show all panels
+        tabPanels.forEach((panel, index) => {
+          originalDisplayValues[index] = panel.style.display;
           panel.style.display = 'block';
         });
         
@@ -234,9 +238,9 @@ var app = new Vue({
 
         page.save(this.nhan.pdf.tenTep)
         
-        // Restore tab visibility
-        tabPanels.forEach(panel => {
-          panel.style.display = '';
+        // Restore original tab visibility
+        tabPanels.forEach((panel, index) => {
+          panel.style.display = originalDisplayValues[index];
         });
         
       } catch (error) {
@@ -244,9 +248,8 @@ var app = new Vue({
         alert(this.nhan.pdf.canhBao)
         
         // Restore tab visibility on error
-        const tabPanels = document.querySelectorAll('.tab-panel');
-        tabPanels.forEach(panel => {
-          panel.style.display = '';
+        tabPanels.forEach((panel, index) => {
+          panel.style.display = originalDisplayValues[index] || '';
         });
       }
     }
