@@ -10,7 +10,7 @@ const data = {
       khuVuc: {
         tieuDe: "The Performance of rooftop Photovoltaic Systems in Vietnam",
         mieuTa:
-          "Chào mừng các bạn truy cập vào trang dữ liệu năng lượng mặt trời của tỉnh Đồng Nai.\n\nTrang này cho phép các bạn truy cập dữ liệu bức xạ của Tỉnh Đồng Nai, ước lượng sản lượng điện mặt trời và diện tích trên mái.  Để tính toán sản lượng điện các bạn làm tho các bước sau đây: (1) Chọn địa điểm lắp đặt;(2) Chọn công suất lắp đặt (Đối với hộ gia đình mỗi tháng sử dụng từ 300 kWh đến 400kWh thì công suất lắp đặt nên chọn từ 3000 Wp đến 5000 Wp), (3) Chọn loại Pin năng lượng mặt trời. Phần mềm sẽ cung cấp kết quả là sản lượng điện hàng năm, số lượng pin quang điện và diện tích trên mái.",
+          "Chào mừng các bạn truy cập vào trang dữ liệu năng lượng mặt trời của tỉnh Đồng Nai.\n\nTrang này cho phép các bạn truy cập dữ liệu bức xạ của Tỉnh Đồng Nai, ước lượng sản lượng điện mặt trời và diện tích trên mái.  Để tính toán sản lượng điện các bạn làm theo các bước sau đây: (1) Chọn địa điểm lắp đặt;(2) Chọn công suất lắp đặt (Đối với hộ gia đình mỗi tháng sử dụng từ 300 kWh đến 400kWh thì công suất lắp đặt nên chọn từ 3000 Wp đến 5000 Wp), (3) Chọn loại Pin năng lượng mặt trời. Phần mềm sẽ cung cấp kết quả là sản lượng điện hàng năm, số lượng pin quang điện và diện tích trên mái.",
         chonKhuVuc: {
           tieuDe: "Chọn khu vực",
           mieuTa: "Lọc huyện hoặc thành phố theo tên"
