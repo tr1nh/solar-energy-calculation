@@ -130,6 +130,41 @@ var app = new Vue({
     },
     xuatPDF: async function () {
       try {
+        // Save current active tab
+        const currentActiveTab = this.activeTab;
+        
+        // Temporarily show all tabs to ensure charts are rendered
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        tabPanels.forEach(panel => {
+          panel.style.display = 'block';
+        });
+        
+        // Ensure both charts are initialized and rendered
+        if (!chartArea) {
+          const areaCanvas = document.getElementById('chart-area');
+          if (areaCanvas) {
+            chartArea = initChart(areaCanvas, data.labels[this.ngonNgu].khuVuc.bucXaTheoThang.chartjs);
+            updateChartColumn(chartArea, this.khuVucDuocChon.bucXa);
+          }
+        } else {
+          // Update chart data
+          updateChartColumn(chartArea, this.khuVucDuocChon.bucXa);
+        }
+        
+        if (!chartEnergy && this.ketQua) {
+          const energyCanvas = document.getElementById('chart-energy');
+          if (energyCanvas) {
+            chartEnergy = initChart(energyCanvas, data.labels[this.ngonNgu].sanLuong.chartjs);
+            updateChartColumn(chartEnergy, this.ketQua.sanLuongTieuThu);
+          }
+        } else if (chartEnergy && this.ketQua) {
+          // Update chart data
+          updateChartColumn(chartEnergy, this.ketQua.sanLuongTieuThu);
+        }
+        
+        // Wait for charts to fully render
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
         const page = new window.jspdf.jsPDF()
         const width = 210
         const margin = 10
@@ -198,9 +233,21 @@ var app = new Vue({
         })
 
         page.save(this.nhan.pdf.tenTep)
+        
+        // Restore tab visibility
+        tabPanels.forEach(panel => {
+          panel.style.display = '';
+        });
+        
       } catch (error) {
         console.log(error);
         alert(this.nhan.pdf.canhBao)
+        
+        // Restore tab visibility on error
+        const tabPanels = document.querySelectorAll('.tab-panel');
+        tabPanels.forEach(panel => {
+          panel.style.display = '';
+        });
       }
     }
   },
