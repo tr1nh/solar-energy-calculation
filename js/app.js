@@ -25,6 +25,7 @@ var app = new Vue({
       inverterPhuHop: [],
       giaInverter: 0,
       thangDuocChon: 0,
+      activeTab: 'area', // Tab navigation state
     }
   },
   beforeMount: async function() {
@@ -50,9 +51,17 @@ var app = new Vue({
   },
   mounted: function () {
     Chart.defaults.global.legend.display = false;
+    Chart.defaults.global.defaultFontFamily = 'Inter, sans-serif';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.defaultFontColor = '#374151';
 
-    chartArea = initChart(document.getElementById('chart-area'), data.labels.vi.khuVuc.bucXaTheoThang.chartjs)
-    chartEnergy = initChart(document.getElementById('chart-energy'), data.labels.vi.sanLuong.chartjs)
+    // Initialize chart for area tab (visible by default)
+    this.$nextTick(() => {
+      const areaCanvas = document.getElementById('chart-area');
+      if (areaCanvas) {
+        chartArea = initChart(areaCanvas, data.labels.vi.khuVuc.bucXaTheoThang.chartjs);
+      }
+    });
   },
   methods: {
     chinhGiaPin: function(e) {
@@ -74,8 +83,12 @@ var app = new Vue({
       this.ngonNgu = (this.ngonNgu === 'en') ? 'vi' : 'en'
       updateObject(this.nhan, data.labels[this.ngonNgu])
 
-      updateChartLabel(chartArea, data.labels[this.ngonNgu].khuVuc.bucXaTheoThang.chartjs)
-      updateChartLabel(chartEnergy, data.labels[this.ngonNgu].sanLuong.chartjs)
+      if (chartArea) {
+        updateChartLabel(chartArea, data.labels[this.ngonNgu].khuVuc.bucXaTheoThang.chartjs)
+      }
+      if (chartEnergy) {
+        updateChartLabel(chartEnergy, data.labels[this.ngonNgu].sanLuong.chartjs)
+      }
 
       document.documentElement.setAttribute('lang', this.ngonNgu)
       document.title = this.nhan.tieuDe
@@ -189,8 +202,6 @@ var app = new Vue({
       let giaDien = this.congSuatTieuThuThang > 401 ? 3015 : this.congSuatTieuThuThang >= 301 ? 2919 : this.congSuatTieuThuThang >= 201 ? 2612 : this.congSuatTieuThuThang >= 101 ? 2072 : this.congSuatTieuThuThang >= 51 ? 1786 : 1728;
       let soNamHoanVon = Math.floor(tongVonDauTu / (sanLuong1TamPin * giaDien * 12 * soLuongPin));
 
-      updateChartColumn(chartEnergy, sanLuongTieuThu);
-
       return { soLuongPin ,tongDienTichPin ,sanLuongTieuThu ,congSuatLapDat ,dienTichLapDat ,tongSanLuongTieuThu ,tongChiPhiPin, tongVonDauTu, soNamHoanVon };
     },
     pinDuocChon: function () {
@@ -199,6 +210,38 @@ var app = new Vue({
     inverterDuocChon: function () {
       return this.inverterPhuHop.find(item => item.gia == giaInverter);
     },
+  },
+  watch: {
+    // Initialize energy chart when results are available
+    ketQua: function(newVal) {
+      if (newVal && newVal.sanLuongTieuThu) {
+        this.$nextTick(() => {
+          const energyCanvas = document.getElementById('chart-energy');
+          if (energyCanvas && !chartEnergy) {
+            // Initialize chart if not exists
+            chartEnergy = initChart(energyCanvas, data.labels[this.ngonNgu].sanLuong.chartjs);
+          }
+          if (chartEnergy) {
+            // Update chart data
+            updateChartColumn(chartEnergy, newVal.sanLuongTieuThu);
+          }
+        });
+      }
+    },
+    // Ensure energy chart is initialized when switching to results tab
+    activeTab: function(newTab) {
+      if (newTab === 'results' && this.ketQua) {
+        this.$nextTick(() => {
+          const energyCanvas = document.getElementById('chart-energy');
+          if (energyCanvas && !chartEnergy) {
+            chartEnergy = initChart(energyCanvas, data.labels[this.ngonNgu].sanLuong.chartjs);
+            if (this.ketQua.sanLuongTieuThu) {
+              updateChartColumn(chartEnergy, this.ketQua.sanLuongTieuThu);
+            }
+          }
+        });
+      }
+    }
   }
 })
 
@@ -209,12 +252,37 @@ function initChart(element, data) {
     type: 'bar',
     data: data,
     options: {
+      responsive: true,
+      maintainAspectRatio: true,
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            fontColor: '#6b7280',
+            fontSize: 12
+          },
+          gridLines: {
+            color: 'rgba(156, 163, 175, 0.2)',
+            borderDash: [5, 5]
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            fontColor: '#6b7280',
+            fontSize: 12
+          },
+          gridLines: {
+            display: false
           }
         }]
+      },
+      tooltips: {
+        backgroundColor: 'rgba(17, 24, 39, 0.9)',
+        titleFontSize: 13,
+        bodyFontSize: 13,
+        cornerRadius: 8,
+        displayColors: false,
+        padding: 12
       }
     }
   })
@@ -229,8 +297,10 @@ function timKhuVuc(tatCaKhuVuc, chuoiTimKiem) {
 }
 
 function updateChartColumn(instance, data) {
-  instance.data.datasets[0].data = data
-  instance.update()
+  if (instance && instance.data && instance.data.datasets[0]) {
+    instance.data.datasets[0].data = data
+    instance.update()
+  }
 }
 
 function updateObject(obj1, obj2) {
@@ -243,11 +313,13 @@ function updateObject(obj1, obj2) {
 }
 
 function updateChartLabel(instance, data) {
-  let temporaryData = Object.assign({}, data)
-  temporaryData.datasets[0].data = instance.data.datasets[0].data
+  if (instance && instance.data) {
+    let temporaryData = Object.assign({}, data)
+    temporaryData.datasets[0].data = instance.data.datasets[0].data
 
-  instance.data = temporaryData
-  instance.update()
+    instance.data = temporaryData
+    instance.update()
+  }
 }
 
 function tinhTong(mang) {

@@ -5,327 +5,545 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Performance of rooftop Photovoltaic Systems in Vietnam</title>
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/style.css" />
+    
+    <!-- Tailwind Custom Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              'poppins': ['Poppins', 'sans-serif'],
+              'inter': ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'solar-green': '#10b981',
+              'solar-blue': '#2563eb',
+            }
+          }
+        }
+      }
+    </script>
   </head>
 
-  <body>
+  <body class="bg-gray-50 font-inter">
     <div id="app" v-cloak>
-      <div
-        class="row clear-fix"
-        style="position: absolute; width: 100%; justify-content: flex-end;"
-      >
-        <a id="button-pdf" v-on:click="xuatPDF">PDF</a>
-        <a id="button-lang" v-on:click="doiNgonNgu"
-          >{{(ngonNgu === "vi" ? "English" : "Tiếng Việt")}}</a
-        >
-      </div>
-
-      <div class="row clear-fix" id="row--area">
-        <div class="row__title">
-          <div class="web-title">
-            <img
-              style="max-width: 5em; max-height: 5em; margin-right: 0.5em;"
-              src="./images/logo-so-khoa-hoc-cong-nghe-tinh-dong-nai.png"
-              alt="logo-so-khoa-hoc-cong-nghe-tinh-dong-nai"
-            />
-            <img
-              style="max-width: 5em; max-height: 5em; margin-right: 1em;"
-              src="./images/logo-so-cong-thuong-tinh-dong-nai.png"
-              alt="logo-so-cong-thuong-tinh-dong-nai"
-            />
-            <h1 style="text-transform: uppercase;">{{nhan.khuVuc.tieuDe}}</h1>
-          </div>
-          <p style="white-space: pre-line;">{{nhan.khuVuc.mieuTa}}</p>
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <div class="card__media" id="card__media--area"></div>
-            <div class="card__title">{{nhan.khuVuc.chonKhuVuc.tieuDe}}</div>
-
-            <div class="card__body">
-              <form>
-                <div class="form__input-group">
-                  <label class="form__label" for="area-name">
-                    {{nhan.khuVuc.chonKhuVuc.mieuTa}}
-                  </label>
-                  <input
-                    class="form__input-text"
-                    type="text"
-                    v-on:input="timKhuVuc"
-                    list="datalist-area"
-                  />
-                  <datalist id="datalist-area">
-                    <option
-                      v-for="(khuVuc, index) in danhSachKhuVuc"
-                      v-bind:key="index"
-                      v-bind:tabindex="index"
-                      v-bind:value="khuVuc.ten"
-                    >
-                    </option>
-                  </datalist>
-                </div>
-              </form>
+      
+      <!-- Fixed Header -->
+      <header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-green-500 to-blue-600 shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+          <div class="flex items-center justify-between">
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-4">
+              <img
+                class="h-12 w-12 md:h-14 md:w-14 object-contain"
+                src="./images/logo-so-khoa-hoc-cong-nghe-tinh-dong-nai.png"
+                alt="Logo Sở Khoa học"
+              />
+              <img
+                class="h-12 w-12 md:h-14 md:w-14 object-contain"
+                src="./images/logo-so-cong-thuong-tinh-dong-nai.png"
+                alt="Logo Sở Công thương"
+              />
+              <h1 class="hidden md:block text-white font-poppins font-bold text-lg lg:text-xl">
+                {{nhan.khuVuc.tieuDe}}
+              </h1>
             </div>
-          </div>
-        </div>
-
-        <div class="column column--right">
-          <div class="card" id="card--result-area">
-            <div class="card__title">{{nhan.khuVuc.bucXaTheoNam.tieuDe}}</div>
-            <div class="card__body">
-              <table id="area-detail">
-                <thead>
-                  <tr>
-                    <td>{{nhan.khuVuc.bucXaTheoNam.viTri}}</td>
-                    <td>{{nhan.khuVuc.bucXaTheoNam.bucXa}}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{khuVucDuocChon.ten}}</td>
-                    <td>{{tongBucXa}}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <br />
-              <h2>{{nhan.khuVuc.bucXaTheoThang.tieuDe}}</h2>
-              <div style="width: 100%;">
-                <canvas id="chart-area"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row clear-fix" id="row--energy">
-        <div class="row__title">
-          <h1>{{nhan.pin.tieuDe}}</h1>
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <div class="card__media" id="card__media--pin"></div>
-
-            <div class="card__title">{{nhan.pin.dauVao.tieuDe}}</div>
-            <div class="card__body">
-              <form>
-                <div class="form__input-group">
-                  <label class="form__label" for="power-plan"
-                    >{{nhan.pin.dauVao.congSuatTieuThu}}</label
-                  >
-                  <input
-                    class="form__input-text"
-                    type="number"
-                    name="power-plan"
-                    id="power-plan"
-                    value="1000"
-                    v-model="congSuatTieuThuThang"
-                  />
-                </div>
-                <div class="form__input-group">
-                  <label class="form__label" for="pin-type">
-                    {{nhan.pin.dauVao.loaiPin}}
-                  </label>
-                  <select
-                    class="form__input-select"
-                    name="pin-type"
-                    id="pin-type"
-                    v-model="maPinDuocChon"
-                    @change="layGiaPinMacDinh"
-                  >
-                    <option
-                      v-for="(pin,index) in danhSachPin"
-                      v-bind:key="index"
-                      v-bind:value="pin.maSanPham"
-                    >
-                      {{pin.maSanPham}}
-                    </option>
-                  </select>
-                </div>
-                <div class="form__input-group">
-                  <label class="form__label" for="power-plan"
-                    >{{nhan.pin.dauVao.giaPin}}</label
-                  >
-                  <input
-                    class="form__input-text"
-                    type="number"
-                    name="power-plan"
-                    id="power-plan"
-                    value="1000"
-                    @change="chinhGiaPin"
-                    v-model="giaPin"
-                  />
-                </div>
-                <div class="form__input-group">
-                  <label class="form__label">
-                    {{nhan.pin.dauVao.heSoTonThat}}
-                  </label>
-                  <input
-                    class="form__input-text"
-                    type="number"
-                    min="0.5"
-                    max="0.9"
-                    step="0.05"
-                    v-model="heSoTonThat"
-                  />
-                </div>
-                <div class="form__input-group">
-                  <label class="form__label" for="pin-type">
-                    {{nhan.pin.dauVao.thang}}
-                  </label>
-                  <select
-                    class="form__input-select"
-                    name="pin-type"
-                    id="pin-type"
-                    v-model="thangDuocChon"
-                  >
-                    <option
-                      v-for="(index) in [0,1,2,3,4,5,6,7,8,9,10,11]"
-                      v-bind:key="index"
-                      v-bind:value="index"
-                    >
-                      {{index + 1}}
-                    </option>
-                  </select>
-                </div>
-                <div class="form__input-group">
-                  <label class="form__label" for="pin-type">Inverter</label>
-                  <select
-                    class="form__input-select"
-                    name="pin-type"
-                    id="pin-type"
-                    v-model="giaInverter"
-                  >
-                    <option
-                      v-for="(inverter,index) in inverterPhuHop"
-                      v-bind:key="index"
-                      v-bind:value="inverter.gia"
-                    >
-                      {{inverter.congSuat}}
-                    </option>
-                  </select>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class="column column--right">
-          <div class="card">
-            <div class="card__title">{{nhan.pin.thongTin.tieuDe}}</div>
-            <div class="card__body">
-              <span v-if="!ketQua">{{nhan.pin.thongTin.mieuTa}}</span>
-              <table id="pin-detail" v-else>
-                <tr>
-                  <td>
-                    {{nhan.pin.thongTin.bang.maSanPham}}
-                  </td>
-                  <td>{{pinDuocChon.maSanPham}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.pmax}}</td>
-                  <td>{{pinDuocChon.pmax}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.vmp}}</td>
-                  <td>{{pinDuocChon.vmp}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.imp}}</td>
-                  <td>{{pinDuocChon.imp}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.voc}}</td>
-                  <td>{{pinDuocChon.voc}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.isc}}</td>
-                  <td>{{pinDuocChon.isc}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.hieuSuat}}</td>
-                  <td>{{pinDuocChon.hieuSuat}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.nhietDoHoatDong}}</td>
-                  <td>{{pinDuocChon.nhietDoHoatDong}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.dienApToiDa}}</td>
-                  <td>{{pinDuocChon.dienApToiDa}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.loaiVatLieu}}</td>
-                  <td>{{pinDuocChon.loaiVatLieu}}</td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.kichThuoc}}</td>
-                  <td>
-                    {{pinDuocChon.chieuDai}} x {{pinDuocChon.chieuRong}} x
-                    {{pinDuocChon.chieuCao}} (mm)
-                  </td>
-                </tr>
-                <tr>
-                  <td>{{nhan.pin.thongTin.bang.trongLuong}}</td>
-                  <td>{{pinDuocChon.trongLuong}}</td>
-                </tr>
-              </table>
-
-              <span v-if="!ketQua"></span>
-              <div v-else>
-                <h2>{{nhan.pin.ketQua.tieuDe}}</h2>
-                <table>
-                  <tr>
-                    <td>{{nhan.pin.ketQua.soLuong}}</td>
-                    <td>{{ketQua.soLuongPin}}</td>
-                  </tr>
-                  <tr>
-                    <td>{{nhan.pin.ketQua.tongDienTich}}</td>
-                    <td>{{ketQua.tongDienTichPin}} (m<sup>2</sup>)</td>
-                  </tr>
-                  <tr>
-                    <td>{{nhan.pin.ketQua.tongSanLuong}}</td>
-                    <td>{{ketQua.tongSanLuongTieuThu}} (kWh)</td>
-                  </tr>
-                  <tr>
-                    <td>{{nhan.pin.ketQua.tongVon}}</td>
-                    <td>
-                      {{Number(ketQua.tongVonDauTu).toLocaleString("us-US")}}
-                      (VNĐ)
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>{{nhan.pin.ketQua.soNamHoanVon}}</td>
-                    <td>{{ketQua.soNamHoanVon}}</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row" id="row--result" v-show="ketQua">
-        <div class="row__title">
-          <h1>{{nhan.sanLuong.tieuDe}} (kWh)</h1>
-        </div>
-        <div class="column column--100">
-          <div class="card">
-            <div class="card__title"></div>
-            <div class="card__body">
-              <div
-                id="chart__container--result"
-                style="position: relative; width: 70vw; margin: 0 auto;"
+            
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-2 md:space-x-3">
+              <button 
+                @click="xuatPDF"
+                class="flex items-center space-x-2 bg-white text-green-600 px-3 py-2 md:px-4 md:py-2 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 hover:scale-105 shadow-md"
               >
-                <canvas id="chart-energy"></canvas>
-              </div>
+                <i class="fas fa-file-pdf"></i>
+                <span class="hidden md:inline">PDF</span>
+              </button>
+              <button 
+                @click="doiNgonNgu"
+                class="flex items-center space-x-2 bg-white text-blue-600 px-3 py-2 md:px-4 md:py-2 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 hover:scale-105 shadow-md"
+              >
+                <i class="fas fa-language"></i>
+                <span class="hidden md:inline">{{(ngonNgu === "vi" ? "English" : "Tiếng Việt")}}</span>
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      </header>
+
+      <!-- Main Content (with top margin for fixed header) -->
+      <main class="pt-24 md:pt-28">
+        
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-br from-green-50 to-blue-50 py-12 md:py-16">
+          <div class="container mx-auto px-4">
+            <div class="text-center max-w-4xl mx-auto">
+              <h2 class="text-3xl md:text-4xl lg:text-5xl font-poppins font-bold mb-6">
+                <span class="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                  {{nhan.khuVuc.tieuDe}}
+                </span>
+              </h2>
+              <p class="text-gray-600 text-base md:text-lg leading-relaxed whitespace-pre-line">
+                {{nhan.khuVuc.mieuTa}}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tabs Navigation -->
+        <section class="container mx-auto px-4 py-8">
+          
+          <!-- Desktop Tabs -->
+          <div class="hidden md:flex justify-center mb-8">
+            <div class="inline-flex bg-white rounded-xl shadow-lg p-2 space-x-2">
+              <button
+                @click="activeTab = 'area'"
+                :class="activeTab === 'area' ? 'bg-gradient-to-r from-green-500 to-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'"
+                class="flex items-center space-x-3 px-6 py-3 rounded-lg font-semibold transition-all duration-200"
+              >
+                <i class="fas fa-map-marker-alt text-xl"></i>
+                <span>{{nhan.tabs ? nhan.tabs.area : 'Khu vực'}}</span>
+              </button>
+              <button
+                @click="activeTab = 'calculation'"
+                :class="activeTab === 'calculation' ? 'bg-gradient-to-r from-green-500 to-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'"
+                class="flex items-center space-x-3 px-6 py-3 rounded-lg font-semibold transition-all duration-200"
+              >
+                <i class="fas fa-calculator text-xl"></i>
+                <span>{{nhan.tabs ? nhan.tabs.calculation : 'Tính toán'}}</span>
+              </button>
+              <button
+                @click="activeTab = 'results'"
+                :class="activeTab === 'results' ? 'bg-gradient-to-r from-green-500 to-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100'"
+                class="flex items-center space-x-3 px-6 py-3 rounded-lg font-semibold transition-all duration-200"
+                :disabled="!ketQua"
+              >
+                <i class="fas fa-chart-line text-xl"></i>
+                <span>{{nhan.tabs ? nhan.tabs.results : 'Kết quả'}}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile Dropdown -->
+          <div class="md:hidden mb-8">
+            <select 
+              v-model="activeTab"
+              class="w-full px-4 py-3 rounded-xl shadow-lg border-2 border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200 font-semibold text-gray-700"
+            >
+              <option value="area">📍 {{nhan.tabs ? nhan.tabs.area : 'Khu vực'}}</option>
+              <option value="calculation">🧮 {{nhan.tabs ? nhan.tabs.calculation : 'Tính toán'}}</option>
+              <option value="results" :disabled="!ketQua">📊 {{nhan.tabs ? nhan.tabs.results : 'Kết quả'}}</option>
+            </select>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="tab-content">
+            
+            <!-- TAB 1: Area Selection -->
+            <div v-show="activeTab === 'area'" class="tab-panel fade-in">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Left Card: Area Input -->
+                <div class="card-modern">
+                  <!-- Icon Header -->
+                  <div class="flex items-center justify-center h-32 bg-gradient-to-br from-green-400 to-blue-500 rounded-t-xl">
+                    <i class="fas fa-solar-panel text-6xl text-white opacity-90"></i>
+                  </div>
+                  
+                  <div class="p-6">
+                    <h3 class="text-2xl font-poppins font-bold text-gray-800 mb-4">
+                      {{nhan.khuVuc.chonKhuVuc.tieuDe}}
+                    </h3>
+                    
+                    <!-- Search Input -->
+                    <div class="relative">
+                      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                      </div>
+                      <input
+                        type="text"
+                        v-on:input="timKhuVuc"
+                        list="datalist-area"
+                        :placeholder="nhan.khuVuc.chonKhuVuc.mieuTa"
+                        class="input-modern pl-12"
+                      />
+                      <datalist id="datalist-area">
+                        <option
+                          v-for="(khuVuc, index) in danhSachKhuVuc"
+                          :key="index"
+                          :value="khuVuc.ten"
+                        ></option>
+                      </datalist>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Card: Area Results -->
+                <div class="card-modern">
+                  <div class="p-6">
+                    <h3 class="text-2xl font-poppins font-bold text-gray-800 mb-6">
+                      {{nhan.khuVuc.bucXaTheoNam.tieuDe}}
+                    </h3>
+                    
+                    <!-- Summary Table -->
+                    <div class="overflow-hidden rounded-lg border border-gray-200 mb-6">
+                      <table class="w-full">
+                        <thead class="bg-gradient-to-r from-green-500 to-blue-600 text-white">
+                          <tr>
+                            <th class="px-4 py-3 text-left font-semibold">{{nhan.khuVuc.bucXaTheoNam.viTri}}</th>
+                            <th class="px-4 py-3 text-left font-semibold">{{nhan.khuVuc.bucXaTheoNam.bucXa}}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="bg-white hover:bg-green-50 transition-colors duration-150">
+                            <td class="px-4 py-3 border-t border-gray-200">{{khuVucDuocChon.ten || '—'}}</td>
+                            <td class="px-4 py-3 border-t border-gray-200 font-semibold text-green-600">{{tongBucXa}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <!-- Monthly Chart -->
+                    <h4 class="text-lg font-poppins font-semibold text-gray-700 mb-4">
+                      {{nhan.khuVuc.bucXaTheoThang.tieuDe}}
+                    </h4>
+                    <div class="chart-container">
+                      <canvas id="chart-area"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- TAB 2: Calculation -->
+            <div v-show="activeTab === 'calculation'" class="tab-panel fade-in">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- Left Card: Input Parameters -->
+                <div class="card-modern">
+                  <!-- Icon Header -->
+                  <div class="flex items-center justify-center h-32 bg-gradient-to-br from-blue-400 to-green-500 rounded-t-xl">
+                    <i class="fas fa-calculator text-6xl text-white opacity-90"></i>
+                  </div>
+                  
+                  <div class="p-6">
+                    <h3 class="text-2xl font-poppins font-bold text-gray-800 mb-6">
+                      {{nhan.pin.dauVao.tieuDe}}
+                    </h3>
+
+                    <form class="space-y-5">
+                      <!-- Monthly Power Consumption -->
+                      <div class="input-group">
+                        <label class="input-label">
+                          <i class="fas fa-bolt text-yellow-500"></i>
+                          {{nhan.pin.dauVao.congSuatTieuThu}}
+                        </label>
+                        <input
+                          type="number"
+                          v-model="congSuatTieuThuThang"
+                          placeholder="1000"
+                          class="input-modern"
+                        />
+                      </div>
+
+                      <!-- Panel Type -->
+                      <div class="input-group">
+                        <label class="input-label">
+                          <i class="fas fa-solar-panel text-blue-500"></i>
+                          {{nhan.pin.dauVao.loaiPin}}
+                        </label>
+                        <select
+                          v-model="maPinDuocChon"
+                          @change="layGiaPinMacDinh"
+                          class="input-modern"
+                        >
+                          <option
+                            v-for="(pin,index) in danhSachPin"
+                            :key="index"
+                            :value="pin.maSanPham"
+                          >
+                            {{pin.maSanPham}}
+                          </option>
+                        </select>
+                      </div>
+
+                      <!-- Panel Price -->
+                      <div class="input-group">
+                        <label class="input-label">
+                          <i class="fas fa-coins text-green-500"></i>
+                          {{nhan.pin.dauVao.giaPin}}
+                        </label>
+                        <input
+                          type="number"
+                          v-model="giaPin"
+                          @change="chinhGiaPin"
+                          placeholder="1000"
+                          class="input-modern"
+                        />
+                      </div>
+
+                      <!-- Loss Factor -->
+                      <div class="input-group">
+                        <label class="input-label">
+                          <i class="fas fa-percentage text-red-500"></i>
+                          {{nhan.pin.dauVao.heSoTonThat}}
+                        </label>
+                        <input
+                          type="number"
+                          v-model="heSoTonThat"
+                          min="0.5"
+                          max="0.9"
+                          step="0.05"
+                          class="input-modern"
+                        />
+                      </div>
+
+                      <!-- Month Selection -->
+                      <div class="input-group">
+                        <label class="input-label">
+                          <i class="fas fa-calendar-alt text-purple-500"></i>
+                          {{nhan.pin.dauVao.thang}}
+                        </label>
+                        <select
+                          v-model="thangDuocChon"
+                          class="input-modern"
+                        >
+                          <option
+                            v-for="(index) in [0,1,2,3,4,5,6,7,8,9,10,11]"
+                            :key="index"
+                            :value="index"
+                          >
+                            {{index + 1}}
+                          </option>
+                        </select>
+                      </div>
+
+                      <!-- Inverter -->
+                      <div class="input-group">
+                        <label class="input-label">
+                          <i class="fas fa-plug text-indigo-500"></i>
+                          Inverter
+                        </label>
+                        <select
+                          v-model="giaInverter"
+                          class="input-modern"
+                        >
+                          <option
+                            v-for="(inverter,index) in inverterPhuHop"
+                            :key="index"
+                            :value="inverter.gia"
+                          >
+                            {{inverter.congSuat}}
+                          </option>
+                        </select>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <!-- Right Card: Panel Info & Results -->
+                <div class="card-modern">
+                  <div class="p-6">
+                    <h3 class="text-2xl font-poppins font-bold text-gray-800 mb-6">
+                      {{nhan.pin.thongTin.tieuDe}}
+                    </h3>
+
+                    <!-- Panel Details -->
+                    <div v-if="!ketQua" class="flex items-center justify-center h-64 text-gray-400">
+                      <div class="text-center">
+                        <i class="fas fa-info-circle text-6xl mb-4"></i>
+                        <p>{{nhan.pin.thongTin.mieuTa}}</p>
+                      </div>
+                    </div>
+
+                    <div v-else class="space-y-6">
+                      <!-- Panel Specifications -->
+                      <div class="overflow-hidden rounded-lg border border-gray-200">
+                        <table class="w-full text-sm">
+                          <tbody>
+                            <tr class="bg-gray-50 hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.maSanPham}}</td>
+                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.maSanPham}}</td>
+                            </tr>
+                            <tr class="bg-white hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.pmax}}</td>
+                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.pmax}}</td>
+                            </tr>
+                            <tr class="bg-gray-50 hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.vmp}}</td>
+                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.vmp}}</td>
+                            </tr>
+                            <tr class="bg-white hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.imp}}</td>
+                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.imp}}</td>
+                            </tr>
+                            <tr class="bg-gray-50 hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.voc}}</td>
+                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.voc}}</td>
+                            </tr>
+                            <tr class="bg-white hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.isc}}</td>
+                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.isc}}</td>
+                            </tr>
+                            <tr class="bg-gray-50 hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.hieuSuat}}</td>
+                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.hieuSuat}}</td>
+                            </tr>
+                            <tr class="bg-white hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.kichThuoc}}</td>
+                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.chieuDai}} x {{pinDuocChon.chieuRong}} x {{pinDuocChon.chieuCao}} (mm)</td>
+                            </tr>
+                            <tr class="bg-gray-50 hover:bg-green-50 transition-colors duration-150">
+                              <td class="px-4 py-2 font-medium text-gray-700">{{nhan.pin.thongTin.bang.trongLuong}}</td>
+                              <td class="px-4 py-2 text-gray-900">{{pinDuocChon.trongLuong}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <!-- Calculation Results -->
+                      <div>
+                        <h4 class="text-xl font-poppins font-semibold text-gray-800 mb-4">
+                          {{nhan.pin.ketQua.tieuDe}}
+                        </h4>
+                        <div class="grid grid-cols-1 gap-3">
+                          <div class="result-card">
+                            <div class="flex items-center space-x-3">
+                              <div class="icon-circle bg-blue-100 text-blue-600">
+                                <i class="fas fa-solar-panel"></i>
+                              </div>
+                              <div class="flex-1">
+                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.soLuong}}</p>
+                                <p class="text-xl font-bold text-gray-900">{{ketQua.soLuongPin}}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="result-card">
+                            <div class="flex items-center space-x-3">
+                              <div class="icon-circle bg-green-100 text-green-600">
+                                <i class="fas fa-ruler-combined"></i>
+                              </div>
+                              <div class="flex-1">
+                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongDienTich}}</p>
+                                <p class="text-xl font-bold text-gray-900">{{ketQua.tongDienTichPin}} m²</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="result-card">
+                            <div class="flex items-center space-x-3">
+                              <div class="icon-circle bg-yellow-100 text-yellow-600">
+                                <i class="fas fa-bolt"></i>
+                              </div>
+                              <div class="flex-1">
+                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongSanLuong}}</p>
+                                <p class="text-xl font-bold text-gray-900">{{ketQua.tongSanLuongTieuThu}} kWh</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="result-card">
+                            <div class="flex items-center space-x-3">
+                              <div class="icon-circle bg-purple-100 text-purple-600">
+                                <i class="fas fa-coins"></i>
+                              </div>
+                              <div class="flex-1">
+                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongVon}}</p>
+                                <p class="text-xl font-bold text-gray-900">{{Number(ketQua.tongVonDauTu).toLocaleString("en-US")}} VNĐ</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="result-card">
+                            <div class="flex items-center space-x-3">
+                              <div class="icon-circle bg-red-100 text-red-600">
+                                <i class="fas fa-calendar-check"></i>
+                              </div>
+                              <div class="flex-1">
+                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.soNamHoanVon}}</p>
+                                <p class="text-xl font-bold text-gray-900">{{ketQua.soNamHoanVon}} năm</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- CTA Button -->
+                      <button
+                        @click="activeTab = 'results'"
+                        class="w-full btn-primary"
+                      >
+                        <i class="fas fa-chart-line mr-2"></i>
+                        Xem chi tiết kết quả
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- TAB 3: Results -->
+            <div v-show="activeTab === 'results'" class="tab-panel fade-in">
+              <div v-if="!ketQua" class="card-modern p-12">
+                <div class="text-center text-gray-400">
+                  <i class="fas fa-chart-line text-8xl mb-6"></i>
+                  <h3 class="text-2xl font-poppins font-semibold mb-2">Chưa có kết quả</h3>
+                  <p class="mb-6">Vui lòng hoàn thành các bước trước để xem kết quả tính toán</p>
+                  <button @click="activeTab = 'area'" class="btn-primary">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Quay lại
+                  </button>
+                </div>
+              </div>
+
+              <div v-else class="space-y-6">
+                <!-- Title -->
+                <div class="text-center">
+                  <h2 class="text-3xl font-poppins font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
+                    {{nhan.sanLuong.tieuDe}}
+                  </h2>
+                </div>
+
+                <!-- Chart Card -->
+                <div class="card-modern">
+                  <div class="p-6">
+                    <div class="chart-container-large">
+                      <canvas id="chart-energy"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Footer (Optional) -->
+      <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+          <p class="text-sm text-gray-400">
+            © 2024 Sở Khoa học & Công nghệ, Sở Công thương Đồng Nai
+          </p>
+        </div>
+      </footer>
+
     </div>
 
+    <!-- Scripts -->
     <script src="./js/data.js"></script>
     <script src="./vendor/chart/chart.min.js"></script>
     <script src="./vendor/lodash/lodash.js"></script>

@@ -2,6 +2,11 @@ const data = {
   labels: {
     vi: {
       tieuDe: "The Performance of rooftop Photovoltaic Systems in Vietnam",
+      tabs: {
+        area: "Khu vực",
+        calculation: "Tính toán",
+        results: "Kết quả"
+      },
       khuVuc: {
         tieuDe: "The Performance of rooftop Photovoltaic Systems in Vietnam",
         mieuTa:
@@ -35,8 +40,8 @@ const data = {
             datasets: [
               {
                 label: "Bức xạ mặt trời",
-                backgroundColor: "#ff9f43",
-                borderColor: "#ff9f43",
+                backgroundColor: "rgba(16, 185, 129, 0.8)",
+                borderColor: "rgb(16, 185, 129)",
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
               }
             ]
@@ -101,8 +106,8 @@ const data = {
           datasets: [
             {
               label: "Sản lượng",
-              backgroundColor: "#1e90ff",
-              borderColor: "#1e90ff",
+              backgroundColor: "rgba(37, 99, 235, 0.8)",
+              borderColor: "rgb(37, 99, 235)",
               data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             }
           ]
@@ -151,7 +156,11 @@ const data = {
     en: {
       tieuDe:
         "PERFORMANCE OF GRID-CONNECTED  ROOFTOP PHOTOVOLTAIC SYSTEM IN VIETNAM.Geographical Information",
-
+      tabs: {
+        area: "Area",
+        calculation: "Calculation",
+        results: "Results"
+      },
       khuVuc: {
         tieuDe:
           "PERFORMANCE OF GRID-CONNECTED  ROOFTOP PHOTOVOLTAIC SYSTEM IN VIETNAM",
@@ -185,8 +194,8 @@ const data = {
             datasets: [
               {
                 label: "Solar radiation level",
-                backgroundColor: "#ff9f43",
-                borderColor: "#ff9f43",
+                backgroundColor: "rgba(16, 185, 129, 0.8)",
+                borderColor: "rgb(16, 185, 129)",
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
               }
             ]
@@ -252,8 +261,8 @@ const data = {
           datasets: [
             {
               label: "Consumption volume",
-              backgroundColor: "#1e90ff",
-              borderColor: "#1e90ff",
+              backgroundColor: "rgba(37, 99, 235, 0.8)",
+              borderColor: "rgb(37, 99, 235)",
               data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             }
           ]

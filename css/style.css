@@ -1,228 +1,379 @@
+/* ========================================
+   Custom Styles for Solar Energy Calculator
+   Built with TailwindCSS CDN + Custom Enhancements
+   ======================================== */
+
+/* === Base Styles === */
 * {
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
 }
+
 body {
   margin: 0;
-  background-color: #fafafa;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* reuse */
-.clear-fix::after {
-  display: block;
-  content: "";
-  clear: both;
+/* === Vue Cloak === */
+[v-cloak] {
+  display: none !important;
 }
-.card {
-  height: 100%;
+
+/* === Modern Card Component === */
+.card-modern {
   background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transition-duration: 0.25s;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-/*
-.card:hover {
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-}
-*/
-.card__media {
-  width: 100%;
-  height: 200px;
-  border-radius: 4px 4px 0 0;
-}
-.card__title {
-  padding: 1em;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.card__body {
-  padding: 0 1.5em 1.5em 1.5em;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white),
+    linear-gradient(135deg, #10b981 0%, #2563eb 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
 
-.form__label {
-  display: block;
-  padding: 1em 0;
+.card-modern:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
 }
-.form__input-text {
-  display: block;
+
+/* === Input Components === */
+.input-modern {
   width: 100%;
-  padding: 0.5em;
-  font-size: 1em;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #d1d5db;
+  transition: all 0.2s ease;
+  color: #374151;
+  font-weight: 500;
+  outline: none;
 }
-.form__input-text:focus,
-.form__input-select:focus {
-  border-color: #66afe9;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-    0 0 8px rgba(102, 175, 233, 0.6);
+
+.input-modern:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  background-image: linear-gradient(white, white),
+    linear-gradient(135deg, #10b981 0%, #2563eb 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
-.form__input-select {
-  display: block;
-  width: 100%;
-  padding: 0.5em;
-  font-size: 1em;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+
+.input-group {
+  margin-bottom: 1rem;
 }
+
+.input-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+/* === Button Components === */
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(to right, #10b981, #2563eb);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: scale(1.05);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+/* === Result Cards === */
+.result-card {
+  background: linear-gradient(to bottom right, #f9fafb, white);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.result-card:hover {
+  border-color: #86efac;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.icon-circle {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* === Tab Animations === */
+.tab-panel {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* === Chart Containers === */
+.chart-container {
+  background: linear-gradient(to bottom right, #f9fafb, #dbeafe);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  position: relative;
+  min-height: 250px;
+}
+
+.chart-container-large {
+  background: linear-gradient(to bottom right, #ecfdf5, #dbeafe);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white),
+    linear-gradient(135deg, #10b981 0%, #2563eb 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  position: relative;
+  min-height: 400px;
+}
+
+/* === Table Enhancements === */
 table {
   width: 100%;
   border-collapse: collapse;
 }
-table tr td {
-  border: 1px solid #ccc;
-}
-table td {
-  padding: 0.5em;
+
+table thead {
+  background: linear-gradient(to right, #10b981, #2563eb);
+  color: white;
 }
 
-/* layout 2 page */
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.row__title {
-  width: 100%;
-  padding: 2em 2em 0 2em;
-}
-.column {
-  width: 50%;
-  padding: 2em;
-}
-.column--right {
-  padding-left: 0;
-}
-.column--100 {
-  width: 100%;
+table tbody tr {
+  transition: background-color 0.15s ease;
 }
 
-#button-pdf {
-  margin: 1em 0.5em;
+table tbody tr:nth-child(even) {
+  background-color: #f9fafb;
 }
 
-#button-lang {
-  margin: 1em 2em 0.5em 0.5em;
+table tbody tr:hover {
+  background-color: #ecfdf5;
 }
 
-#button-pdf:hover,
-#button-lang:hover {
-  cursor: pointer;
+table td,
+table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
 }
 
-/* title section */
-#section-title {
-  text-align: center;
-  background-color: #1e90ff;
+/* === Custom Scrollbar === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* area section */
-#section-area {
-  background-color: #48dbfb;
-}
-#card__media--area {
-  background: #ccc
-    url("https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80")
-    no-repeat center;
-  background-size: cover;
-}
-.list-area {
-  overflow-y: scroll;
-  margin-top: 1em;
-  background-color: white;
-  border: 1px solid #ccc;
+::-webkit-scrollbar-track {
+  background-color: #f3f4f6;
   border-radius: 4px;
-  position: relative;
-  flex: 1;
 }
-.list-area__scroll {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  scrollbar-width: none;
-  overflow: scroll;
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #4ade80, #3b82f6);
+  border-radius: 4px;
 }
-.list-area__scroll::-webkit-scrollbar {
-  display: none;
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #10b981, #2563eb);
 }
-.list-area__item {
-  display: block;
-  padding: 0.5em 1em;
+
+/* === Loading Spinner (Optional) === */
+.spinner {
+  border: 3px solid rgba(16, 185, 129, 0.1);
+  border-top-color: #10b981;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.8s linear infinite;
 }
-.list-area__item:hover {
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* === Gradient Text Utilities === */
+.text-gradient {
+  background: linear-gradient(to right, #059669, #2563eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* === Responsive Utilities === */
+@media (max-width: 640px) {
+  .card-modern {
+    border-radius: 0.5rem;
+  }
+
+  .chart-container {
+    min-height: 200px;
+  }
+
+  .chart-container-large {
+    min-height: 300px;
+    padding: 1rem;
+  }
+}
+
+/* === Focus Visible for Accessibility === */
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5);
+  border-radius: 0.25rem;
+}
+
+/* === Disabled State === */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  transform: scale(1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* === Select Dropdown Enhancement === */
+select.input-modern {
   cursor: pointer;
-  background-color: #dfe4ea;
-}
-#area-detail td {
-  text-align: center;
-}
-
-/* section of energy calculationg */
-#section-energy {
-  background-color: #0abde3;
-}
-#card__media--pin {
-  height: 300px;
-  background-color: #f2f2f2;
-  background-image: url("../images/solar-panel-3.png");
-  background-position: center;
-  background-size: 95%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2310b981'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-/* section of chart */
-#section-result {
-  background-color: #2e86de;
-}
-
-/* responsive */
-@media only screen and (max-width: 750px) {
-  .row {
-    height: auto;
-  }
-  .column {
-    width: 100%;
-    padding: 1em;
-  }
-  .column--right {
-    padding: 1em;
-  }
-  .card__media {
-    height: 150px;
-  }
-  .card__title {
-    padding: 0.5em;
-  }
-  .card__body {
-    /* height: calc(100% - 2em - 1.5em - 100px); */
-    padding: 0 1em 1em 1em;
-  }
-  #chart__container--result {
-    width: 100%;
-  }
-  .web-title {
-    display: flex;
-    flex-flow: column wrap;
-  }
-}
-
-[v-cloak] {
+/* === Datalist Enhancement === */
+input[list]::-webkit-calendar-picker-indicator {
   display: none;
 }
 
-.web-title {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+/* === Mobile Optimizations === */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  h1 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+/* === Print Styles === */
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  .card-modern {
+    box-shadow: none;
+    border: 1px solid #ccc !important;
+  }
+}
+
+/* === Smooth Scroll Behavior === */
+html {
+  scroll-behavior: smooth;
+}
+
+/* === Chart.js Canvas Responsive === */
+canvas {
+  max-width: 100%;
+  height: auto !important;
+}
+
+/* === Additional Utility Classes === */
+.bg-gradient-primary {
+  background: linear-gradient(to right, #10b981, #2563eb);
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(to bottom right, #ecfdf5, #dbeafe);
+}
+
+.border-gradient {
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white),
+    linear-gradient(135deg, #10b981 0%, #2563eb 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+/* === Transition Utilities === */
+.transition-all {
+  transition: all 0.2s ease;
+}
+
+.transition-transform {
+  transition: transform 0.2s ease;
+}
+
+/* === Shadow Utilities === */
+.shadow-custom {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-custom-lg {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-custom-xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
