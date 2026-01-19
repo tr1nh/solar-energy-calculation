@@ -40,8 +40,8 @@ const data = {
             datasets: [
               {
                 label: "Bức xạ mặt trời",
-                backgroundColor: "rgba(16, 185, 129, 0.8)",
-                borderColor: "rgb(16, 185, 129)",
+                backgroundColor: "rgba(37, 99, 235, 0.8)",
+                borderColor: "rgb(37, 99, 235)",
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
               }
             ]
@@ -194,8 +194,8 @@ const data = {
             datasets: [
               {
                 label: "Solar radiation level",
-                backgroundColor: "rgba(16, 185, 129, 0.8)",
-                borderColor: "rgb(16, 185, 129)",
+                backgroundColor: "rgba(37, 99, 235, 0.8)",
+                borderColor: "rgb(37, 99, 235)",
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
               }
             ]

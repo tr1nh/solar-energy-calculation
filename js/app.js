@@ -51,7 +51,7 @@ var app = new Vue({
   },
   mounted: function () {
     Chart.defaults.global.legend.display = false;
-    Chart.defaults.global.defaultFontFamily = 'Inter, sans-serif';
+    Chart.defaults.global.defaultFontFamily = 'Roboto, sans-serif';
     Chart.defaults.global.defaultFontSize = 13;
     Chart.defaults.global.defaultFontColor = '#374151';
 

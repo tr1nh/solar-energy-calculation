@@ -1,6 +1,6 @@
 /* ========================================
    Custom Styles for Solar Energy Calculator
-   Built with TailwindCSS CDN + Custom Enhancements
+   Professional Design System - No Gradients
    ======================================== */
 
 /* === Base Styles === */
@@ -19,44 +19,36 @@ body {
   display: none !important;
 }
 
-/* === Modern Card Component === */
-.card-modern {
+/* === Professional Card Component === */
+.card-professional {
   background-color: white;
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-  background-image: linear-gradient(white, white),
-    linear-gradient(135deg, #10b981 0%, #2563eb 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  transition: box-shadow 0.2s ease;
+  border: 1px solid #e5e7eb;
 }
 
-.card-modern:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  transform: translateY(-2px);
+.card-professional:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* === Input Components === */
-.input-modern {
+.input-professional {
   width: 100%;
   padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  border: 2px solid #d1d5db;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
   transition: all 0.2s ease;
   color: #374151;
-  font-weight: 500;
+  font-weight: 400;
   outline: none;
+  background-color: white;
 }
 
-.input-modern:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-  background-image: linear-gradient(white, white),
-    linear-gradient(135deg, #10b981 0%, #2563eb 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+.input-professional:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .input-group {
@@ -68,20 +60,20 @@ body {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #374151;
   margin-bottom: 0.5rem;
 }
 
 /* === Button Components === */
-.btn-primary {
+.btn-professional {
   padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  background: linear-gradient(to right, #10b981, #2563eb);
+  border-radius: 6px;
+  background-color: #2563eb;
   color: white;
-  font-weight: 600;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.2s ease;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -89,30 +81,28 @@ body {
   cursor: pointer;
 }
 
-.btn-primary:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  transform: scale(1.05);
+.btn-professional:hover {
+  background-color: #1d4ed8;
 }
 
-.btn-primary:active {
-  transform: scale(0.95);
+.btn-professional:active {
+  background-color: #1e40af;
 }
 
 /* === Result Cards === */
-.result-card {
-  background: linear-gradient(to bottom right, #f9fafb, white);
-  border-radius: 0.5rem;
+.result-professional {
+  background-color: white;
+  border-radius: 6px;
   padding: 1rem;
   border: 1px solid #e5e7eb;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
-.result-card:hover {
-  border-color: #86efac;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+.result-professional:hover {
+  border-color: #2563eb;
 }
 
-.icon-circle {
+.icon-professional {
   width: 3rem;
   height: 3rem;
   border-radius: 9999px;
@@ -121,6 +111,8 @@ body {
   justify-content: center;
   font-size: 1.25rem;
   flex-shrink: 0;
+  background-color: #eff6ff;
+  color: #2563eb;
 }
 
 /* === Tab Animations === */
@@ -144,24 +136,20 @@ body {
 }
 
 /* === Chart Containers === */
-.chart-container {
-  background: linear-gradient(to bottom right, #f9fafb, #dbeafe);
-  border-radius: 0.5rem;
+.chart-professional {
+  background-color: #f9fafb;
+  border-radius: 6px;
   padding: 1rem;
-  border: 2px solid #e5e7eb;
+  border: 1px solid #e5e7eb;
   position: relative;
   min-height: 250px;
 }
 
-.chart-container-large {
-  background: linear-gradient(to bottom right, #ecfdf5, #dbeafe);
-  border-radius: 0.5rem;
+.chart-professional-large {
+  background-color: white;
+  border-radius: 6px;
   padding: 1.5rem;
-  border: 2px solid transparent;
-  background-image: linear-gradient(white, white),
-    linear-gradient(135deg, #10b981 0%, #2563eb 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  border: 1px solid #e5e7eb;
   position: relative;
   min-height: 400px;
 }
@@ -173,7 +161,7 @@ table {
 }
 
 table thead {
-  background: linear-gradient(to right, #10b981, #2563eb);
+  background-color: #1e3a8a;
   color: white;
 }
 
@@ -186,7 +174,7 @@ table tbody tr:nth-child(even) {
 }
 
 table tbody tr:hover {
-  background-color: #ecfdf5;
+  background-color: #eff6ff;
 }
 
 table td,
@@ -207,18 +195,18 @@ table th {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #4ade80, #3b82f6);
+  background-color: #2563eb;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #10b981, #2563eb);
+  background-color: #1d4ed8;
 }
 
-/* === Loading Spinner (Optional) === */
+/* === Loading Spinner === */
 .spinner {
-  border: 3px solid rgba(16, 185, 129, 0.1);
-  border-top-color: #10b981;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2563eb;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -231,25 +219,17 @@ table th {
   }
 }
 
-/* === Gradient Text Utilities === */
-.text-gradient {
-  background: linear-gradient(to right, #059669, #2563eb);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 /* === Responsive Utilities === */
 @media (max-width: 640px) {
-  .card-modern {
-    border-radius: 0.5rem;
+  .card-professional {
+    border-radius: 6px;
   }
 
-  .chart-container {
+  .chart-professional {
     min-height: 200px;
   }
 
-  .chart-container-large {
+  .chart-professional-large {
     min-height: 300px;
     padding: 1rem;
   }
@@ -258,7 +238,7 @@ table th {
 /* === Focus Visible for Accessibility === */
 *:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
   border-radius: 0.25rem;
 }
 
@@ -269,14 +249,13 @@ button:disabled {
 }
 
 button:disabled:hover {
-  transform: scale(1);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: #2563eb;
 }
 
 /* === Select Dropdown Enhancement === */
-select.input-modern {
+select.input-professional {
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2310b981'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 1.5em 1.5em;
@@ -322,7 +301,7 @@ input[list]::-webkit-calendar-picker-indicator {
     display: none !important;
   }
 
-  .card-modern {
+  .card-professional {
     box-shadow: none;
     border: 1px solid #ccc !important;
   }
@@ -339,23 +318,6 @@ canvas {
   height: auto !important;
 }
 
-/* === Additional Utility Classes === */
-.bg-gradient-primary {
-  background: linear-gradient(to right, #10b981, #2563eb);
-}
-
-.bg-gradient-secondary {
-  background: linear-gradient(to bottom right, #ecfdf5, #dbeafe);
-}
-
-.border-gradient {
-  border: 2px solid transparent;
-  background-image: linear-gradient(white, white),
-    linear-gradient(135deg, #10b981 0%, #2563eb 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-}
-
 /* === Transition Utilities === */
 .transition-all {
   transition: all 0.2s ease;
@@ -366,14 +328,100 @@ canvas {
 }
 
 /* === Shadow Utilities === */
-.shadow-custom {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+.shadow-professional {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.shadow-custom-lg {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+.shadow-professional-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.shadow-custom-xl {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+.shadow-professional-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* === Backward Compatibility (Legacy Classes) === */
+/* Map old class names to new professional styles */
+.card-modern {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.input-modern {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  transition: all 0.2s ease;
+  color: #374151;
+  font-weight: 400;
+  outline: none;
+  background-color: white;
+}
+
+.input-modern:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.result-card {
+  background-color: white;
+  border-radius: 6px;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.2s ease;
+}
+
+.icon-circle {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.chart-container {
+  background-color: #f9fafb;
+  border-radius: 6px;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  position: relative;
+  min-height: 250px;
+}
+
+.chart-container-large {
+  background-color: white;
+  border-radius: 6px;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  position: relative;
+  min-height: 400px;
 }
