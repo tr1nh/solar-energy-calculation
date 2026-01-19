@@ -111,30 +111,82 @@
           <!-- Desktop Tabs -->
           <div class="hidden md:flex justify-center mb-8">
             <div class="inline-flex bg-white rounded-lg shadow-sm border border-gray-200 p-1 space-x-1">
+              <!-- Tab 1: Area Selection -->
               <button
-                @click="activeTab = 'area'"
-                :class="activeTab === 'area' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
-                class="flex items-center space-x-2 px-6 py-3 rounded-md font-medium transition-colors duration-200"
+                @click="navigateToTab('area')"
+                :class="[
+                  activeTab === 'area' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
+                  !canAccessStep.area ? 'opacity-50 cursor-not-allowed' : ''
+                ]"
+                :disabled="!canAccessStep.area"
+                class="flex items-center space-x-3 px-6 py-3 rounded-md font-medium transition-colors duration-200 relative"
               >
-                <i class="fas fa-map-marker-alt"></i>
-                <span>{{nhan.tabs ? nhan.tabs.area : 'Khu vực'}}</span>
+                <div class="flex items-center space-x-2">
+                  <span class="flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold"
+                        :class="activeTab === 'area' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
+                    <i v-if="isStepCompleted('area')" class="fas fa-check text-green-500"></i>
+                    <span v-else>1</span>
+                  </span>
+                  <div class="flex flex-col items-start">
+                    <span class="text-xs opacity-75">{{ngonNgu === 'vi' ? 'Bước 1/3' : 'Step 1/3'}}</span>
+                    <span class="flex items-center space-x-2">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>{{nhan.tabs ? nhan.tabs.area : 'Khu vực'}}</span>
+                    </span>
+                  </div>
+                </div>
               </button>
+              
+              <!-- Tab 2: Calculation -->
               <button
-                @click="activeTab = 'calculation'"
-                :class="activeTab === 'calculation' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
-                class="flex items-center space-x-2 px-6 py-3 rounded-md font-medium transition-colors duration-200"
+                @click="navigateToTab('calculation')"
+                :class="[
+                  activeTab === 'calculation' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
+                  !canAccessStep.calculation ? 'opacity-50 cursor-not-allowed' : ''
+                ]"
+                :disabled="!canAccessStep.calculation"
+                class="flex items-center space-x-3 px-6 py-3 rounded-md font-medium transition-colors duration-200 relative"
               >
-                <i class="fas fa-calculator"></i>
-                <span>{{nhan.tabs ? nhan.tabs.calculation : 'Tính toán'}}</span>
+                <div class="flex items-center space-x-2">
+                  <span class="flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold"
+                        :class="activeTab === 'calculation' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
+                    <i v-if="isStepCompleted('calculation')" class="fas fa-check text-green-500"></i>
+                    <span v-else>2</span>
+                  </span>
+                  <div class="flex flex-col items-start">
+                    <span class="text-xs opacity-75">{{ngonNgu === 'vi' ? 'Bước 2/3' : 'Step 2/3'}}</span>
+                    <span class="flex items-center space-x-2">
+                      <i class="fas fa-calculator"></i>
+                      <span>{{nhan.tabs ? nhan.tabs.calculation : 'Tính toán'}}</span>
+                    </span>
+                  </div>
+                </div>
               </button>
+              
+              <!-- Tab 3: Results -->
               <button
-                @click="activeTab = 'results'"
-                :class="activeTab === 'results' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50'"
-                class="flex items-center space-x-2 px-6 py-3 rounded-md font-medium transition-colors duration-200"
-                :disabled="!ketQua"
+                @click="navigateToTab('results')"
+                :class="[
+                  activeTab === 'results' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
+                  !canAccessStep.results ? 'opacity-50 cursor-not-allowed' : ''
+                ]"
+                :disabled="!canAccessStep.results"
+                class="flex items-center space-x-3 px-6 py-3 rounded-md font-medium transition-colors duration-200 relative"
               >
-                <i class="fas fa-chart-line"></i>
-                <span>{{nhan.tabs ? nhan.tabs.results : 'Kết quả'}}</span>
+                <div class="flex items-center space-x-2">
+                  <span class="flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold"
+                        :class="activeTab === 'results' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
+                    <i v-if="isStepCompleted('results')" class="fas fa-check text-green-500"></i>
+                    <span v-else>3</span>
+                  </span>
+                  <div class="flex flex-col items-start">
+                    <span class="text-xs opacity-75">{{ngonNgu === 'vi' ? 'Bước 3/3' : 'Step 3/3'}}</span>
+                    <span class="flex items-center space-x-2">
+                      <i class="fas fa-chart-line"></i>
+                      <span>{{nhan.tabs ? nhan.tabs.results : 'Kết quả'}}</span>
+                    </span>
+                  </div>
+                </div>
               </button>
             </div>
           </div>
@@ -143,11 +195,12 @@
           <div class="md:hidden mb-8">
             <select 
               v-model="activeTab"
+              @change="navigateToTab(activeTab)"
               class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 transition-all duration-200 font-medium text-gray-700 bg-white"
             >
-              <option value="area">📍 {{nhan.tabs ? nhan.tabs.area : 'Khu vực'}}</option>
-              <option value="calculation">🧮 {{nhan.tabs ? nhan.tabs.calculation : 'Tính toán'}}</option>
-              <option value="results" :disabled="!ketQua">📊 {{nhan.tabs ? nhan.tabs.results : 'Kết quả'}}</option>
+              <option value="area">📍 {{nhan.tabs ? nhan.tabs.area : 'Khu vực'}} (1/3)</option>
+              <option value="calculation" :disabled="!canAccessStep.calculation">🧮 {{nhan.tabs ? nhan.tabs.calculation : 'Tính toán'}} (2/3)</option>
+              <option value="results" :disabled="!canAccessStep.results">📊 {{nhan.tabs ? nhan.tabs.results : 'Kết quả'}} (3/3)</option>
             </select>
           </div>
 
@@ -228,6 +281,29 @@
                   </div>
                 </div>
 
+              </div>
+              
+              <!-- Next Step Button for Tab 1 -->
+              <div class="mt-8 flex items-center justify-between">
+                <div class="text-sm text-gray-500">
+                  <i class="fas fa-info-circle mr-2"></i>
+                  <span v-if="!isStep1Valid">{{ngonNgu === 'vi' ? 'Vui lòng chọn khu vực để tiếp tục' : 'Please select an area to continue'}}</span>
+                  <span v-else class="text-green-600 font-medium">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    {{ngonNgu === 'vi' ? 'Đã chọn khu vực' : 'Area selected'}}
+                  </span>
+                </div>
+                <button
+                  @click="goToNextStep"
+                  :disabled="!isStep1Valid"
+                  :class="[
+                    'btn-professional',
+                    !isStep1Valid ? 'opacity-50 cursor-not-allowed' : ''
+                  ]"
+                >
+                  <span>{{ngonNgu === 'vi' ? 'Tiếp theo: Tính toán' : 'Next: Calculation'}}</span>
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </button>
               </div>
             </div>
 
@@ -481,18 +557,41 @@
                         </div>
                       </div>
 
-                      <!-- CTA Button -->
-                      <button
-                        @click="activeTab = 'results'"
-                        class="w-full btn-professional"
-                      >
-                        <i class="fas fa-chart-line mr-2"></i>
-                        Xem chi tiết kết quả
-                      </button>
                     </div>
                   </div>
                 </div>
 
+              </div>
+              
+              <!-- Navigation Buttons for Tab 2 -->
+              <div class="mt-8 flex items-center justify-between">
+                <button
+                  @click="goToPreviousStep"
+                  class="flex items-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+                >
+                  <i class="fas fa-arrow-left"></i>
+                  <span>{{ngonNgu === 'vi' ? 'Quay lại' : 'Back'}}</span>
+                </button>
+                
+                <div class="flex-1 mx-6">
+                  <div class="text-sm text-center" :class="isStep2Valid ? 'text-green-600 font-medium' : 'text-gray-500'">
+                    <i :class="isStep2Valid ? 'fas fa-check-circle' : 'fas fa-info-circle'" class="mr-2"></i>
+                    <span v-if="!isStep2Valid">{{ngonNgu === 'vi' ? 'Vui lòng nhập đầy đủ thông số để tiếp tục' : 'Please enter all parameters to continue'}}</span>
+                    <span v-else>{{ngonNgu === 'vi' ? 'Đã nhập đầy đủ thông số' : 'All parameters entered'}}</span>
+                  </div>
+                </div>
+                
+                <button
+                  @click="goToNextStep"
+                  :disabled="!isStep2Valid"
+                  :class="[
+                    'btn-professional',
+                    !isStep2Valid ? 'opacity-50 cursor-not-allowed' : ''
+                  ]"
+                >
+                  <span>{{ngonNgu === 'vi' ? 'Xem kết quả' : 'View Results'}}</span>
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </button>
               </div>
             </div>
 
@@ -525,6 +624,17 @@
                       <canvas id="chart-energy"></canvas>
                     </div>
                   </div>
+                </div>
+                
+                <!-- Back Button for Tab 3 -->
+                <div class="flex justify-start">
+                  <button
+                    @click="goToPreviousStep"
+                    class="flex items-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 border border-gray-300"
+                  >
+                    <i class="fas fa-arrow-left"></i>
+                    <span>{{ngonNgu === 'vi' ? 'Quay lại tính toán' : 'Back to Calculation'}}</span>
+                  </button>
                 </div>
               </div>
             </div>

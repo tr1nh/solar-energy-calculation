@@ -26,6 +26,7 @@ var app = new Vue({
       giaInverter: 0,
       thangDuocChon: 0,
       activeTab: 'area', // Tab navigation state
+      completedSteps: [], // Track completed steps
     }
   },
   beforeMount: async function() {
@@ -64,6 +65,40 @@ var app = new Vue({
     });
   },
   methods: {
+    // Navigate to next step with validation
+    goToNextStep: function() {
+      if (this.activeTab === 'area' && this.isStep1Valid) {
+        this.activeTab = 'calculation';
+        this.markStepCompleted('area');
+      } else if (this.activeTab === 'calculation' && this.isStep2Valid) {
+        this.activeTab = 'results';
+        this.markStepCompleted('calculation');
+      }
+    },
+    // Navigate to previous step
+    goToPreviousStep: function() {
+      if (this.activeTab === 'calculation') {
+        this.activeTab = 'area';
+      } else if (this.activeTab === 'results') {
+        this.activeTab = 'calculation';
+      }
+    },
+    // Mark step as completed
+    markStepCompleted: function(step) {
+      if (!this.completedSteps.includes(step)) {
+        this.completedSteps.push(step);
+      }
+    },
+    // Check if step is completed
+    isStepCompleted: function(step) {
+      return this.completedSteps.includes(step);
+    },
+    // Safe navigation - only allow if step is accessible
+    navigateToTab: function(tab) {
+      if (this.canAccessStep[tab]) {
+        this.activeTab = tab;
+      }
+    },
     chinhGiaPin: function(e) {
       this.giaPin = e.target.value;
     },
@@ -173,6 +208,25 @@ var app = new Vue({
     tongBucXa: function () {
       const tong = tinhTong(this.khuVucDuocChon.bucXa)
       return tong
+    },
+    // Validate Step 1: Area Selection
+    isStep1Valid: function() {
+      return this.khuVucDuocChon && this.khuVucDuocChon.ten !== "";
+    },
+    // Validate Step 2: Calculation
+    isStep2Valid: function() {
+      return this.isStep1Valid && 
+             this.congSuatTieuThuThang > 0 && 
+             this.maPinDuocChon !== '' &&
+             this.giaPin > 0;
+    },
+    // Check if step is accessible
+    canAccessStep: function() {
+      return {
+        area: true, // Always accessible
+        calculation: this.isStep1Valid,
+        results: this.isStep2Valid && this.ketQua !== null
+      };
     },
     ketQua: function () {
       if (!this.khuVucDuocChon || !this.pinDuocChon) return null;
