@@ -1,5 +1,4 @@
 var chartArea
-var chartTemperature
 var chartEnergy
 
 const KHU_VUC_RONG = {
@@ -53,7 +52,6 @@ var app = new Vue({
     Chart.defaults.global.legend.display = false;
 
     chartArea = initChart(document.getElementById('chart-area'), data.labels.vi.khuVuc.bucXaTheoThang.chartjs)
-    chartTemperature = initChart(document.getElementById('chart-temperature'), data.labels.vi.khuVuc.nhietDoTheoThang.chartjs)
     chartEnergy = initChart(document.getElementById('chart-energy'), data.labels.vi.sanLuong.chartjs)
   },
   methods: {
@@ -71,14 +69,12 @@ var app = new Vue({
       this.khuVucDuocChon = temp || KHU_VUC_RONG;
       Object.assign(this.khuVucDuocChon, temp || KHU_VUC_RONG);
       updateChartColumn(chartArea, this.khuVucDuocChon.bucXa)
-      updateChartColumn(chartTemperature, this.khuVucDuocChon.nhietDo)
     }, 250),
     doiNgonNgu: function () {
       this.ngonNgu = (this.ngonNgu === 'en') ? 'vi' : 'en'
       updateObject(this.nhan, data.labels[this.ngonNgu])
 
       updateChartLabel(chartArea, data.labels[this.ngonNgu].khuVuc.bucXaTheoThang.chartjs)
-      updateChartLabel(chartTemperature, data.labels[this.ngonNgu].khuVuc.nhietDoTheoThang.chartjs)
       updateChartLabel(chartEnergy, data.labels[this.ngonNgu].sanLuong.chartjs)
 
       document.documentElement.setAttribute('lang', this.ngonNgu)
@@ -116,63 +112,34 @@ var app = new Vue({
         addTextPDF(page, `${this.nhan.pdf.tieuDeThongTin}`, fontSizeHeading, margin, currentLine += 20)
 
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
-
-        // vi tri // system grid
-        addTextPDF(page, `Geographical site: ${this.khuVucDuocChon.ten}` , fontSizeNormal, margin, currentLine += 7)
-        addTextPDF(page, `System Type: Grid - Connected` , fontSizeNormal, margin + 100, currentLine)
-
-        // meteo data // loai pin quang dien
-        addTextPDF(page, `Meteo data: PV GIS (Solar radiation) Nasa (Temperature)` , fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `PV module: ${this.pinDuocChon.maSanPham}` , fontSizeNormal, margin + 100, currentLine)
-
-        // tieu thu hang thang // so luong pin
-        addTextPDF(page, `Monthly Power consumption (kW): ${this.congSuatTieuThuThang}` , fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `Number of PV module: ${this.ketQua.soLuongPin}` , fontSizeNormal, margin + 100, currentLine)
-
-        // cong suat lap dat // cong suat tieu thu
-        addTextPDF(page, `Installed capacity (kW): ${this.ketQua.congSuatLapDat}` , fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `Power of PV module (W) ${this.pinDuocChon.pmax}` , fontSizeNormal, margin + 100, currentLine)
-
-        // tong nang suat // gia mot tam pin
-        addTextPDF(page, `Final Yield (kWh/yr): ${this.ketQua.tongSanLuongTieuThu}` , fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `Price of PV module (VND): ${this.giaPin}` , fontSizeNormal, margin + 100, currentLine)
-
-        // tong chi phi dau tu // inverter heading
-        addTextPDF(page, `Total investment (VND): ${Number(this.ketQua.tongVonDauTu).toLocaleString("us-US")}` , fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `Number of Inverter:` , fontSizeNormal, margin + 100, currentLine)
-
-        // so nam thu hoi von // cong suat inverter
-        addTextPDF(page, `Payback years (Yr): ${this.ketQua.soNamHoanVon}` , fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `Power of inverter (kW): ${this.inverterDuocChon.congSuat}` , fontSizeNormal, margin + 100, currentLine)
-
-        // ti le hieu suat // gia inverter
-        addTextPDF(page, `Performance Ratio PR: ${this.pinDuocChon.hieuSuat}` , fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `Price of PV module (VND): ${this.inverterDuocChon.gia}` , fontSizeNormal, margin + 100, currentLine)
-
+        addTextPDF(page, `${this.nhan.pdf.diaChi}: ${this.khuVucDuocChon.ten}`, fontSizeNormal, margin, currentLine += 7)
+        addTextPDF(page, `${this.nhan.pdf.tongVon}: ${Number(this.ketQua.tongVonDauTu).toLocaleString("us-US")} (VNĐ)`, fontSizeNormal, margin + 75, currentLine)
+        addTextPDF(page, `${this.nhan.pdf.congSuatLapDat}: ${this.ketQua.congSuatLapDat} (W)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.soNamHoanVon}: ${this.ketQua.soNamHoanVon}`, fontSizeNormal, margin + 75, currentLine)
+        addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.ketQua.soLuongPin}`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.ketQua.dienTichLapDat} (m²)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.ketQua.tongSanLuongTieuThu} (kWh/năm)`, fontSizeNormal, margin, currentLine += 5)
 
         // calculation result
         await loadFontPDF(page, './fonts/Roboto-Bold.ttf')
-        addTextPDF(page, `${this.nhan.pdf.tieuDeKetQua}`, fontSizeHeading, margin, currentLine += 14)
+        addTextPDF(page, `${this.nhan.pdf.tieuDeKetQua}`, fontSizeHeading, margin, currentLine += 12)
 
         // charts
         addChartJSPDF(page, chartArea, document.getElementById('chart-area'), margin, currentLine += 7, (width / 2 - margin - (margin / 2)), 50)
-        addChartJSPDF(page, chartTemperature, document.getElementById('chart-temperature'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)
+        addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 2), currentLine, (width / 2 - margin - (margin / 2)), 50)
         await loadFontPDF(page, './fonts/Roboto-Italic.ttf')
         await addTextCenterPDF(page, this.nhan.pdf.hinh1, fontSizeNormal, (width / 4), currentLine += 55, (width / 2))
         await addTextCenterPDF(page, this.nhan.pdf.hinh2, fontSizeNormal, ((width * (3 / 4)) - (margin / 2)), currentLine, (width / 2))
-        addChartJSPDF(page, chartEnergy, document.getElementById('chart-energy'), (width / 3.5), currentLine += 7, (width / 2 - margin - (margin / 2)), 50)
-        await addTextCenterPDF(page, this.nhan.pdf.hinh3, fontSizeNormal, ((width / 2)), currentLine += 55, (width / 2))
 
         // table
         await loadFontPDF(page, './fonts/Roboto-Regular.ttf')
-        let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.khuVucDuocChon.nhietDo, this.ketQua.sanLuongTieuThu, this.tongBucXa, this.khuVucDuocChon.nhietDo.reduce((a,c) => a+=c, 0), this.ketQua.tongSanLuongTieuThu)
-        page.addPage();
-
-        await addTextCenterPDF(page, 'Results of simulation', fontSizeNormal, (width / 2), 20, 100)
+        let data = await layDuLieuBangBucXaHangThang(this.nhan.pdf.bang1.column1, this.khuVucDuocChon.bucXa, this.ketQua.sanLuongTieuThu, this.tongBucXa, this.ketQua.tongSanLuongTieuThu)
         page.autoTable({
           head: this.nhan.pdf.bang1.head,
           body: data,
-          startY: 25,
+          startY: currentLine += 12,
           margin: {horizontal: (width * 0.25)},
           styles: {
             font: 'Roboto-Regular',
@@ -197,11 +164,10 @@ var app = new Vue({
     ketQua: function () {
       if (!this.khuVucDuocChon || !this.pinDuocChon) return null;
 
-      let heSoSuyGiamNangSuat = this.khuVucDuocChon.nhietDo.map(nhietDo => 1 - 0.0045 * (nhietDo - 25));
+      let heSoSuyGiamNangSuat = 1 - 0.0045 * (this.khuVucDuocChon.nhietDo[this.thangDuocChon] - 25);
       let dienTichPin = this.pinDuocChon.chieuDai * this.pinDuocChon.chieuRong / 1000000;
-      let sanLuong1TamPin = heSoSuyGiamNangSuat.map((heSo, i) => this.heSoTonThat * dienTichPin * this.khuVucDuocChon.bucXa[i] * heSo * this.pinDuocChon.hieuSuat / 100);
-      let sanLuong1TamPinTB = sanLuong1TamPin.reduce((a,c) => a+=c, 0) / 12;
-      let soLuongPin = Math.round(this.congSuatTieuThuThang / sanLuong1TamPinTB);
+      let sanLuong1TamPin = this.heSoTonThat * dienTichPin * this.khuVucDuocChon.bucXa[this.thangDuocChon] * heSoSuyGiamNangSuat * this.pinDuocChon.hieuSuat / 100;
+      let soLuongPin = Math.round(this.congSuatTieuThuThang / sanLuong1TamPin);
       let tongDienTichPin = Math.round((this.pinDuocChon.chieuDai / 1000) * (this.pinDuocChon.chieuRong / 1000) * soLuongPin);
       let dienTichLapDat = soLuongPin * tongDienTichPin;
       let congSuatLapDat = soLuongPin * this.pinDuocChon.pmax / 1000;
@@ -221,7 +187,7 @@ var app = new Vue({
 
       let tongVonDauTu = tongChiPinInverter + phiLapDat + phiDayCap + phiKhungGiaDo;
       let giaDien = this.congSuatTieuThuThang > 401 ? 3015 : this.congSuatTieuThuThang >= 301 ? 2919 : this.congSuatTieuThuThang >= 201 ? 2612 : this.congSuatTieuThuThang >= 101 ? 2072 : this.congSuatTieuThuThang >= 51 ? 1786 : 1728;
-      let soNamHoanVon = Math.floor(tongVonDauTu / (sanLuong1TamPinTB * giaDien * 12 * soLuongPin));
+      let soNamHoanVon = Math.floor(tongVonDauTu / (sanLuong1TamPin * giaDien * 12 * soLuongPin));
 
       updateChartColumn(chartEnergy, sanLuongTieuThu);
 
@@ -231,7 +197,7 @@ var app = new Vue({
       return chonPin(this.danhSachPin, this.maPinDuocChon)
     },
     inverterDuocChon: function () {
-      return this.inverterPhuHop.find(item => item.gia == this.giaInverter);
+      return this.inverterPhuHop.find(item => item.gia == giaInverter);
     },
   }
 })
@@ -357,8 +323,10 @@ async function addChartJSPDF(pageInstance, chartInstance, element, x, y, width, 
   chartInstance.update()
 }
 
-async function layDuLieuBangBucXaHangThang(thang, bucXa, nhietDo, sanLuong, tongBucXa, tongNhietDo, tongSanLuong) {
+async function layDuLieuBangBucXaHangThang(thang, bucXa, sanLuong, tongBucXa, tongSanLuong) {
   let data = []
+
+  console.log({thang, bucXa, sanLuong, tongBucXa, tongSanLuong});
 
   thang.forEach((v, i) => {
     let row = {}
@@ -367,14 +335,12 @@ async function layDuLieuBangBucXaHangThang(thang, bucXa, nhietDo, sanLuong, tong
       row = [
         v,
         bucXa[i].toString(),
-        nhietDo[i].toString(),
         sanLuong[i].toString(),
       ]
     } else {
       row = [
         v,
         tongBucXa.toString(),
-        tongNhietDo.toString(),
         tongSanLuong.toString(),
       ]
     }
