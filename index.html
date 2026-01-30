@@ -1,680 +1,621 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Performance of rooftop Photovoltaic Systems in Vietnam</title>
-    
-    <!-- TailwindCSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- FontAwesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <!-- Google Fonts - Roboto -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="./css/style.css" />
-    
-    <!-- Tailwind Custom Config -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              'roboto': ['Roboto', 'sans-serif'],
-            },
-            colors: {
-              'primary': {
-                50: '#eff6ff',
-                100: '#dbeafe',
-                600: '#2563eb',
-                700: '#1d4ed8',
-                900: '#1e3a8a',
-              }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Performance of rooftop Photovoltaic Systems in Vietnam</title>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Google Fonts - Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'roboto': ['Roboto', 'sans-serif'],
+          },
+          colors: {
+            'primary': {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
             }
           }
         }
       }
-    </script>
-  </head>
+    }
+  </script>
+</head>
 
-  <body class="bg-gray-50 font-roboto">
-    <div id="app" v-cloak>
-      
-      <!-- Fixed Header - Solid Navy -->
-      <header class="fixed top-0 left-0 right-0 z-50 bg-primary-900 border-b border-gray-300 shadow-sm">
-        <div class="container mx-auto px-6 py-4">
-          <div class="flex items-center justify-between">
-            <!-- Logo & Title -->
-            <div class="flex items-center space-x-4">
-              <img
-                class="h-12 w-12 md:h-14 md:w-14 object-contain"
-                src="./images/logo-so-khoa-hoc-cong-nghe-tinh-dong-nai.png"
-                alt="Logo Sở Khoa học"
-              />
-              <img
-                class="h-12 w-12 md:h-14 md:w-14 object-contain"
-                src="./images/logo-so-cong-thuong-tinh-dong-nai.png"
-                alt="Logo Sở Công thương"
-              />
-              <h1 class="hidden md:block text-white font-roboto font-medium text-base lg:text-lg">
-                {{nhan.khuVuc.tieuDe}}
-              </h1>
-            </div>
-            
-            <!-- Action Buttons -->
-            <div class="flex items-center space-x-3">
-              <button 
-                @click="xuatPDF"
-                class="flex items-center space-x-2 bg-white text-primary-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors duration-200 shadow-sm border border-gray-200"
-              >
-                <i class="fas fa-file-pdf"></i>
-                <span class="hidden md:inline">PDF</span>
+<body class="bg-gray-50 font-roboto">
+  <div id="app" v-cloak>
+
+    <!-- Fixed Header - Solid Navy -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-primary-900 border-b border-gray-300 shadow-sm">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Logo & Title -->
+          <div class="flex items-center space-x-4">
+            <h1 class="hidden md:block text-white font-roboto font-medium text-base lg:text-lg">
+              {{nhan.khuVuc.tieuDe}}
+            </h1>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center space-x-3">
+            <button @click="xuatPDF"
+              class="flex items-center space-x-2 bg-white text-primary-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors duration-200 shadow-sm border border-gray-200">
+              <i class="fas fa-file-pdf"></i>
+              <span class="hidden md:inline">PDF</span>
+            </button>
+            <button @click="doiNgonNgu"
+              class="flex items-center space-x-2 bg-white text-primary-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors duration-200 shadow-sm border border-gray-200">
+              <i class="fas fa-language"></i>
+              <span class="hidden md:inline">{{(ngonNgu === "vi" ? "English" : "Tiếng Việt")}}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content (with top margin for fixed header) -->
+    <main class="pt-24 md:pt-28">
+
+      <!-- Hero Section - Clean, Professional -->
+      <section class="bg-white border-b border-gray-200 py-12 md:py-16">
+        <div class="container mx-auto px-6">
+          <div class="text-center max-w-4xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-roboto font-bold text-primary-900 mb-6">
+              {{nhan.khuVuc.tieuDe}}
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Navigation - Responsive -->
+      <section class="container mx-auto px-4 md:px-6 py-6 md:py-8">
+
+        <!-- Unified Responsive Tabs -->
+        <div class="flex justify-center mx-auto mb-6 md:mb-8 max-w-2xl">
+          <div class="w-full md:inline-flex bg-white rounded-lg shadow-sm border border-gray-200 p-1">
+            <div class="grid grid-cols-3 gap-1 w-full">
+
+              <!-- Tab 1: Area Selection -->
+              <button @click="navigateToTab('area')" :class="[
+                    activeTab === 'area' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
+                    !canAccessStep.area ? 'opacity-50 cursor-not-allowed' : ''
+                  ]" :disabled="!canAccessStep.area"
+                class="flex flex-col md:flex-row items-center justify-center md:space-x-2 px-2 md:px-6 py-3 md:py-3 rounded-md font-medium transition-colors duration-200 relative">
+                <!-- Badge Number/Checkmark -->
+                <span
+                  class="flex items-center justify-center w-7 h-7 md:w-6 md:h-6 rounded-full text-xs font-bold mb-1 md:mb-0"
+                  :class="activeTab === 'area' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
+                  <i v-if="isStepCompleted('area')" class="fas fa-check text-green-500"></i>
+                  <span v-else>1</span>
+                </span>
+
+                <!-- Tab Content -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                  <span class="text-xs opacity-75 hidden sm:block">{{ngonNgu === 'vi' ? 'Bước 1/3' : 'Step 1/3'}}</span>
+                  <span class="flex items-center space-x-1 md:space-x-2 text-xs md:text-base">
+                    <i class="fas fa-map-marker-alt text-sm md:text-base"></i>
+                    <span class="hidden sm:inline">{{nhan.tabs ? nhan.tabs.area : 'Khu vực'}}</span>
+                    <span class="sm:hidden text-xs">{{ngonNgu === 'vi' ? 'Khu vực' : 'Area'}}</span>
+                  </span>
+                </div>
               </button>
-              <button 
-                @click="doiNgonNgu"
-                class="flex items-center space-x-2 bg-white text-primary-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100 transition-colors duration-200 shadow-sm border border-gray-200"
-              >
-                <i class="fas fa-language"></i>
-                <span class="hidden md:inline">{{(ngonNgu === "vi" ? "English" : "Tiếng Việt")}}</span>
+
+              <!-- Tab 2: Calculation -->
+              <button @click="navigateToTab('calculation')" :class="[
+                    activeTab === 'calculation' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
+                    !canAccessStep.calculation ? 'opacity-50 cursor-not-allowed' : ''
+                  ]" :disabled="!canAccessStep.calculation"
+                class="flex flex-col md:flex-row items-center justify-center md:space-x-2 px-2 md:px-6 py-3 md:py-3 rounded-md font-medium transition-colors duration-200 relative">
+                <!-- Badge Number/Checkmark -->
+                <span
+                  class="flex items-center justify-center w-7 h-7 md:w-6 md:h-6 rounded-full text-xs font-bold mb-1 md:mb-0"
+                  :class="activeTab === 'calculation' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
+                  <i v-if="isStepCompleted('calculation')" class="fas fa-check text-green-500"></i>
+                  <span v-else>2</span>
+                </span>
+
+                <!-- Tab Content -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                  <span class="text-xs opacity-75 hidden sm:block">{{ngonNgu === 'vi' ? 'Bước 2/3' : 'Step 2/3'}}</span>
+                  <span class="flex items-center space-x-1 md:space-x-2 text-xs md:text-base">
+                    <i class="fas fa-calculator text-sm md:text-base"></i>
+                    <span class="hidden sm:inline">{{nhan.tabs ? nhan.tabs.calculation : 'Tính toán'}}</span>
+                    <span class="sm:hidden text-xs">{{ngonNgu === 'vi' ? 'Tính toán' : 'Calc'}}</span>
+                  </span>
+                </div>
               </button>
+
+              <!-- Tab 3: Results -->
+              <button @click="navigateToTab('results')" :class="[
+                    activeTab === 'results' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
+                    !canAccessStep.results ? 'opacity-50 cursor-not-allowed' : ''
+                  ]" :disabled="!canAccessStep.results"
+                class="flex flex-col md:flex-row items-center justify-center md:space-x-2 px-2 md:px-6 py-3 md:py-3 rounded-md font-medium transition-colors duration-200 relative">
+                <!-- Badge Number/Checkmark -->
+                <span
+                  class="flex items-center justify-center w-7 h-7 md:w-6 md:h-6 rounded-full text-xs font-bold mb-1 md:mb-0"
+                  :class="activeTab === 'results' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
+                  <i v-if="isStepCompleted('results')" class="fas fa-check text-green-500"></i>
+                  <span v-else>3</span>
+                </span>
+
+                <!-- Tab Content -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                  <span class="text-xs opacity-75 hidden sm:block">{{ngonNgu === 'vi' ? 'Bước 3/3' : 'Step 3/3'}}</span>
+                  <span class="flex items-center space-x-1 md:space-x-2 text-xs md:text-base">
+                    <i class="fas fa-chart-line text-sm md:text-base"></i>
+                    <span class="hidden sm:inline">{{nhan.tabs ? nhan.tabs.results : 'Kết quả'}}</span>
+                    <span class="sm:hidden text-xs">{{ngonNgu === 'vi' ? 'Kết quả' : 'Results'}}</span>
+                  </span>
+                </div>
+              </button>
+
             </div>
           </div>
         </div>
-      </header>
 
-      <!-- Main Content (with top margin for fixed header) -->
-      <main class="pt-24 md:pt-28">
-        
-        <!-- Hero Section - Clean, Professional -->
-        <section class="bg-white border-b border-gray-200 py-12 md:py-16">
-          <div class="container mx-auto px-6">
-            <div class="text-center max-w-4xl mx-auto">
-              <h2 class="text-3xl md:text-4xl font-roboto font-bold text-primary-900 mb-6">
-                {{nhan.khuVuc.tieuDe}}
-              </h2>
-              <p class="text-gray-600 text-base md:text-lg leading-relaxed whitespace-pre-line">
-                {{nhan.khuVuc.mieuTa}}
-              </p>
+        <!-- Tab Content -->
+        <div class="tab-content">
+
+          <!-- TAB 1: Area Selection -->
+          <div v-show="activeTab === 'area'" class="tab-panel fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+              <!-- Left Card: Area Input -->
+              <div class="card-professional">
+                <!-- Icon Header - Solid Navy -->
+                <div class="flex items-center justify-center h-32 bg-primary-900 border-b border-gray-200">
+                  <i class="fas fa-solar-panel text-6xl text-white opacity-90"></i>
+                </div>
+
+                <div class="p-8">
+                  <h3 class="text-2xl font-roboto font-bold text-gray-900 mb-6">
+                    {{nhan.khuVuc.chonKhuVuc.tieuDe}}
+                  </h3>
+
+                  <!-- Search Input -->
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <i class="fas fa-search text-primary-600"></i>
+                    </div>
+                    <input type="text" v-on:input="timKhuVuc" list="datalist-area"
+                      :placeholder="nhan.khuVuc.chonKhuVuc.mieuTa" class="input-professional pl-12" />
+                    <datalist id="datalist-area">
+                      <option v-for="(khuVuc, index) in danhSachKhuVuc" :key="index" :value="khuVuc.ten"></option>
+                    </datalist>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Card: Area Results -->
+              <div class="card-professional">
+                <div class="p-8">
+                  <h3 class="text-2xl font-roboto font-bold text-gray-900 mb-6">
+                    {{nhan.khuVuc.bucXaTheoNam.tieuDe}}
+                  </h3>
+
+                  <!-- Summary Table -->
+                  <div class="overflow-hidden rounded-lg border border-gray-200 mb-8">
+                    <table class="w-full">
+                      <thead class="bg-primary-900 text-white">
+                        <tr>
+                          <th class="px-4 py-3 text-left font-semibold">{{nhan.khuVuc.bucXaTheoNam.viTri}}</th>
+                          <th class="px-4 py-3 text-left font-semibold">{{nhan.khuVuc.bucXaTheoNam.bucXa}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
+                          <td class="px-4 py-3 border-t border-gray-200 text-gray-900">{{khuVucDuocChon.ten || '—'}}
+                          </td>
+                          <td class="px-4 py-3 border-t border-gray-200 font-semibold text-primary-600">{{tongBucXa}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Monthly Chart -->
+                  <h4 class="text-lg font-roboto font-semibold text-gray-800 mb-4">
+                    {{nhan.khuVuc.bucXaTheoThang.tieuDe}}
+                  </h4>
+                  <div class="chart-professional">
+                    <canvas id="chart-area"></canvas>
+                  </div>
+                </div>
+              </div>
+
             </div>
-          </div>
-        </section>
 
-        <!-- Tabs Navigation - Responsive -->
-        <section class="container mx-auto px-4 md:px-6 py-6 md:py-8">
-          
-          <!-- Unified Responsive Tabs -->
-          <div class="flex justify-center mx-auto mb-6 md:mb-8 max-w-2xl">
-            <div class="w-full md:inline-flex bg-white rounded-lg shadow-sm border border-gray-200 p-1">
-              <div class="grid grid-cols-3 gap-1 w-full">
-                
-                <!-- Tab 1: Area Selection -->
-                <button
-                  @click="navigateToTab('area')"
-                  :class="[
-                    activeTab === 'area' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
-                    !canAccessStep.area ? 'opacity-50 cursor-not-allowed' : ''
-                  ]"
-                  :disabled="!canAccessStep.area"
-                  class="flex flex-col md:flex-row items-center justify-center md:space-x-2 px-2 md:px-6 py-3 md:py-3 rounded-md font-medium transition-colors duration-200 relative"
-                >
-                  <!-- Badge Number/Checkmark -->
-                  <span class="flex items-center justify-center w-7 h-7 md:w-6 md:h-6 rounded-full text-xs font-bold mb-1 md:mb-0"
-                        :class="activeTab === 'area' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
-                    <i v-if="isStepCompleted('area')" class="fas fa-check text-green-500"></i>
-                    <span v-else>1</span>
-                  </span>
-                  
-                  <!-- Tab Content -->
-                  <div class="flex flex-col items-center md:items-start text-center md:text-left">
-                    <span class="text-xs opacity-75 hidden sm:block">{{ngonNgu === 'vi' ? 'Bước 1/3' : 'Step 1/3'}}</span>
-                    <span class="flex items-center space-x-1 md:space-x-2 text-xs md:text-base">
-                      <i class="fas fa-map-marker-alt text-sm md:text-base"></i>
-                      <span class="hidden sm:inline">{{nhan.tabs ? nhan.tabs.area : 'Khu vực'}}</span>
-                      <span class="sm:hidden text-xs">{{ngonNgu === 'vi' ? 'Khu vực' : 'Area'}}</span>
-                    </span>
+            <!-- Next Step Button for Tab 1 -->
+            <div class="mt-6 md:mt-8">
+              <!-- Status Message -->
+              <div class="mb-4 p-4 rounded-lg border"
+                :class="isStep1Valid ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'">
+                <div class="flex items-start space-x-3">
+                  <i :class="isStep1Valid ? 'fas fa-check-circle text-green-600' : 'fas fa-info-circle text-blue-600'"
+                    class="text-lg md:text-xl mt-0.5 flex-shrink-0"></i>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm md:text-base font-medium"
+                      :class="isStep1Valid ? 'text-green-800' : 'text-blue-800'">
+                      <span v-if="!isStep1Valid">
+                        {{ngonNgu === 'vi' ? 'Vui lòng chọn khu vực để tiếp tục' : 'Please select an area to continue'}}
+                      </span>
+                      <span v-else>{{ngonNgu === 'vi' ? 'Đã chọn khu vực' : 'Area selected'}}</span>
+                    </p>
                   </div>
+                </div>
+              </div>
+
+              <!-- Next Button -->
+              <div class="flex justify-end">
+                <button @click="goToNextStep" :disabled="!isStep1Valid" :class="[
+                      'btn-professional w-full md:w-auto',
+                      !isStep1Valid ? 'opacity-50 cursor-not-allowed' : ''
+                    ]">
+                  <span>{{ngonNgu === 'vi' ? 'Tiếp theo: Tính toán' : 'Next: Calculation'}}</span>
+                  <i class="fas fa-arrow-right ml-2"></i>
                 </button>
-                
-                <!-- Tab 2: Calculation -->
-                <button
-                  @click="navigateToTab('calculation')"
-                  :class="[
-                    activeTab === 'calculation' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
-                    !canAccessStep.calculation ? 'opacity-50 cursor-not-allowed' : ''
-                  ]"
-                  :disabled="!canAccessStep.calculation"
-                  class="flex flex-col md:flex-row items-center justify-center md:space-x-2 px-2 md:px-6 py-3 md:py-3 rounded-md font-medium transition-colors duration-200 relative"
-                >
-                  <!-- Badge Number/Checkmark -->
-                  <span class="flex items-center justify-center w-7 h-7 md:w-6 md:h-6 rounded-full text-xs font-bold mb-1 md:mb-0"
-                        :class="activeTab === 'calculation' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
-                    <i v-if="isStepCompleted('calculation')" class="fas fa-check text-green-500"></i>
-                    <span v-else>2</span>
-                  </span>
-                  
-                  <!-- Tab Content -->
-                  <div class="flex flex-col items-center md:items-start text-center md:text-left">
-                    <span class="text-xs opacity-75 hidden sm:block">{{ngonNgu === 'vi' ? 'Bước 2/3' : 'Step 2/3'}}</span>
-                    <span class="flex items-center space-x-1 md:space-x-2 text-xs md:text-base">
-                      <i class="fas fa-calculator text-sm md:text-base"></i>
-                      <span class="hidden sm:inline">{{nhan.tabs ? nhan.tabs.calculation : 'Tính toán'}}</span>
-                      <span class="sm:hidden text-xs">{{ngonNgu === 'vi' ? 'Tính toán' : 'Calc'}}</span>
-                    </span>
-                  </div>
-                </button>
-                
-                <!-- Tab 3: Results -->
-                <button
-                  @click="navigateToTab('results')"
-                  :class="[
-                    activeTab === 'results' ? 'bg-primary-600 text-white shadow-sm' : 'text-gray-600 hover:bg-gray-50',
-                    !canAccessStep.results ? 'opacity-50 cursor-not-allowed' : ''
-                  ]"
-                  :disabled="!canAccessStep.results"
-                  class="flex flex-col md:flex-row items-center justify-center md:space-x-2 px-2 md:px-6 py-3 md:py-3 rounded-md font-medium transition-colors duration-200 relative"
-                >
-                  <!-- Badge Number/Checkmark -->
-                  <span class="flex items-center justify-center w-7 h-7 md:w-6 md:h-6 rounded-full text-xs font-bold mb-1 md:mb-0"
-                        :class="activeTab === 'results' ? 'bg-white text-primary-600' : 'bg-gray-200 text-gray-600'">
-                    <i v-if="isStepCompleted('results')" class="fas fa-check text-green-500"></i>
-                    <span v-else>3</span>
-                  </span>
-                  
-                  <!-- Tab Content -->
-                  <div class="flex flex-col items-center md:items-start text-center md:text-left">
-                    <span class="text-xs opacity-75 hidden sm:block">{{ngonNgu === 'vi' ? 'Bước 3/3' : 'Step 3/3'}}</span>
-                    <span class="flex items-center space-x-1 md:space-x-2 text-xs md:text-base">
-                      <i class="fas fa-chart-line text-sm md:text-base"></i>
-                      <span class="hidden sm:inline">{{nhan.tabs ? nhan.tabs.results : 'Kết quả'}}</span>
-                      <span class="sm:hidden text-xs">{{ngonNgu === 'vi' ? 'Kết quả' : 'Results'}}</span>
-                    </span>
-                  </div>
-                </button>
-                
               </div>
             </div>
           </div>
 
-          <!-- Tab Content -->
-          <div class="tab-content">
-            
-            <!-- TAB 1: Area Selection -->
-            <div v-show="activeTab === 'area'" class="tab-panel fade-in">
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                <!-- Left Card: Area Input -->
-                <div class="card-professional">
-                  <!-- Icon Header - Solid Navy -->
-                  <div class="flex items-center justify-center h-32 bg-primary-900 border-b border-gray-200">
-                    <i class="fas fa-solar-panel text-6xl text-white opacity-90"></i>
-                  </div>
-                  
-                  <div class="p-8">
-                    <h3 class="text-2xl font-roboto font-bold text-gray-900 mb-6">
-                      {{nhan.khuVuc.chonKhuVuc.tieuDe}}
-                    </h3>
-                    
-                    <!-- Search Input -->
-                    <div class="relative">
-                      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-primary-600"></i>
-                      </div>
-                      <input
-                        type="text"
-                        v-on:input="timKhuVuc"
-                        list="datalist-area"
-                        :placeholder="nhan.khuVuc.chonKhuVuc.mieuTa"
-                        class="input-professional pl-12"
-                      />
-                      <datalist id="datalist-area">
-                        <option
-                          v-for="(khuVuc, index) in danhSachKhuVuc"
-                          :key="index"
-                          :value="khuVuc.ten"
-                        ></option>
-                      </datalist>
-                    </div>
-                  </div>
+          <!-- TAB 2: Calculation -->
+          <div v-show="activeTab === 'calculation'" class="tab-panel fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+              <!-- Left Card: Input Parameters -->
+              <div class="card-professional">
+                <!-- Icon Header - Solid Navy -->
+                <div class="flex items-center justify-center h-32 bg-primary-900 border-b border-gray-200">
+                  <i class="fas fa-calculator text-6xl text-white opacity-90"></i>
                 </div>
 
-                <!-- Right Card: Area Results -->
-                <div class="card-professional">
-                  <div class="p-8">
-                    <h3 class="text-2xl font-roboto font-bold text-gray-900 mb-6">
-                      {{nhan.khuVuc.bucXaTheoNam.tieuDe}}
-                    </h3>
-                    
-                    <!-- Summary Table -->
-                    <div class="overflow-hidden rounded-lg border border-gray-200 mb-8">
-                      <table class="w-full">
-                        <thead class="bg-primary-900 text-white">
-                          <tr>
-                            <th class="px-4 py-3 text-left font-semibold">{{nhan.khuVuc.bucXaTheoNam.viTri}}</th>
-                            <th class="px-4 py-3 text-left font-semibold">{{nhan.khuVuc.bucXaTheoNam.bucXa}}</th>
-                          </tr>
-                        </thead>
+                <div class="p-8">
+                  <h3 class="text-2xl font-roboto font-bold text-gray-900 mb-6">
+                    {{nhan.pin.dauVao.tieuDe}}
+                  </h3>
+
+                  <form class="space-y-5">
+                    <!-- Monthly Power Consumption -->
+                    <div class="input-group">
+                      <label class="input-label-professional">
+                        <i class="fas fa-bolt text-primary-600"></i>
+                        {{nhan.pin.dauVao.congSuatTieuThu}}
+                      </label>
+                      <input type="number" v-model="congSuatTieuThuThang" placeholder="1000"
+                        class="input-professional" />
+                    </div>
+
+                    <!-- Panel Type -->
+                    <div class="input-group">
+                      <label class="input-label-professional">
+                        <i class="fas fa-solar-panel text-primary-600"></i>
+                        {{nhan.pin.dauVao.loaiPin}}
+                      </label>
+                      <select v-model="maPinDuocChon" @change="layGiaPinMacDinh" class="input-professional">
+                        <option v-for="(pin,index) in danhSachPin" :key="index" :value="pin.maSanPham">
+                          {{pin.maSanPham}}
+                        </option>
+                      </select>
+                    </div>
+
+                    <!-- Panel Price -->
+                    <div class="input-group">
+                      <label class="input-label-professional">
+                        <i class="fas fa-coins text-primary-600"></i>
+                        {{nhan.pin.dauVao.giaPin}}
+                      </label>
+                      <input type="number" v-model="giaPin" @change="chinhGiaPin" placeholder="1000"
+                        class="input-professional" />
+                    </div>
+
+                    <!-- Loss Factor -->
+                    <div class="input-group">
+                      <label class="input-label-professional">
+                        <i class="fas fa-percentage text-primary-600"></i>
+                        {{nhan.pin.dauVao.heSoTonThat}}
+                      </label>
+                      <input type="number" v-model="heSoTonThat" min="0.5" max="0.9" step="0.05"
+                        class="input-professional" />
+                    </div>
+
+                    <!-- Month Selection -->
+                    <div class="input-group">
+                      <label class="input-label-professional">
+                        <i class="fas fa-calendar-alt text-primary-600"></i>
+                        {{nhan.pin.dauVao.thang}}
+                      </label>
+                      <select v-model="thangDuocChon" class="input-professional">
+                        <option v-for="(index) in [0,1,2,3,4,5,6,7,8,9,10,11]" :key="index" :value="index">
+                          {{index + 1}}
+                        </option>
+                      </select>
+                    </div>
+
+                    <!-- Inverter -->
+                    <div class="input-group">
+                      <label class="input-label-professional">
+                        <i class="fas fa-plug text-primary-600"></i>
+                        Inverter
+                      </label>
+                      <select v-model="giaInverter" class="input-professional">
+                        <option v-for="(inverter,index) in inverterPhuHop" :key="index" :value="inverter.gia">
+                          {{inverter.congSuat}} (kW) - {{inverter.gia}} (VNĐ)
+                        </option>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Right Card: Panel Info & Results -->
+              <div class="card-professional">
+                <div class="p-8">
+                  <h3 class="text-2xl font-roboto font-bold text-gray-900 mb-6">
+                    {{nhan.pin.thongTin.tieuDe}}
+                  </h3>
+
+                  <!-- Panel Details -->
+                  <div v-if="!ketQua" class="flex items-center justify-center h-64 text-gray-400">
+                    <div class="text-center">
+                      <i class="fas fa-info-circle text-6xl mb-4"></i>
+                      <p class="text-gray-500">{{nhan.pin.thongTin.mieuTa}}</p>
+                    </div>
+                  </div>
+
+                  <div v-else class="space-y-6">
+                    <!-- Panel Specifications -->
+                    <div class="overflow-hidden rounded-lg border border-gray-200">
+                      <table class="w-full text-sm">
                         <tbody>
+                          <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
+                            <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">
+                              {{nhan.pin.thongTin.bang.maSanPham}}</td>
+                            <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.maSanPham}}</td>
+                          </tr>
                           <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
-                            <td class="px-4 py-3 border-t border-gray-200 text-gray-900">{{khuVucDuocChon.ten || '—'}}</td>
-                            <td class="px-4 py-3 border-t border-gray-200 font-semibold text-primary-600">{{tongBucXa}}</td>
+                            <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">
+                              {{nhan.pin.thongTin.bang.pmax}}</td>
+                            <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.pmax}}</td>
+                          </tr>
+                          <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
+                            <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">
+                              {{nhan.pin.thongTin.bang.vmp}}</td>
+                            <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.vmp}}</td>
+                          </tr>
+                          <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
+                            <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">
+                              {{nhan.pin.thongTin.bang.imp}}</td>
+                            <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.imp}}</td>
+                          </tr>
+                          <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
+                            <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">
+                              {{nhan.pin.thongTin.bang.voc}}</td>
+                            <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.voc}}</td>
+                          </tr>
+                          <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
+                            <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">
+                              {{nhan.pin.thongTin.bang.isc}}</td>
+                            <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.isc}}</td>
+                          </tr>
+                          <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
+                            <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">
+                              {{nhan.pin.thongTin.bang.hieuSuat}}</td>
+                            <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.hieuSuat}}</td>
+                          </tr>
+                          <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
+                            <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">
+                              {{nhan.pin.thongTin.bang.kichThuoc}}</td>
+                            <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.chieuDai}} x
+                              {{pinDuocChon.chieuRong}} x {{pinDuocChon.chieuCao}} (mm)</td>
+                          </tr>
+                          <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
+                            <td class="px-4 py-2 font-medium text-gray-700">{{nhan.pin.thongTin.bang.trongLuong}}</td>
+                            <td class="px-4 py-2 text-gray-900">{{pinDuocChon.trongLuong}}</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
 
-                    <!-- Monthly Chart -->
-                    <h4 class="text-lg font-roboto font-semibold text-gray-800 mb-4">
-                      {{nhan.khuVuc.bucXaTheoThang.tieuDe}}
-                    </h4>
-                    <div class="chart-professional">
-                      <canvas id="chart-area"></canvas>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              
-              <!-- Next Step Button for Tab 1 -->
-              <div class="mt-6 md:mt-8">
-                <!-- Status Message -->
-                <div class="mb-4 p-4 rounded-lg border" :class="isStep1Valid ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'">
-                  <div class="flex items-start space-x-3">
-                    <i :class="isStep1Valid ? 'fas fa-check-circle text-green-600' : 'fas fa-info-circle text-blue-600'" class="text-lg md:text-xl mt-0.5 flex-shrink-0"></i>
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm md:text-base font-medium" :class="isStep1Valid ? 'text-green-800' : 'text-blue-800'">
-                        <span v-if="!isStep1Valid">{{ngonNgu === 'vi' ? 'Vui lòng chọn khu vực để tiếp tục' : 'Please select an area to continue'}}</span>
-                        <span v-else>{{ngonNgu === 'vi' ? 'Đã chọn khu vực' : 'Area selected'}}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Next Button -->
-                <div class="flex justify-end">
-                  <button
-                    @click="goToNextStep"
-                    :disabled="!isStep1Valid"
-                    :class="[
-                      'btn-professional w-full md:w-auto',
-                      !isStep1Valid ? 'opacity-50 cursor-not-allowed' : ''
-                    ]"
-                  >
-                    <span>{{ngonNgu === 'vi' ? 'Tiếp theo: Tính toán' : 'Next: Calculation'}}</span>
-                    <i class="fas fa-arrow-right ml-2"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- TAB 2: Calculation -->
-            <div v-show="activeTab === 'calculation'" class="tab-panel fade-in">
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                <!-- Left Card: Input Parameters -->
-                <div class="card-professional">
-                  <!-- Icon Header - Solid Navy -->
-                  <div class="flex items-center justify-center h-32 bg-primary-900 border-b border-gray-200">
-                    <i class="fas fa-calculator text-6xl text-white opacity-90"></i>
-                  </div>
-                  
-                  <div class="p-8">
-                    <h3 class="text-2xl font-roboto font-bold text-gray-900 mb-6">
-                      {{nhan.pin.dauVao.tieuDe}}
-                    </h3>
-
-                    <form class="space-y-5">
-                      <!-- Monthly Power Consumption -->
-                      <div class="input-group">
-                        <label class="input-label-professional">
-                          <i class="fas fa-bolt text-primary-600"></i>
-                          {{nhan.pin.dauVao.congSuatTieuThu}}
-                        </label>
-                        <input
-                          type="number"
-                          v-model="congSuatTieuThuThang"
-                          placeholder="1000"
-                          class="input-professional"
-                        />
-                      </div>
-
-                      <!-- Panel Type -->
-                      <div class="input-group">
-                        <label class="input-label-professional">
-                          <i class="fas fa-solar-panel text-primary-600"></i>
-                          {{nhan.pin.dauVao.loaiPin}}
-                        </label>
-                        <select
-                          v-model="maPinDuocChon"
-                          @change="layGiaPinMacDinh"
-                          class="input-professional"
-                        >
-                          <option
-                            v-for="(pin,index) in danhSachPin"
-                            :key="index"
-                            :value="pin.maSanPham"
-                          >
-                            {{pin.maSanPham}}
-                          </option>
-                        </select>
-                      </div>
-
-                      <!-- Panel Price -->
-                      <div class="input-group">
-                        <label class="input-label-professional">
-                          <i class="fas fa-coins text-primary-600"></i>
-                          {{nhan.pin.dauVao.giaPin}}
-                        </label>
-                        <input
-                          type="number"
-                          v-model="giaPin"
-                          @change="chinhGiaPin"
-                          placeholder="1000"
-                          class="input-professional"
-                        />
-                      </div>
-
-                      <!-- Loss Factor -->
-                      <div class="input-group">
-                        <label class="input-label-professional">
-                          <i class="fas fa-percentage text-primary-600"></i>
-                          {{nhan.pin.dauVao.heSoTonThat}}
-                        </label>
-                        <input
-                          type="number"
-                          v-model="heSoTonThat"
-                          min="0.5"
-                          max="0.9"
-                          step="0.05"
-                          class="input-professional"
-                        />
-                      </div>
-
-                      <!-- Month Selection -->
-                      <div class="input-group">
-                        <label class="input-label-professional">
-                          <i class="fas fa-calendar-alt text-primary-600"></i>
-                          {{nhan.pin.dauVao.thang}}
-                        </label>
-                        <select
-                          v-model="thangDuocChon"
-                          class="input-professional"
-                        >
-                          <option
-                            v-for="(index) in [0,1,2,3,4,5,6,7,8,9,10,11]"
-                            :key="index"
-                            :value="index"
-                          >
-                            {{index + 1}}
-                          </option>
-                        </select>
-                      </div>
-
-                      <!-- Inverter -->
-                      <div class="input-group">
-                        <label class="input-label-professional">
-                          <i class="fas fa-plug text-primary-600"></i>
-                          Inverter
-                        </label>
-                        <select
-                          v-model="giaInverter"
-                          class="input-professional"
-                        >
-                          <option
-                            v-for="(inverter,index) in inverterPhuHop"
-                            :key="index"
-                            :value="inverter.gia"
-                          >
-                            {{inverter.congSuat}} (kW) - {{inverter.gia}} (VNĐ)
-                          </option>
-                        </select>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-
-                <!-- Right Card: Panel Info & Results -->
-                <div class="card-professional">
-                  <div class="p-8">
-                    <h3 class="text-2xl font-roboto font-bold text-gray-900 mb-6">
-                      {{nhan.pin.thongTin.tieuDe}}
-                    </h3>
-
-                    <!-- Panel Details -->
-                    <div v-if="!ketQua" class="flex items-center justify-center h-64 text-gray-400">
-                      <div class="text-center">
-                        <i class="fas fa-info-circle text-6xl mb-4"></i>
-                        <p class="text-gray-500">{{nhan.pin.thongTin.mieuTa}}</p>
-                      </div>
-                    </div>
-
-                    <div v-else class="space-y-6">
-                      <!-- Panel Specifications -->
-                      <div class="overflow-hidden rounded-lg border border-gray-200">
-                        <table class="w-full text-sm">
-                          <tbody>
-                            <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.maSanPham}}</td>
-                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.maSanPham}}</td>
-                            </tr>
-                            <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.pmax}}</td>
-                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.pmax}}</td>
-                            </tr>
-                            <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.vmp}}</td>
-                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.vmp}}</td>
-                            </tr>
-                            <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.imp}}</td>
-                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.imp}}</td>
-                            </tr>
-                            <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.voc}}</td>
-                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.voc}}</td>
-                            </tr>
-                            <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.isc}}</td>
-                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.isc}}</td>
-                            </tr>
-                            <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.hieuSuat}}</td>
-                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.hieuSuat}}</td>
-                            </tr>
-                            <tr class="bg-white hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700 border-b border-gray-200">{{nhan.pin.thongTin.bang.kichThuoc}}</td>
-                              <td class="px-4 py-2 text-gray-900 border-b border-gray-200">{{pinDuocChon.chieuDai}} x {{pinDuocChon.chieuRong}} x {{pinDuocChon.chieuCao}} (mm)</td>
-                            </tr>
-                            <tr class="bg-gray-50 hover:bg-primary-50 transition-colors duration-150">
-                              <td class="px-4 py-2 font-medium text-gray-700">{{nhan.pin.thongTin.bang.trongLuong}}</td>
-                              <td class="px-4 py-2 text-gray-900">{{pinDuocChon.trongLuong}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
-                      <!-- Calculation Results -->
-                      <div>
-                        <h4 class="text-xl font-roboto font-semibold text-gray-900 mb-4">
-                          {{nhan.pin.ketQua.tieuDe}}
-                        </h4>
-                        <div class="grid grid-cols-1 gap-3">
-                          <div class="result-professional">
-                            <div class="flex items-center space-x-3">
-                              <div class="icon-professional">
-                                <i class="fas fa-solar-panel text-primary-600"></i>
-                              </div>
-                              <div class="flex-1">
-                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.soLuong}}</p>
-                                <p class="text-xl font-bold text-gray-900">{{ketQua.soLuongPin}}</p>
-                              </div>
+                    <!-- Calculation Results -->
+                    <div>
+                      <h4 class="text-xl font-roboto font-semibold text-gray-900 mb-4">
+                        {{nhan.pin.ketQua.tieuDe}}
+                      </h4>
+                      <div class="grid grid-cols-1 gap-3">
+                        <div class="result-professional">
+                          <div class="flex items-center space-x-3">
+                            <div class="icon-professional">
+                              <i class="fas fa-solar-panel text-primary-600"></i>
+                            </div>
+                            <div class="flex-1">
+                              <p class="text-sm text-gray-600">{{nhan.pin.ketQua.soLuong}}</p>
+                              <p class="text-xl font-bold text-gray-900">{{ketQua.soLuongPin}}</p>
                             </div>
                           </div>
-                          <div class="result-professional">
-                            <div class="flex items-center space-x-3">
-                              <div class="icon-professional">
-                                <i class="fas fa-ruler-combined text-primary-600"></i>
-                              </div>
-                              <div class="flex-1">
-                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongDienTich}}</p>
-                                <p class="text-xl font-bold text-gray-900">{{ketQua.tongDienTichPin}} m²</p>
-                              </div>
+                        </div>
+                        <div class="result-professional">
+                          <div class="flex items-center space-x-3">
+                            <div class="icon-professional">
+                              <i class="fas fa-ruler-combined text-primary-600"></i>
+                            </div>
+                            <div class="flex-1">
+                              <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongDienTich}}</p>
+                              <p class="text-xl font-bold text-gray-900">{{ketQua.tongDienTichPin}} m²</p>
                             </div>
                           </div>
-                          <div class="result-professional">
-                            <div class="flex items-center space-x-3">
-                              <div class="icon-professional">
-                                <i class="fas fa-bolt text-primary-600"></i>
-                              </div>
-                              <div class="flex-1">
-                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongSanLuong}}</p>
-                                <p class="text-xl font-bold text-gray-900">{{ketQua.tongSanLuongTieuThu}} kWh</p>
-                              </div>
+                        </div>
+                        <div class="result-professional">
+                          <div class="flex items-center space-x-3">
+                            <div class="icon-professional">
+                              <i class="fas fa-bolt text-primary-600"></i>
+                            </div>
+                            <div class="flex-1">
+                              <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongSanLuong}}</p>
+                              <p class="text-xl font-bold text-gray-900">{{ketQua.tongSanLuongTieuThu}} kWh</p>
                             </div>
                           </div>
-                          <div class="result-professional">
-                            <div class="flex items-center space-x-3">
-                              <div class="icon-professional">
-                                <i class="fas fa-coins text-primary-600"></i>
-                              </div>
-                              <div class="flex-1">
-                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongVon}}</p>
-                                <p class="text-xl font-bold text-gray-900">{{Number(ketQua.tongVonDauTu).toLocaleString("en-US")}} VNĐ</p>
-                              </div>
+                        </div>
+                        <div class="result-professional">
+                          <div class="flex items-center space-x-3">
+                            <div class="icon-professional">
+                              <i class="fas fa-coins text-primary-600"></i>
+                            </div>
+                            <div class="flex-1">
+                              <p class="text-sm text-gray-600">{{nhan.pin.ketQua.tongVon}}</p>
+                              <p class="text-xl font-bold text-gray-900">
+                                {{Number(ketQua.tongVonDauTu).toLocaleString("en-US")}} VNĐ</p>
                             </div>
                           </div>
-                          <div class="result-professional">
-                            <div class="flex items-center space-x-3">
-                              <div class="icon-professional">
-                                <i class="fas fa-calendar-check text-primary-600"></i>
-                              </div>
-                              <div class="flex-1">
-                                <p class="text-sm text-gray-600">{{nhan.pin.ketQua.soNamHoanVon}}</p>
-                                <p class="text-xl font-bold text-gray-900">{{ketQua.soNamHoanVon}} năm</p>
-                              </div>
+                        </div>
+                        <div class="result-professional">
+                          <div class="flex items-center space-x-3">
+                            <div class="icon-professional">
+                              <i class="fas fa-calendar-check text-primary-600"></i>
+                            </div>
+                            <div class="flex-1">
+                              <p class="text-sm text-gray-600">{{nhan.pin.ketQua.soNamHoanVon}}</p>
+                              <p class="text-xl font-bold text-gray-900">{{ketQua.soNamHoanVon}} yr</p>
                             </div>
                           </div>
                         </div>
                       </div>
-
                     </div>
+
                   </div>
                 </div>
-
               </div>
-              
-              <!-- Navigation Buttons for Tab 2 -->
-              <div class="mt-6 md:mt-8 space-y-4">
-                <!-- Status Message -->
-                <div class="p-4 rounded-lg border" :class="isStep2Valid ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'">
-                  <div class="flex items-start space-x-3">
-                    <i :class="isStep2Valid ? 'fas fa-check-circle text-green-600' : 'fas fa-info-circle text-blue-600'" class="text-lg md:text-xl mt-0.5 flex-shrink-0"></i>
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm md:text-base font-medium" :class="isStep2Valid ? 'text-green-800' : 'text-blue-800'">
-                        <span v-if="!isStep2Valid">{{ngonNgu === 'vi' ? 'Vui lòng nhập đầy đủ thông số để tiếp tục' : 'Please enter all parameters to continue'}}</span>
-                        <span v-else>{{ngonNgu === 'vi' ? 'Đã nhập đầy đủ thông số' : 'All parameters entered'}}</span>
-                      </p>
-                    </div>
+
+            </div>
+
+            <!-- Navigation Buttons for Tab 2 -->
+            <div class="mt-6 md:mt-8 space-y-4">
+              <!-- Status Message -->
+              <div class="p-4 rounded-lg border"
+                :class="isStep2Valid ? 'bg-green-50 border-green-200' : 'bg-blue-50 border-blue-200'">
+                <div class="flex items-start space-x-3">
+                  <i :class="isStep2Valid ? 'fas fa-check-circle text-green-600' : 'fas fa-info-circle text-blue-600'"
+                    class="text-lg md:text-xl mt-0.5 flex-shrink-0"></i>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm md:text-base font-medium"
+                      :class="isStep2Valid ? 'text-green-800' : 'text-blue-800'">
+                      <span v-if="!isStep2Valid">{{ngonNgu === 'vi' ? 'Vui lòng nhập đầy đủ thông số để tiếp tục' :
+                        'Please enter all parameters to continue'}}</span>
+                      <span v-else>{{ngonNgu === 'vi' ? 'Đã nhập đầy đủ thông số' : 'All parameters entered'}}</span>
+                    </p>
                   </div>
                 </div>
-                
-                <!-- Navigation Buttons -->
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                  <button
-                    @click="goToPreviousStep"
-                    class="flex items-center justify-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 border border-gray-300"
-                  >
-                    <i class="fas fa-arrow-left"></i>
-                    <span>{{ngonNgu === 'vi' ? 'Quay lại' : 'Back'}}</span>
-                  </button>
-                  
-                  <button
-                    @click="goToNextStep"
-                    :disabled="!isStep2Valid"
-                    :class="[
+              </div>
+
+              <!-- Navigation Buttons -->
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <button @click="goToPreviousStep"
+                  class="flex items-center justify-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 border border-gray-300">
+                  <i class="fas fa-arrow-left"></i>
+                  <span>{{ngonNgu === 'vi' ? 'Quay lại' : 'Back'}}</span>
+                </button>
+
+                <button @click="goToNextStep" :disabled="!isStep2Valid" :class="[
                       'btn-professional',
                       !isStep2Valid ? 'opacity-50 cursor-not-allowed' : ''
-                    ]"
-                  >
-                    <span>{{ngonNgu === 'vi' ? 'Xem kết quả' : 'View Results'}}</span>
-                    <i class="fas fa-arrow-right ml-2"></i>
-                  </button>
-                </div>
+                    ]">
+                  <span>{{ngonNgu === 'vi' ? 'Xem kết quả' : 'View Results'}}</span>
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: Results -->
+          <div v-show="activeTab === 'results'" class="tab-panel fade-in">
+            <div v-if="!ketQua" class="card-professional p-12">
+              <div class="text-center text-gray-400">
+                <i class="fas fa-chart-line text-8xl mb-6 text-gray-300"></i>
+                <h3 class="text-2xl font-roboto font-semibold mb-2 text-gray-700">Chưa có kết quả</h3>
+                <p class="mb-6 text-gray-500">Vui lòng hoàn thành các bước trước để xem kết quả tính toán</p>
+                <button @click="activeTab = 'area'" class="btn-professional">
+                  <i class="fas fa-arrow-left mr-2"></i>
+                  Quay lại
+                </button>
               </div>
             </div>
 
-            <!-- TAB 3: Results -->
-            <div v-show="activeTab === 'results'" class="tab-panel fade-in">
-              <div v-if="!ketQua" class="card-professional p-12">
-                <div class="text-center text-gray-400">
-                  <i class="fas fa-chart-line text-8xl mb-6 text-gray-300"></i>
-                  <h3 class="text-2xl font-roboto font-semibold mb-2 text-gray-700">Chưa có kết quả</h3>
-                  <p class="mb-6 text-gray-500">Vui lòng hoàn thành các bước trước để xem kết quả tính toán</p>
-                  <button @click="activeTab = 'area'" class="btn-professional">
-                    <i class="fas fa-arrow-left mr-2"></i>
-                    Quay lại
-                  </button>
-                </div>
+            <div v-else class="space-y-6">
+              <!-- Title -->
+              <div class="text-center">
+                <h2 class="text-3xl font-roboto font-bold text-primary-900 mb-2">
+                  {{nhan.sanLuong.tieuDe}}
+                </h2>
               </div>
 
-              <div v-else class="space-y-6">
-                <!-- Title -->
-                <div class="text-center">
-                  <h2 class="text-3xl font-roboto font-bold text-primary-900 mb-2">
-                    {{nhan.sanLuong.tieuDe}}
-                  </h2>
-                </div>
-
-                <!-- Chart Card -->
-                <div class="card-professional">
-                  <div class="p-8">
-                    <div class="chart-professional-large">
-                      <canvas id="chart-energy"></canvas>
-                    </div>
+              <!-- Chart Card -->
+              <div class="card-professional">
+                <div class="p-8">
+                  <div class="chart-professional-large">
+                    <canvas id="chart-energy"></canvas>
                   </div>
                 </div>
-                
-                <!-- Back Button for Tab 3 -->
-                <div class="flex justify-center sm:justify-start">
-                  <button
-                    @click="goToPreviousStep"
-                    class="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 border border-gray-300"
-                  >
-                    <i class="fas fa-arrow-left"></i>
-                    <span>{{ngonNgu === 'vi' ? 'Quay lại tính toán' : 'Back to Calculation'}}</span>
-                  </button>
-                </div>
+              </div>
+
+              <!-- Back Button for Tab 3 -->
+              <div class="flex justify-center sm:justify-start">
+                <button @click="goToPreviousStep"
+                  class="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-3 rounded-md font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 border border-gray-300">
+                  <i class="fas fa-arrow-left"></i>
+                  <span>{{ngonNgu === 'vi' ? 'Quay lại tính toán' : 'Back to Calculation'}}</span>
+                </button>
               </div>
             </div>
-
           </div>
-        </section>
 
-      </main>
-
-      <!-- Footer -->
-      <footer class="bg-gray-900 text-white py-8 mt-16 border-t border-gray-800">
-        <div class="container mx-auto px-6 text-center">
-          <p class="text-sm text-gray-400">
-            © 2024 Sở Khoa học & Công nghệ, Sở Công thương Đồng Nai
-          </p>
         </div>
-      </footer>
+      </section>
 
-    </div>
+    </main>
 
-    <!-- Scripts -->
-    <script src="./js/data.js"></script>
-    <script src="./vendor/chart/chart.min.js"></script>
-    <script src="./vendor/lodash/lodash.js"></script>
-    <script src="./vendor/jspdf/jspdf.umd.min.js"></script>
-    <script src="./vendor/jspdf-autotable/jspdf.plugin.autotable.js"></script>
-    <script src="./vendor/vue/vue.js"></script>
-    <script src="./js/app.js"></script>
-  </body>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-16 border-t border-gray-800">
+      <div class="container mx-auto px-6 text-center">
+        <p class="text-sm text-gray-400">
+          © 2024 Sở Khoa học & Công nghệ, Sở Công thương Đồng Nai
+        </p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="./js/data.js"></script>
+  <script src="./vendor/chart/chart.min.js"></script>
+  <script src="./vendor/lodash/lodash.js"></script>
+  <script src="./vendor/jspdf/jspdf.umd.min.js"></script>
+  <script src="./vendor/jspdf-autotable/jspdf.plugin.autotable.js"></script>
+  <script src="./vendor/vue/vue.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+
 </html>

@@ -206,7 +206,7 @@ var app = new Vue({
         addTextPDF(page, `${this.nhan.pdf.soLuongPin}: ${this.ketQua.soLuongPin}`, fontSizeNormal, margin, currentLine += 5)
         addTextPDF(page, `${this.nhan.pdf.loaiPin}: ${this.pinDuocChon.maSanPham}`, fontSizeNormal, margin, currentLine += 5)
         addTextPDF(page, `${this.nhan.pdf.congSuatPin}: ${this.pinDuocChon.pmax} (W)`, fontSizeNormal, margin, currentLine += 5)
-        addTextPDF(page, `${this.nhan.pdf.dienTich}: ${this.ketQua.dienTichLapDat} (m²)`, fontSizeNormal, margin, currentLine += 5)
+        addTextPDF(page, `${this.nhan.pin.ketQua.tongDienTich}: ${this.ketQua.tongDienTichPin} (m²)`, fontSizeNormal, margin, currentLine += 5)
         addTextPDF(page, `${this.nhan.pdf.sanLuongDuKien}: ${this.ketQua.tongSanLuongTieuThu} (kWh/năm)`, fontSizeNormal, margin, currentLine += 5)
 
         // calculation result

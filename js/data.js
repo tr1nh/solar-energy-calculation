@@ -80,7 +80,7 @@ const data = {
         ketQua: {
           tieuDe: "Kết quả",
           soLuong: "Số lượng pin quang điện",
-          tongDienTich: "Tổng diện tích lắp đặt",
+          tongDienTich: "Tổng diện tích pin",
           tongSanLuong: "Tổng sản lượng cả năm",
           tongVon: "Tổng vốn đầu tư",
           soNamHoanVon: "Số năm hoàn vốn"
@@ -235,7 +235,7 @@ const data = {
         ketQua: {
           tieuDe: "Results",
           soLuong: "Number of Photovoltaic Panels",
-          tongDienTich: "Total Installation Area",
+          tongDienTich: "Total panel Area",
           tongSanLuong: "Total Annual Production",
           tongVon: "Total Investment",
           soNamHoanVon: "Payback Period (Years)"
